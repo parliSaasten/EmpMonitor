@@ -1,0 +1,612 @@
+input#singleDateCalender {
+    background-image: url('https://img.icons8.com/external-sbts2018-solid-sbts2018/20/external-events-basic-ui-elements-2.3-sbts2018-solid-sbts2018.png');
+    background-repeat: no-repeat;
+    text-indent: 31px; 
+    background-position: 7px 8px;
+}
+.ui-datepicker-year{
+    background: #fff; 
+    border: 1px solid #ddd;
+    margin-left: 2px !important;
+}
+.ui-datepicker-month{
+    background: #fff; 
+    border: 1px solid #ddd;
+    margin-right: 2px !important;
+}
+.ui-state-default{ 
+    background-color: #fff !important;
+    border: none !important;
+}
+#ui-datepicker-div{ 
+    background-color: #fff;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+.ui-state-active{
+    color: #163975 !important; 
+    font-weight: bold !important;
+}
+/* Write your custom CSS here */
+.login-logo {
+    width: 300px;
+}
+
+.expireHeader {
+    position: relative;
+    /* width: calc(100% - 220px); */
+    background: #0d7ec7;
+    margin-top: 61px;
+    right: 0;
+    color: #ffffff;
+    padding: 3px 10px;
+    text-align: center;
+}
+
+.expireHeader>label {
+    padding: 0px 10px 0 20px;
+    margin: 0px;
+    font-weight: bold;
+}
+
+.expireHeader>a {
+    border-radius: 9999px;
+    border: 1px solid;
+    font-weight: bolder;
+}
+
+.card-pink-grid {
+    padding: 10px !important;
+    background-image: -webkit-linear-gradient(left, #fe94bf, #ff35f8);
+    color: #fff !important;
+    min-height: 120px;
+}
+
+.card-blue-grid {
+    padding: 10px !important;
+    background-image: -webkit-linear-gradient(left, #51b6ff, #0492f8);
+    color: #fff !important;
+    min-height: 120px;
+}
+
+.card-green-grid {
+    padding: 10px !important;
+    background-image: -webkit-linear-gradient(left, #43eab5, #04a6a5);
+    color: #fff !important;
+    min-height: 120px;
+}
+
+.card-perpule-grid {
+    padding: 10px !important;
+    background-image: -webkit-linear-gradient(left, #ba02ff, #7102ff);
+    color: #fff !important;
+    min-height: 120px;
+}
+
+.bootstrap-tagsinput .badge {
+    margin: 2px;
+    padding: 2px 8px;
+}
+
+/* portal */
+.portal_logo_hover {
+    opacity: 1;
+}
+
+.portal_logo_hover:hover {
+    opacity: 0.3;
+}
+
+/* div scroll bar */
+.div_scrollbar {
+    height: 350px;
+    overflow: scroll;
+}
+
+.div_scrollbar::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+.div_scrollbar ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+.div_scrollbar::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+/* Handle on hover */
+.div_scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.p_sm_30 {
+    width: 30px;
+}
+
+/* side bar version */
+.lastfoot {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+/* side bar version */
+/* ====== btn help ======== */
+.mybtn {
+    background-color: #FFA500;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    border: none;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Arial;
+    font-size: 11px;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    -webkit-animation: glowing 1500ms infinite;
+    -moz-animation: glowing 1500ms infinite;
+    -o-animation: glowing 1500ms infinite;
+    animation: glowing 1500ms infinite;
+}
+
+@-webkit-keyframes glowing {
+    0% {
+        background-color: #FFA500;
+        -webkit-box-shadow: 0 0 3px #FFA500;
+    }
+
+    50% {
+        background-color: #FFA500;
+        -webkit-box-shadow: 0 0 40px #FFA500;
+    }
+
+    100% {
+        background-color: #FFA500;
+        -webkit-box-shadow: 0 0 3px #FFA500;
+    }
+}
+
+@-moz-keyframes glowing {
+    0% {
+        background-color: #FFA500;
+        -moz-box-shadow: 0 0 3px #FFA500;
+    }
+
+    50% {
+        background-color: #FFA500;
+        -moz-box-shadow: 0 0 40px #FFA500;
+    }
+
+    100% {
+        background-color: #FFA500;
+        -moz-box-shadow: 0 0 3px #FFA500;
+    }
+}
+
+@-o-keyframes glowing {
+    0% {
+        background-color: #FFA500;
+        box-shadow: 0 0 3px #FFA500;
+    }
+
+    50% {
+        background-color: #FFA500;
+        box-shadow: 0 0 40px #FFA500;
+    }
+
+    100% {
+        background-color: #FFA500;
+        box-shadow: 0 0 3px #FFA500;
+    }
+}
+
+@keyframes glowing {
+    0% {
+        background-color: #FFA500;
+        box-shadow: 0 0 3px #FFA500;
+    }
+
+    50% {
+        background-color: #FFA500;
+        box-shadow: 0 0 40px #FFA500;
+    }
+
+    100% {
+        background-color: #FFA500;
+        box-shadow: 0 0 3px #FFA500;
+    }
+}
+
+/* ====== btn help end======== */
+
+/* ========= Add Task ========= */
+.modal-dialog-slideout {
+    min-height: 100%;
+    margin: 0 0 0 auto;
+    background: #fff;
+}
+
+.modal.fade .modal-dialog.modal-dialog-slideout {
+    -webkit-transform: translate(100%, 0) scale(1);
+    transform: translate(100%, 0) scale(1);
+}
+
+.modal.fade.show .modal-dialog.modal-dialog-slideout {
+    -webkit-transform: translate(0, 0);
+    transform: translate(0, 0);
+    display: flex;
+    align-items: stretch;
+    -webkit-box-align: stretch;
+    height: 100%;
+}
+
+.modal.fade.show .modal-dialog.modal-dialog-slideout .modal-body {
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.modal-dialog-slideout .modal-content {
+    border: 0;
+}
+
+.modal-dialog-slideout .modal-header,
+.modal-dialog-slideout .modal-footer {
+    height: 69px;
+    display: block;
+}
+
+.modal-dialog-slideout .modal-header h5 {
+    float: left;
+}
+
+/* ====================== */
+
+/*-----------Projects Module-----------*/
+
+
+/* ========== Project Wizard (Harshada)============ */
+
+.hidden {
+    display: none !important;
+}
+
+.form_wizard li.active>a.hidden-xs {
+    display: block !important;
+}
+
+.form_wizard li.active>a.visible-xs {
+    display: none !important;
+}
+
+.form_wizard .nav-pills.nav-wizard>li {
+    position: relative;
+    overflow: visible;
+    border-right: 10px solid #fff;
+    border-left: 10px solid #fff;
+}
+
+.form_wizard .nav-pills.nav-wizard>li:first-child {
+    border-left: 0;
+}
+
+.form_wizard .nav-pills.nav-wizard>li:first-child a {
+    border-radius: 5px 0 0 5px;
+}
+
+.form_wizard .nav-pills.nav-wizard>li:last-child {
+    border-right: 0;
+}
+
+.form_wizard .nav-pills.nav-wizard>li:last-child a {
+    border-radius: 0 5px 5px 0;
+}
+
+.form_wizard .nav-pills.nav-wizard>li a {
+    border-radius: 0;
+    background-color: #eee;
+    padding: 10px;
+}
+
+.form_wizard .nav-pills.nav-wizard>li .nav-arrow {
+    position: absolute;
+    top: 0px;
+    right: -20px;
+    width: 0px;
+    height: 0px;
+    border-style: solid;
+    border-width: 20px 0 20px 20px;
+    border-color: transparent transparent transparent #eee;
+    z-index: 150;
+}
+
+.form_wizard .nav-pills.nav-wizard>li .nav-wedge {
+    position: absolute;
+    top: 0px;
+    left: -20px;
+    width: 0px;
+    height: 0px;
+    border-style: solid;
+    border-width: 20px 0 20px 20px;
+    border-color: #eee #eee #eee transparent;
+    z-index: 150;
+}
+
+.form_wizard .nav-pills.nav-wizard>li:hover .nav-arrow {
+    border-color: transparent transparent transparent #aaa;
+}
+
+.form_wizard .nav-pills.nav-wizard>li:hover .nav-wedge {
+    border-color: #aaa #aaa #aaa transparent;
+}
+
+.form_wizard .nav-pills.nav-wizard>li:hover a {
+    background-color: #aaa;
+    color: #fff;
+}
+
+.form_wizard .nav-pills.nav-wizard>li.active .nav-arrow {
+    border-color: transparent transparent transparent #428bca;
+}
+
+.form_wizard .nav-pills.nav-wizard>li.active .nav-wedge {
+    border-color: #428bca #428bca #428bca transparent;
+}
+
+.form_wizard .nav-pills.nav-wizard>li.active a {
+    background-color: #428bca;
+}
+
+.form_wizard .data_blk h3 {
+    text-align: center;
+    line-height: 32px;
+}
+
+.form_wizard .data_blk p {
+    text-align: center;
+    font-size: 14px;
+}
+
+.form_wizard .data_blk p.lead {
+    text-align: left;
+    font-size: 21px;
+}
+
+.a_right {
+    border: solid #ffffff;
+    border-width: 0 1px 1px 0;
+    display: inline-block;
+    padding: 6px;
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+    vertical-align: middle;
+    margin-right: -10px;
+}
+
+.a_left {
+    border: solid #ffffff;
+    border-width: 0 1px 1px 0;
+    display: inline-block;
+    padding: 6px;
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+    vertical-align: middle;
+    margin-left: -5px;
+}
+
+.form_wizard .back:hover,
+.form_wizard .back:focus {
+    background: #000000;
+    border-color: transparent;
+}
+
+.form_wizard .progress {
+    height: 8px;
+    margin: 0 60px;
+}
+
+.form_wizard .radio,
+.form_blk .checkbox {
+    margin: 0;
+}
+
+.form_wizard .radio label,
+.form_blk .checkbox label {
+    padding: 12px;
+    background: #fff;
+    padding-left: 40px;
+    display: block;
+    font-size: 16px;
+    border-top: 1px solid #f2f2f2;
+}
+
+.form_wizard .radio:last-child label,
+.form_blk .checkbox:last-child label {
+    border-bottom: 1px solid #f2f2f2;
+}
+
+.formwizardpopup .modal-body button.close {
+    position: absolute;
+    top: 4px;
+    right: 15px;
+    font-size: 3.5rem;
+    opacity: .1;
+}
+
+.formwizardpopup .modal-content {
+    border-radius: 3px;
+    background: #fafafa;
+}
+
+.form_wizard .other label input[type="checkbox"] {
+    margin-top: 10px;
+}
+
+.form_wizard .other label input[type="text"] {
+    display: block;
+    vertical-align: middle;
+    width: 100%;
+    height: 35px;
+    padding: 5px;
+    border: 1px solid #d4d4d4;
+    border-radius: 3px;
+}
+
+.form_wizard textarea {
+    height: 100px;
+}
+
+.form_wizard .zip_blk {
+    padding: 20px 130px 30px;
+}
+
+.form_wizard .zip_blk input {
+    text-align: center;
+}
+
+.form_wizard .sm_text {
+    font-size: 10px;
+    padding: 0 100px 40px;
+    text-align: center;
+}
+
+.form_wizard .col-sm-6 .sm_text {
+    padding: 0;
+}
+
+@media (min-width: 768px) {
+    .formwizardpopup .modal-dialog {
+        width: auto;
+    }
+}
+
+.form_wizard .progress-bar-info {
+    background: transparent;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 12px;
+}
+
+.formwizardpopup .modal-content.banner .progress,
+.formwizardpopup .modal-content.banner .progress-bar-info {
+    display: none;
+}
+
+.formwizardpopup .modal-content.banner .modal-body {
+    padding-top: 20px;
+    background: #203047;
+    color: #fff;
+}
+
+.formwizardpopup .modal-content.banner .modal-body h3 {
+    font-size: 3rem;
+    margin-bottom: 30px;
+}
+
+.formwizardpopup .modal-content.banner .a_left {
+    border-color: #fff;
+}
+
+.formwizardpopup .modal-content.banner {
+    background: #203047;
+}
+
+.formwizardpopup .modal-content.banner button.close {
+    color: #fff;
+    opacity: .2;
+}
+
+.formwizardpopup .modal-content.banner {
+    text-align: center;
+}
+
+.formwizardpopup .modal-content.banner img {
+    -webkit-filter: brightness(0) invert(1);
+    filter: brightness(0) invert(1);
+}
+
+.mb_3 {
+    margin-bottom: 0px;
+}
+.cust-time-picker-pr{
+    display: flex;
+    width: 100%;
+}
+.cust-time-picker-ch{
+    width: 50%;
+    align-items: flex-start;
+    border: none !important;
+    padding: 0px !important;
+}
+
+.custom-grp-tooltip {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+.custom-grp-tooltip .grp-tooltip-title {
+    font-weight: bold; 
+}
+
+@media (max-width: 767px) {
+    .mb_3 {
+        margin-bottom: 10px;
+    }
+}
+
+.dataTables_scrollHeadInner {
+    width: 100% !important;
+}
+
+.table {
+    width: 100% !important;
+}
+
+.idleProductive .badge {
+    padding: 0.5em 0.3em !important;
+}
+
+.idleProductive .badge-new {
+    color: #ffffff;
+    background-color: #004dff;
+}
+
+.silah-admin-login-wrapper {
+    position: absolute;
+    top: 11px;
+    left: calc(100% - 146px);
+    z-index: 9;
+}
+
+.silah-admin-login-wrapper+.login-box {
+    padding-top: 61px !important;
+}
+.login-box {
+    max-height: 100vh;
+    overflow: auto;
+}
+@media screen and (min-width:769px) and (max-width:856px){
+    .silah-admin-login-wrapper + div> div:first-child {
+        max-height: 100vh;
+        overflow: auto;
+        padding: 10px 30px;
+        margin: 18px auto;
+        display: block;
+    }
+    .silah-admin-login-wrapper+.login-box {
+        padding-top: 0px !important;
+        padding: 0;
+    }
+}
+@media screen and (max-width:768px){
+    .silah-admin-login-wrapper {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}

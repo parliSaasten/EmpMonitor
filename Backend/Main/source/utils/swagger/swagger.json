@@ -1,0 +1,661 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Employee Management API",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/admin/login": {
+      "post": {
+        "summary": "Admin login",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "mounig0610@gmail.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "Admin@123"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful login",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string",
+                      "description": "JWT token for authentication"
+                    }
+                  },
+                  "example": {
+                    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjMzMDA4MjIzLCJleHAiOjE2MzMwMTE4MjN9.xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Invalid credentials"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/register": {
+        "post": {
+            "summary": "Admin registration",
+            "security": [
+                {
+                    "bearerAuth": []
+                }
+            ],
+            "requestBody": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "firstName": {
+                                    "type": "string",
+                                    "example": "John"
+                                },
+                                "lastName": {
+                                    "type": "string",
+                                    "example": "Doe"
+                                },
+                                "email": {
+                                    "type": "string",
+                                    "example": "employee@example.com"
+                                },
+                                "password": {
+                                    "type": "string",
+                                    "example": "employeePassword"
+                                },
+                                "mobileNumber": {
+                                  "type": "string",
+                                  "example": "1234567890"
+                                },
+                                "employeeCode": {
+                                  "type": "string",
+                                  "example": "EMP123"
+                                },
+                                "timeZone": {
+                                  "type": "string",
+                                  "example": "UTC"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "201": {
+                    "description": "Admin registered",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "example": 2
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "500": {
+                    "description": "Internal server error",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "error": {
+                                        "type": "string",
+                                        "example": "Internal server error"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+      "/admin/web-app-activity": {
+        "get": {
+          "summary": "Get web app activity records with filters",
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "parameters": [
+            {
+              "name": "employeeId",
+              "in": "query",
+              "description": "Employee ID to filter by",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "example": "44"
+              }
+            },
+            {
+              "name": "startDate",
+              "in": "query",
+              "description": "Start date to filter by (YYYY-MM-DD)",
+              "required": false,
+              "schema": {
+                "type": "string",
+                "format": "date",
+                "example": "2024-01-01"
+              }
+            },
+            {
+              "name": "endDate",
+              "in": "query",
+              "description": "End date to filter by (YYYY-MM-DD)",
+              "required": false,
+              "schema": {
+                "type": "string",
+                "format": "date",
+                "example": "2024-01-31"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "A list of web app activity records",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": { "type": "integer", "example": 1 },
+                        "organization_id": { "type": "integer", "example": 1 },
+                        "employee_id": { "type": "integer", "example": 44 },
+                        "start_time": { "type": "string", "example": "2025-01-21T05:16:49.000Z" },
+                        "end_time": { "type": "string", "example": "2025-01-21T05:16:54.000Z" },
+                        "yyyymmdd": { "type": "integer", "example": 20250121 },
+                        "application_name": { "type": "string", "example": "Windows Explorer" },
+                        "title": { "type": "string", "example": "" },
+                        "url": { "type": "string", "example": "" },
+                        "created_at": { "type": "string", "format": "date-time", "example": "2025-03-26T07:13:40.708Z" },
+                        "updated_at": { "type": "string", "format": "date-time", "example": "2025-03-26T07:13:40.708Z" }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request - Missing required parameters",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "message": { "type": "string", "example": "employeeId and startDate are required." },
+                       "details":{ "type": "string", "example": "The employeeId and startDate parameters are required for this request. Please provide valid values."}
+                    }
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal server error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": { "type": "string", "example": "Internal server error" },
+                      "details" : { "type": "string", "example": "An unexpected error occurred on the server. Please try again later."}
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+    "/admin/employees": {
+      "get": {
+        "summary": "Get all employees (admin only)",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of employees",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer",
+                        "example": 1
+                      },
+                      "name": {
+                        "type": "string",
+                        "example": "Admin User"
+                      },
+                      "email": {
+                        "type": "string",
+                        "example": "admin@example.com"
+                      },
+                      "role": {
+                        "type": "string",
+                        "example": "admin"
+                      },
+                      "employeeCode":{
+                        "type":"string",
+                        "example":"EMP001"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/employees/{id}": {
+      "delete": {
+        "summary": "Delete Employee (admin only)",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "The ID of the employee to delete.",
+            "example": 2
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Employee Deleted"
+          },
+          "401": {
+            "description": "Unauthorized. Admin role required."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      },
+      "get": {
+        "summary": "Get Employee (admin only)",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "The ID of the employee to get data.",
+            "example": 2
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Fetch Admin"
+          },
+          "401": {
+            "description": "Unauthorized. Admin role required."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/admin/attendance": {
+      "get": {
+        "summary": "Get all attendance records (admin only)",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of attendance records.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": { "type": "integer" },
+                  "employee_id": { "type": "integer" },
+                  "date": { "type": "string", "format": "date" },
+                  "start_time": { "type": "string", "format": "date-time" },
+                  "end_time": { "type": "string", "format": "date-time" }
+                }
+              }
+            }
+          },
+          "401": { "description": "Unauthorized. Admin role required." },
+          "500": { "description": "Internal server error." }
+        }
+      }
+    },
+    "/employee/login": {
+      "post": {
+        "summary": "Employee login",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "employee@example.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "employeePassword"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful login",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string",
+                      "description": "JWT token for authentication"
+                    }
+                  },
+                  "example": {
+                    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6ImVtcGxveWVlIiwiaWF0IjoxNjMzMDA4MjIzLCJleHAiOjE2MzMwMTE4MjN9.xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Invalid credentials"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal Server Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/employee": {
+      "put": {
+        "summary": "Update employee details",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Updated Name"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "updated.email@example.com"
+                  },
+                  "role": {
+                    "type": "string",
+                    "example": "employee"
+                  },
+                  "employeeCode": {
+                    "type": "string",
+                    "example": "EMP002"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Employee updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Employee updated"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Missing required fields"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal Server Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "get employee details",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "employee details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "example": 2
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "Employee Name"
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "employee.email@example.com"
+                    },
+                    "role": {
+                      "type": "string",
+                      "example": "employee"
+                    },
+                    "employeeCode":{
+                        "type":"string",
+                        "example":"EMP002"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401":{
+            "description": "Unauthorized, Invalid Token",
+            "content":{
+                "application/json": {
+                    "schema": {
+                        "type":"object",
+                        "properties": {
+                            "error":{
+                                "type":"string",
+                                "example":"Unauthorized, Invalid Token"
+                            }
+                        }
+                    }
+                }
+            }
+          },
+          "500":{
+            "description": "Internal Server Error",
+              "content":{
+                "application/json": {
+                  "schema":{
+                    "type":"object",
+                    "properties":{
+                      "error":{
+                        "type":"string",
+                        "example":"Internal Server Error"
+                      }
+                    }
+                  }
+                }
+              }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
