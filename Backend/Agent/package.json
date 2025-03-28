@@ -1,0 +1,30 @@
+{
+    "name": "agent",
+    "version": "1.0.0",
+    "description": "A agent service microservice for EmpMonitor",
+    "main": "index.js",
+    "scripts": {
+        "dev": "nodemon index.js",
+        "start": "pm2 start index.js --name=Agent"
+    },
+    "author": "",
+    "license": "",
+    "dependencies": {
+        "agent": "file:",
+        "bcrypt": "^5.1.1",
+        "compression": "^1.8.0",
+        "cors": "^2.8.5",
+        "dotenv": "^16.4.7",
+        "express": "^4.21.2",
+        "express-async-errors": "^3.1.1",
+        "helmet": "^8.1.0",
+        "jsonwebtoken": "^9.0.2",
+        "mongoose": "^8.13.0",
+        "morgan": "^1.10.0",
+        "mysql": "^2.18.1",
+        "swagger-ui-express": "^5.0.1"
+    },
+    "devDependencies": {
+        "nodemon": "^3.0.2"
+    }
+}
