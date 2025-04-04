@@ -1,52 +1,25 @@
-
-function loadBrowserHistory() {
+function loadWebAppHistory(type) {
     $('#dateRange').show();
+    let url ='';
+    if(userType == 'employee') url = "/"+userType+'/get-web-app-histories'
+    else if(userType == 'admin') url = "/"+userType+'/get-web-app-history'
     $.ajax({
         type: "post",
-        url: "/"+userType+'/get-browser-history-data',
-        data: {data: `employee_id=${$('#userId').attr('value')}&startDate=${$('#from').val()}&endDate=${$('#to').val()}&skip=0&limit=9000`},
-
-        beforeSend: function () {
-            $('#browserHistoryTableLoader').css('display', 'block');
-            $('#webHistoryChartLoader').css('display', 'block');
-            WEB_HISTORY_CHECK = true;
-            $('#browserHistoryDataTableData').empty();
-            $('#browserHistoryTable').empty();
-            $('#browserHistoryDataTableData').append("<tr><td colspan='7' style='text-align: center' class='text-primary'>"+EMPLOYEE_FULL_DETAILS_ERROR.BrowserDataLoading+" </td></tr>");
-            $('#webHistoryChart').empty();
-        },
-        success: function (response) {
-            return browserHistoryData(response);
-        },
-        error: function (error) {
-            if (error.status === 410) {
-                $('#BrowserHistory').empty();
-                $('#BrowserHistory').append('<p  style="color: red; text-align: center; font-size: 150%; width: 100%; height: 40% " class="mt-5"><b>'+EMPLOYEE_FULL_DETAILS_ERROR.AccessDenied+' </b></p>');
-            } else {
-                return errorHandler(DASHBOARD_JS.error);
-            }
-            WEB_HISTORY_CHECK = false;
-        }
-    });
-}
-
-function loadAppHistory() {
-    $('#dateRange').show();
-    $.ajax({
-        type: "post",
-        url: "/"+userType+'/get-application-history-data',
-        data: {data: `employee_id=${$('#userId').attr('value')}&startDate=${$('#from').val()}&endDate=${$('#to').val()}&skip=0&limit=9000`},
+        url: url,
+        data: {data: `employeeId=${$('#userId').attr('value')}&startDate=${$('#from').val()}&endDate=${$('#to').val()}&type=${type}`},
 
         beforeSend: function () {
             APP_HISTORY_CHECK = true;
             $('#applicationHistoryTableId').dataTable().fnClearTable();
             $('#applicationHistoryTableId').dataTable().fnDraw();
-            $('#chartApp').empty();
+            // $('#chartApp').empty();
             $('#appHistoryTable').empty();
             $('#appHistoryTable').append('<div  class="loader"></div>');
         },
         success: function (response) {
-            return applicationHistoryData(response);
+            if(type == 2){
+                return browserHistoryData(response);
+            }else return applicationHistoryData(response);
         },
         error: function (error) {
             APP_HISTORY_CHECK = false;

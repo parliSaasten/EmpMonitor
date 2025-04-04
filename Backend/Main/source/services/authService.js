@@ -34,7 +34,7 @@ function decryptPassword(userPassword, encryptedPassword) {
 }
 
 function generateToken(payload) {
-  return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
+  return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1d' });
 }
 
 module.exports = {

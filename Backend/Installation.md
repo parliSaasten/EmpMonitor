@@ -168,12 +168,22 @@ Dependencies are external packages required for the software to function correct
 >
 > Keep Redis running in the background for better performance.
 
----
 ### 📍 Step 6: Compile Backend Assets
 - To bundle application assets and start the development server, use the command below:
-   ```sh
-      npm run start:dev
+
+   For using default admin and user credentials, add the following `JWT_SECRET` in the `.env` file of all your services:
+
+   ```env
+   JWT_SECRET=tfwsIg87P49M1CWCcpJYOtfwsIg87P49M1CWCcpJYOl2FN29fkAjjGQo7hAJtuXK3Ej8Uld
    ```
+
+   Start the development server with:
+
+   ```sh
+   npm run start
+   ```
+
    - Expected Output: Vite server running at `http://localhost:5173`
 
-##### ✅ Your Laravel backend is now set up and running! 
+##### ✅ Your Laravel backend is now set up and running!
+

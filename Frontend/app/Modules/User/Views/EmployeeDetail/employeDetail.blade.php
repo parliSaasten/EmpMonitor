@@ -154,8 +154,8 @@
                                                 </select> {{ __('messages.entries') }}
                                             </p>
                                         </div>
-                                    </div>
-                                
+                                    </div> 
+                                    <div class="col-md-3 input-group"></div>
                                     <div class="col-md-3 input-group">
                                         <input type="text" class="form-control"
                                                placeholder="{{ __('messages.search') }} ..." value=""
@@ -544,7 +544,6 @@
 
     
     </script>
-    <!-- <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script> -->
     <script src="../assets/js/final-timezone.js" type="text/javascript"></script>
     <script src="//unpkg.com/xlsx/dist/xlsx.full.min.js" type="text/javascript"></script>
     <script src="../assets/js/incJSFile/SuccessAndErrorHandlers/_swalHandlers.js" type="text/javascript"></script>

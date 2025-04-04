@@ -125,22 +125,15 @@ class UserController extends Controller
     //login
     public function login(Request $request)
     {
-
-        if ($request->isMethod('get')) {
-
-            if (Session::has(env('Manager'))) return redirect(env('Manager') . '/dashboard');
-            else if (Session::has(env('Employee'))) {
-
-                return redirect(env('Employee') . '/myTimeline?id=' . Session::get(env('Employee'))['token']['user_id']);
-            } else return view("User::adminLogin")->with('reset', []);
+         if ($request->isMethod('get')) { 
+         return view("User::adminLogin")->with('reset', []);
         } else if ($request->isMethod('post')) {
             $rules = array(
                 "email" => 'required | email',
                 "password" => 'required'
             );
             try {
-                //validate login-creds
-                $validator = Validator::make($request->all(), $rules);
+                 $validator = Validator::make($request->all(), $rules);
                 if ($validator->fails()) {
                     return redirect()->back()->withErrors($validator)->withInput();
                 } else {
@@ -148,13 +141,10 @@ class UserController extends Controller
                     $loginData = array(
                         "email" => $request->email,
                         "password" => $request->password,
-                        "ip" => $request->ip
-                        //                         "ip" => "123.123.123.128"
-                    );
-                    //  $api_url_old = $this->API_URL . 'api/v1/manager-auth';
-
-                    $api_url = $this->API_URL_3 . 'api/' . $this->VERSION_3 . '/auth/user';
-                    try {
+                      );
+ 
+                      $api_url = env('MAIN_API').'employee/login';
+                     try {
                         $response = $this->client->post($api_url, [
                             'form_params' => $loginData,
                             'headers' => [
@@ -162,66 +152,16 @@ class UserController extends Controller
                                 'Content-Type' => 'application/x-www-form-urlencoded',
                             ]
                         ]);
-                    } catch (\GuzzleHttp\Exception\RequestException $e) {
-
-
+                    } catch (\GuzzleHttp\Exception\RequestException $e) {  
                         Log::info('Exception ' . $e->getLine() . " => Function Name =>Login  => code =>" . $e->getCode() . " => message =>  " . $e->getMessage());
                         $parsedMessage = json_decode($e->getResponse()->getBody()->getContents());
                         return redirect('login')->with('error', $parsedMessage->message);
                     }
-                    if ($response->getStatusCode() == 200) {
-
+                    if ($response->getStatusCode() == 200) { 
                         $response = json_decode($response->getBody()->getContents(), true);
-                        if ($response['code'] == 200 && $response['message'] == "OTP Send Successful") {
-                            return view("User::loginOTP")->with(['email' => $request->email]);
-                        }else if ($response['code'] == 200) {
-                            Session::put('locale', $response['language']);
-
-                            if ($response['photo_path'] == 'undefined') $response['photo_path'] = env('DEFAULT_IMAGE');
-                            elseif (substr($response['photo_path'], 0, 5) === "https") $response['photo_path'] = $response['photo_path'];
-                            else $response['photo_path'] = env('API_HOST') . $response['photo_path'];
-
-                            $response['login'] = $response['user_name'];
-                            $loginSession = array(
-                                'token' => $response
-                            );
-
-                            foreach ($response['feature'] as $feature) {
-                                if ($feature['status'] == 1) {
-                                    $loginSession[$feature['name']] = 1;
-                                } else {
-                                    $loginSession[$feature['name']] = 0;
-                                }
-                            }
-                            $role = str_replace(' ', '', strtolower($response['role'])); //this will be changed once api is done
-                            Session::put('role', $role);
-                            if ($role == "employee") {
-                                Session::put('employee', $loginSession);
-                                Session::put('EmployeeLogged', $role);
-                                return redirect(env('Employee') . '/myTimeline?id=' . Session::get(env('Employee'))['token']['user_id']);
-                            } else if ($role != env('Employee') || $role != env('Admin')) {
-                                Session::put(env('Manager'), $loginSession);
-                                return redirect(env('Manager') . '/dashboard');
-                            } else {
-                                return redirect('login')->with('error', $response['message']);
-                            }
-
-
-                            // if ($response['is_manager'] == true  || $response['is_teamlead'] == true) {
-                            //     Session::put('admin', $loginSession);
-                            //     return redirect('/dashboard');
-                            // } else if ($response['is_employee'] == true) {
-                            //     Session::put('employee', $loginSession);
-                            //     return redirect('/myTimeline?id=' . Session::get('employee')['token']['user_id']);
-
-                            // } else {
-
-                            //     return redirect('login')->with('error', $response['message']);
-
-                            // }
-
-                        } else if ($response['code'] == 400) {
-                            return redirect('login')->with('error', $response['message']);
+                       if ($response['role'] == 'employee') {  
+                            Session::put('employee_session', $response); 
+                             return redirect('/employee/myTimeline?id='.$response['id']);
                         } else {
                             return redirect('login')->with('error', $response['error']);
                         }

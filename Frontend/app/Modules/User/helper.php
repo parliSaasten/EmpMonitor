@@ -23,6 +23,10 @@ class helper
     public function postApiCall($method, $api_url, $data, $is_multipart = false)
     {
         $role = $this->getHostName();
+        $session_token = '';
+        if(Session::has('admin_session')) $session_token = Session::get('admin_session')['token'];
+        else if(Session::has('employee_session')) $session_token = Session::get('employee_session')['token'];
+       
         switch (strtolower($method)) {
             case "get-with-token":
                 $response = [];
@@ -31,7 +35,7 @@ class helper
                         'headers' => [
                             'user-agent' => $_SERVER['HTTP_USER_AGENT'],
                             'Content-Type' => 'application/x-www-form-urlencoded',
-                            'Authorization' => 'Bearer ' . Session::get('admin_session')['token']
+                            'Authorization' => 'Bearer ' . $session_token
                         ]
                     ]); 
                     $response = json_decode($response->getBody()->getContents(), true); 
@@ -179,55 +183,7 @@ class helper
         }
     }
 
-
-    //get Departments
-    public function getDepartment()
-    {
-        $responseData['department'] = [];
-        $methodDepartment = "post";
-        $dataDepartment['skip'] = "";
-        $dataDepartment['limit'] = "";
-        $api_url = $this->API_URL_3 . '/department/get-departments';
-
-        try {
-            $responseDepartment = $this->postApiCall($methodDepartment, $api_url, $dataDepartment);
-
-            if ($responseDepartment['statusCode'] == 200) {
-                if ($responseDepartment['data']['code'] == 200 && $responseDepartment['data']['data'] != []) {
-                    $responseData['department'] = $responseDepartment['data']['data'];
-                }
-            }
-        } catch (\Exception $e) {
-            Log::info('Exception in helper getDepartment ' . $e->getMessage());
-
-        }
-
-        return $responseData['department'];
-    }
-
-    public function getUsers()
-    {
-        $api_url = $this->API_URL_3 . '/user/users';
-        // dd($api  _url);
-        $method = "post";
-        $data['skip'] = "";
-        $data['limit'] = "";
-        $responseData['employee'] = [];
-        try {
-            $response = $this->postApiCall($method, $api_url, $data);
-            if ($response['statusCode'] == 200) {
-                if ($response['data']['code'] == 200 && $response['data']['data'] != []) {
-                    $responseData['employee'] = $response['data']['data'];
-                }
-            }
-            // return $this->responseHandler($response);
-        } catch (\Exception $e) {
-            Log::info('Exception in helper getUsers ' . $e->getMessage());
-
-            // return $this->errorHandler($e);
-        }
-        return $responseData['employee'];
-    }
+  
 
     public function logException($method, $message)
     {

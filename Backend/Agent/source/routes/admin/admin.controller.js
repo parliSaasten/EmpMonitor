@@ -13,7 +13,7 @@ class AdminController {
             if (!employee) {
                 return responseHandler(res, 401, null, 'Invalid email or password');
             }
-            console.log(email, password);
+
             const passwordMatch = await authModel.decryptPassword(password, employee.password);
 
             if (!passwordMatch) {
@@ -21,7 +21,13 @@ class AdminController {
             }
             const token = authModel.generateToken({ id: employee.id, email: employee.email, role: employee.role });
             delete employee.password;
-            return responseHandler(res, 200, { token, ...employee }, 'Login successful');
+            return res.json({  
+                "success": true,
+                "accessToken": token,
+                "identifier": employee.id,
+                ...employee
+            })
+            // return responseHandler(res, 200, { token, ...employee }, 'Login successful');
         } catch (error) {
             console.error('Error during admin login:', error);
             return responseHandler(res, 500, null, 'Internal server error', error.message);

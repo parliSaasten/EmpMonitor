@@ -56,14 +56,20 @@
                     value="{{$user_details['data']['id']}}">{{$user_details['data']['first_name']." ".$user_details['data']['last_name']}}</h1>
                 <a href="#" class="btn btn-link btn-sm" onclick="getdetails()" data-toggle="modal"
                    data-target="#editEmpModal">{{ __('messages.edit') }} </a>
-        
+                   <div class="col-md-4 float-right p-0">
+                        <div class="form-control" id="dateRange" style="cursor: pointer">
+                            <i class="fa fa-calendar"></i>&nbsp; <span></span>
+                            <i class="fa fa-caret-down"></i>
+                            <span id="from" hidden></span>
+                            <span id="to" hidden></span>
+                        </div>
+                   </div>
             </div>
           
         </div>
         {{--    removed Analysis modals and calling from external page  --}}
         @include('User::EmployeeFullDetailsPage._middleSubSections')
-        @include('User::EmployeeFullDetailsPage._analysisModals')
-
+ 
     </div>
 
 @endsection

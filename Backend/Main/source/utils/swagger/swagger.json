@@ -17,7 +17,7 @@
                 "properties": {
                   "email": {
                     "type": "string",
-                    "example": "mounig0610@gmail.com"
+                    "example": "admin@mail.com"
                   },
                   "password": {
                     "type": "string",
@@ -206,6 +206,17 @@
                 "type": "string",
                 "format": "date",
                 "example": "2024-01-31"
+              }
+            },
+            {
+              "name": "type",
+              "in": "query",
+              "description": "1 - Application, 2 - Website",
+              "required": false,
+              "schema": {
+                "type": "string",
+                "format": "",
+                "example": "1"
               }
             }
           ],
@@ -420,11 +431,11 @@
                 "properties": {
                   "email": {
                     "type": "string",
-                    "example": "employee@example.com"
+                    "example": "first_user@mail.com"
                   },
                   "password": {
                     "type": "string",
-                    "example": "employeePassword"
+                    "example": "User@123"
                   }
                 }
               }

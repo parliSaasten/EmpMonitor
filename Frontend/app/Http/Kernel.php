@@ -56,22 +56,12 @@ class Kernel extends HttpKernel
     protected $middlewareAliases = [
         'auth' => \App\Http\Middleware\Authenticate::class,
         'authenticateAdmin' => \App\Http\Middleware\authenticateAdmin::class,
+        'openAdmin' => \App\Http\Middleware\openAdmin::class,
         'authenticateEmployee' => \App\Http\Middleware\authenticateEmployee::class,
-        'authenticateReseller' => \App\Http\Middleware\authenticateReseller::class,
         'role.browse' => \App\Http\Middleware\CanRolesBrowse::class,
         'role.add' => \App\Http\Middleware\CanRolesCreate::class,
         'role.edit' => \App\Http\Middleware\CanRolesModify::class,
         'role.delete' => \App\Http\Middleware\CanRolesDelete::class,
-        'productivity.browse' => \App\Http\Middleware\CanSettingsProductivityRuleBrowse::class,
-        'productivity.Modify' => \App\Http\Middleware\CanSettingsProductivityRuleModify::class,
-        'report.view' => \App\Http\Middleware\CanReportWebApplicationUsedView::class,
-        'report.download' => \App\Http\Middleware\CanReportWebApplicationUsedDownload::class,
-        'report.producivityview' => \App\Http\Middleware\CanReportProductivityView::class,
-        'report.producivitydownload' => \App\Http\Middleware\CanReportProductivityDownload::class,
-
-        'userFullDetailsCheck' => \App\Http\Middleware\UserFullDetailsCheck::class,
-        'managerFullDetailsCheck' => \App\Http\Middleware\ManagerFullDetailsCheck::class,
-        'checkLogs'=>\App\Http\Middleware\checkLogs::class,
         'unauthorizedRoutes'=>\App\Http\Middleware\unauthorizedRoutes::class,
 
 
@@ -82,14 +72,7 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'password.confirm' => \Illuminate\Auth\Middleware\RequirePassword::class,
         'signed' => \App\Http\Middleware\ValidateSignature::class,
-        'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'employeeDetails' => \App\Http\Middleware\employeeDetails::class,
-        'SettingsTimesheets' => \App\Http\Middleware\SettingsTimesheets::class,
-        'permissionCheck_RoleWise' => \App\Http\Middleware\permissionCheck_RoleWise::class,
-        'LocaleMiddleware' => \App\Http\Middleware\LocaleMiddleware::class,
-        'permissionCheckHRMS_RoleWise' => \App\Http\Middleware\permissionCheckHRMS_RoleWise::class,
-        'CheckLicenseCount' => \App\Http\Middleware\CheckLicenseCount::class,
+        'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class, 
     ];
 
 }

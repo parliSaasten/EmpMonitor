@@ -5,28 +5,26 @@
 </div>
 
 <p align="center">
-  <img src="/assets/EMPMonitor logo.png" alt="EmpMonitor Logo">
+  <img src="/EmpMonitor-OpenSource-main/assets/EMPMonitor logo.png" alt="EmpMonitor Logo">
 </p>
 <p align="center"><i>Your Workforce Productivity Compass</i></p>
 
 <p align="center">
   <!-- <img src="https://github.com/abhishekglb/EmpMonitor/actions/workflows/main.yml/badge.svg" alt="Build Status"> -->
-  <img src="https://img.shields.io/github/license/EmpCloud/EmpMonitor" alt="License: MIT">
-  <img src="https://img.shields.io/github/last-commit/EmpCloud/EmpMonitor" alt="Last Commit">
-  <img src="https://img.shields.io/github/issues/EmpCloud/EmpMonitor" alt="GitHub Issues">
-  <img src="https://img.shields.io/github/forks/EmpCloud/EmpMonitor" alt="GitHub Forks">
-  <img src="https://img.shields.io/github/stars/EmpCloud/EmpMonitor" alt="GitHub Stars">
+  <img src="https://img.shields.io/github/license/Rohit-6/EMPMonitor" alt="License: MIT">
+  <img src="https://img.shields.io/github/last-commit/Rohit-6/EMPMonitor" alt="Last Commit">
+  <img src="https://img.shields.io/github/issues/Rohit-6/EMPMonitor" alt="GitHub Issues">
+  <img src="https://img.shields.io/github/forks/Rohit-6/EMPMonitor" alt="GitHub Forks">
+  <img src="https://img.shields.io/github/stars/Rohit-6/EMPMonitor" alt="GitHub Stars">
 </p>
 
 <p align="center">
   <a href="#">📘 Read the Documentation</a> &ensp;•&ensp;
   <a href="https://empmonitor.com/blog">📝 Learn More on Our Blog</a> &ensp;•&ensp;
-  <a href="https://github.com/EmpCloud/EmpMonitor/issues/new">✨ Request a Feature</a>
+  <a href="https://github.com/Rohit-6/EMPMonitor/issues/new">✨ Request a Feature</a>
 </p>
 
-> **_EmpMonitor: The Ultimate Solution for Workforce Monitoring and Productivity Optimization_**
-
-
+> **_EmpMonitor: The Worlds #1 Advanced Open-Source Platform for Workforce Management & Productivity Enhancement_**
 
 
 
@@ -36,7 +34,7 @@
 <details>
   <summary>📖 Expand Table of Contents</summary>
   
-  - [Why EmpMonitor?](#why-empmonitor-)
+  - [Why EmpMonitor?](#-why-empmonitor-)
     - Advanced Workforce Analytics
       - Work Hours & Activity Monitoring
       - Application & Website Usage Reports
@@ -51,7 +49,7 @@
       - Customizable & Configurable
       - Seamless Integration
 
-  - [Key Features of EmpMonitor](#key-features-of-empmonitor)
+  - [Key Features of EmpMonitor](#-key-features-of-empmonitor)
     - Employee Monitoring Software
       - Employee Information Hub
       - Attendance Tracking System
@@ -70,30 +68,33 @@
     - Workforce Productivity & Engagement
       - Comprehensive Employee Analytics & Insights
       - Advanced Filtering, Search & Benchmarking Tools
-   
-  - [Why Use EmpMonitor?](#why-use-empmonitor)
-  - [Tech Stack](#tech-stack)
-  - [How to Setup EmpMonitor?](#how-to-setup-empmonitor)
-  - [Contribute to EmpMonitor](#contribute-to-empmonitor)
-  - [Acknowledgment](#acknowledgement)
-  - [License](#license)
+    - Project Management
+      - Task Management & Progress Tracking
+      - Collaboration & Optimization Tools
+
+  - [Why Use EmpMonitor?](#-why-use-empmonitor)
+  - [Tech Stack](#-tech-stack)
+  - [How to Setup EmpMonitor?](#-how-to-setup-empmonitor)
+  - [Contribute to EmpMonitor](#-contribute-to-empmonitor)
+  - [Acknowledgment](#-acknowledgement)
+  - [License](#-license)
 </details>
 
 
 
 ## ➤ Introduction
-<a href="https://empmonitor.com/">EmpMonitor</a> is an advanced **employee monitoring and productivity management software** designed to help businesses effectively *_track workforce activities, enhance efficiency, strengthen security, and improve overall workplace transparency_*. With the growing need for remote and hybrid work environments, organizations require a **_centralized, data-driven solution_** that ensures employees stay productive while maintaining a balanced and ethical approach to monitoring. EmpMonitor delivers a powerful suite of features that include **time tracking, real-time screen monitoring, activity logging, and comprehensive analytics to provide deep insights into employee performance**.With automated tracking and intelligent monitoring, EmpMonitor allows managers and business owners to evaluate work patterns, optimize workloads, and prevent operational inefficiencies. The software monitors active and idle time, website visits, application usage, keystrokes, and overall engagement levels, helping organizations identify productivity gaps and implement necessary improvements. Detailed reporting and intuitive dashboards ensure managers have a clear overview of employee performance, allowing them to make data-driven decisions to enhance workflow efficiency.
+**[EmpMonitor](https://empmonitor.com/)** is an advanced **Open Source employee monitoring and productivity management software** designed to help businesses effectively *_track workforce activities, enhance efficiency, strengthen security, and improve overall workplace transparency_*. With the growing need for remote and hybrid work environments, organizations require a **_centralized, data-driven solution_** that ensures employees stay productive while maintaining a balanced and ethical approach to monitoring. EmpMonitor delivers a **complete powerful suite** of features that include **_time tracking, real-time screen monitoring, activity logging, and comprehensive analytics to provide deep insights into employee performance_**.With automated tracking and intelligent monitoring, EmpMonitor allows managers and business owners to evaluate work patterns, optimize workloads, and prevent operational inefficiencies. The software monitors active and idle time, website visits, application usage, keystrokes, and overall engagement levels, helping organizations identify productivity gaps and implement necessary improvements. Detailed reporting and intuitive dashboards ensure managers have a clear overview of employee performance, allowing them to make data-driven decisions to enhance workflow efficiency.
 
-Beyond productivity tracking, EmpMonitor places a strong emphasis on security and compliance. The platform includes insider threat detection, data loss prevention, and real-time alerts for unauthorized access or suspicious activities. These security measures help businesses protect sensitive data, prevent corporate fraud, and maintain a safe digital workspace. By proactively identifying security risks, organizations can mitigate threats before they escalate, ensuring compliance with workplace privacy policies and industry regulations.EmpMonitor also offers seamless integration with third-party applications to streamline business operations and improve workflow management. Whether it's HR management systems, payroll processing tools, or collaboration platforms, EmpMonitor ensures that businesses have a fully connected ecosystem for managing their workforce. The software’s AI-powered analytics and automated reporting provide businesses with valuable insights that drive smarter decision-making, leading to higher efficiency and improved workforce engagement.
+Beyond productivity tracking, EmpMonitor an **Open-source employee monitoring software** places a strong emphasis on security and compliance. This open source platform includes insider threat detection, data loss prevention, and real-time alerts for unauthorized access or suspicious activities. These security measures help businesses protect sensitive data, prevent corporate fraud, and maintain a safe digital workspace. By proactively identifying security risks, organizations can mitigate threats before they escalate, ensuring compliance with workplace privacy policies and industry regulations. **[EmpMonitor](https://empmonitor.com/)** also offers seamless **open source** integration with third-party applications to streamline business operations and improve workflow management. Whether it's HR management systems, payroll processing tools, or collaboration platforms, EmpMonitor ensures that businesses have a fully connected ecosystem for managing their workforce. The software’s AI-powered analytics and automated reporting provide businesses with valuable insights that drive smarter decision-making, leading to higher efficiency and improved workforce engagement.
 
-This versatile monitoring solution is designed to cater to businesses of all sizes, from small startups to large enterprises. Whether companies operate in traditional office settings, remote work environments, or hybrid work models, EmpMonitor helps them maintain transparency, accountability, and productivity without compromising employee privacy. By offering customizable monitoring settings and ethical tracking options, the software strikes the perfect balance between workforce oversight and employee autonomy, ensuring that businesses can achieve operational success while fostering a positive workplace culture.
+This versatile open-source monitoring solution is designed to cater to businesses of all sizes, from small startups to large enterprises. Whether companies operate in traditional office settings, remote work environments, or hybrid work models. **[EmpMonitor](https://empmonitor.com/) - the world's most trusted open-source** employee monitoring platform  helps businesses maintain transparency, accountability, and productivity without compromising employee privacy. The only open-source platform of its kind, **EmpMonitor** delivers customizable monitoring settings and ethical tracking options, the software strikes the perfect balance between workforce oversight and employee autonomy, ensuring that businesses can achieve operational success while fostering a positive workplace culture.
 
 With powerful automation, AI-driven insights, and a user-friendly interface, EmpMonitor stands as an indispensable tool for modern businesses looking to optimize performance, secure their digital infrastructure, and create a highly productive work environment.
 
 
  <details>
   <summary>Dashboard Preview</summary>
-      <img src="/assets/Dashboard.png" width ="800" height = "400 "></img>
+      <img src="/EmpMonitor-OpenSource-main/assets/Dashboard.png" width ="800" height = "400 "></img>
   </details>
 
 
@@ -101,35 +102,40 @@ With powerful automation, AI-driven insights, and a user-friendly interface, Emp
 
 ## ➤ Why EmpMonitor ?
 
+> EmpMonitor is the best open-source employee monitoring software for businesses needing advanced workforce management and productivity tracking features.
+
 ### ⚡Advanced Workforce Analytics 
 <!-- ## ⚡Future of Workforce Analytics -->
 
-- EmpMonitor provides detailed insights and data-driven reports to help businesses analyze employee productivity, optimize operations, and enhance overall efficiency. By leveraging AI-powered analytics, organizations can gain a real-time overview of workforce performance, allowing them to identify trends, improve time management, and boost collaboration.
+- The EmpMonitor open source software provides detailed insights and data-driven reports to help businesses analyze employee productivity, optimize operations, and enhance overall efficiency. By leveraging AI-powered analytics, organizations can gain a real-time overview of workforce performance, allowing them to identify trends, improve time management, and boost collaboration.
     - **Work Hours & Activity Monitoring**: Track active and idle time to measure employee efficiency, ensuring that work hours are utilized productively. This helps managers identify workflow bottlenecks and optimize resource allocation for better performance.
     - **Application & Website Usage Reports**:  Gain a clear understanding of employee work habits by monitoring frequently used applications and websites. This allows businesses to recognize productivity patterns, eliminate distractions, and improve focus on essential tasks.
     - **Automated Performance Reports**: Receive scheduled reports with in-depth performance insights, helping managers evaluate trends, measure key productivity indicators, and implement improvements to enhance workforce engagement and operational effectiveness.
-
+> [!NOTE]
+>
 > _By utilizing real-time analytics, automated tracking, and AI-driven reporting, businesses can make informed decisions, enhance team collaboration, and maintain a highly productive work environment. With clear visibility into employee activities and productivity metrics, organizations can eliminate inefficiencies, improve workflow management, and drive long-term success._
 
 
 ### ⚡Enterprise-Grade Security & Compliance
 
-- Ensuring the security and integrity of business data is a top priority in workforce monitoring, and EmpMonitor offers robust security measures to protect sensitive information while maintaining compliance with industry regulations. With a multi-layered security approach, organizations can effectively mitigate risks, prevent data breaches, and uphold transparency in the workplace.
+- Ensuring the security and integrity of business data is a top priority in workforce monitoring, and EmpMonitor - the most trusted open-source employee monitoring solution offers robust, military-grade security measures to protect sensitive information while maintaining compliance with industry regulations. With a multi-layered security approach, organizations can effectively mitigate risks, prevent data breaches, and uphold transparency in the workplace.
     - **Insider Threat Detection**: Identify and analyze suspicious activity patterns that may indicate potential insider threats, helping businesses proactively prevent security breaches.
     - **Data Loss Prevention (DLP)**: Implement strict access controls and data-sharing policies to prevent unauthorized transfers, ensuring that critical business information remains secure.
     - **End-to-End Encryption**: Utilize industry-standard encryption protocols to securely store and transmit sensitive data, protecting it from unauthorized access or cyber threats.
     - **Regulatory Compliance & Privacy Protection**: Designed to align with global privacy regulations, EmpMonitor ensures that employee monitoring remains ethical, transparent, and compliant with workplace privacy laws.
-
+> [!NOTE]
+>
 > _With advanced security features, real-time alerts, and compliance safeguards, businesses can fortify their digital infrastructure, prevent unauthorized access, and maintain a secure, legally compliant monitoring system while fostering a trustworthy and transparent work environment._
 <br>
 
 
 ### ⚡Scalable & Adaptable for Any Business Size
-- EmpMonitor is designed to support businesses of all sizes, from startups to large enterprises, providing a flexible, scalable, and efficient workforce monitoring solution. Whether managing an in-office team, remote workforce, or hybrid employees, the platform ensures seamless adaptability and reliability as your organization grows.
+- EmpMonitor Open-Source Suite is designed to support businesses of all sizes, from startups to large enterprises, providing a flexible, scalable, and efficient workforce monitoring solution. Whether managing an in-office team, remote workforce, or hybrid employees, the platform ensures seamless adaptability and reliability as your organization grows.
     - **Cloud-Based & Remote-Friendly**:  Access and manage workforce data from anywhere with a secure, cloud-based infrastructure, ensuring uninterrupted monitoring and productivity tracking for distributed teams.
     - **Customizable & Configurable**: Tailor EmpMonitor to fit your organization's unique workflows, policies, and monitoring preferences, enabling businesses to adapt the platform to their evolving needs.
     - **Seamless Integration**: Effortlessly connect EmpMonitor with HR tools, payroll systems, project management software, and other business applications, streamlining operations for a fully connected workforce management ecosystem.
-
+> [!NOTE]
+>
 > _With its scalable architecture and adaptable features, EmpMonitor provides businesses with the flexibility, security, and efficiency needed to optimize workforce productivity, enhance collaboration, and ensure seamless business growth._
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -137,18 +143,18 @@ With powerful automation, AI-driven insights, and a user-friendly interface, Emp
 
 
 
+
 ## ➤ Key Features of EmpMonitor
 
-
 - **_Employee Monitoring Software_**:  
-    <p> EmpMonitor’s Employee Monitoring Software is designed to help businesses track employee activities and analyze productivity with real-time insights. By providing a clear view of how time is spent during work hours, you can identify productivity trends, optimize workflows, and ensure your team is working efficiently.</p>
+    <p> EmpMonitor’s <b>Best-in-class</b> Employee Monitoring Software is designed to help businesses track employee activities and analyze productivity with real-time insights. By providing a clear view of how time is spent during work hours, you can identify productivity trends, optimize workflows, and ensure your team is working efficiently.</p>
     
     <p>With automated reporting, you can generate detailed performance summaries, attendance logs, and activity breakdowns effortlessly. These reports not only save time but also provide actionable data to improve workforce management, enhance accountability, and drive better decision-making across your organization.</p>
 
     <p>Whether you’re monitoring application usage, tracking work hours, or identifying areas for improvement, EmpMonitor ensures transparency, efficiency, and trust in your workplace.</p>
      <details>
   <summary>Preview</summary>
-      <img src="/assets/Employee-details.png" alt = "Dashboard Preview" width ="800" height = "400 "></img>
+      <img src="/EmpMonitor-OpenSource-main/assets/Employee-details.png" alt = "Dashboard Preview" width ="800" height = "400 "></img>
   </details>
     <details>
         <summary>Features</summary>
@@ -235,10 +241,10 @@ With powerful automation, AI-driven insights, and a user-friendly interface, Emp
 
   
 - **Time-Tracking**:   
-    <p>EmpMonitor’s Work Hours Monitoring feature enables precise tracking of employee work hours through real-time timesheets and performance analytics. Real-time timesheets ensure accurate records of login/logout times, breaks, and overtime, promoting transparency and schedule compliance. Meanwhile, performance analytics offer insights into productivity trends like peak performance hours, task completion rates, and application usage. These insights help identify inefficiencies, optimize workflows, and allocate resources effectively. By fostering accountability, EmpMonitor keeps employees productive and equips managers with actionable data for informed decision-making. Whether streamlining operations, improving payroll accuracy, or enhancing team performance, this feature drives efficiency, transparency, and accountability across your organization.</p>
+    <p>EmpMonitor open source has the <b>industry-leading Work Hours Monitoring feature</b> enables precise tracking of employee work hours through real-time timesheets and performance analytics. Real-time timesheets ensure accurate records of login/logout times, breaks, and overtime, promoting transparency and schedule compliance. Meanwhile, performance analytics offer insights into productivity trends like peak performance hours, task completion rates, and application usage. These insights help identify inefficiencies, optimize workflows, and allocate resources effectively. By fostering accountability, EmpMonitor keeps employees productive and equips managers with actionable data for informed decision-making. Whether streamlining operations, improving payroll accuracy, or enhancing team performance, this feature drives efficiency, transparency, and accountability across your organization.</p>
     <details>
   <summary>Preview</summary>
-      <img src="/assets/Time-tracking.png" alt = "Dashboard Preview" width ="800" height = "400 "></img>
+      <img src="/EmpMonitor-OpenSource-main/assets/Time-tracking.png" alt = "Dashboard Preview" width ="800" height = "400 "></img>
   </details>
     <details>
     <summary>Features</summary>
@@ -288,13 +294,13 @@ With powerful automation, AI-driven insights, and a user-friendly interface, Emp
 
 - **User Activity Monitoring**: 
     <p>
-    EmpMonitor's User Activity Monitoring is a feature that helps businesses understand how employees use their time during work hours. It tracks which applications and websites are being accessed, giving managers clear insights into what tools are driving productivity and what might be causing distractions. This isn’t about micromanaging—it’s about creating a balanced and efficient work environment.
+    EmpMonitor's <b>#1 Best-in-class</b> User Activity Monitoring is a feature that helps businesses understand how employees use their time during work hours. It tracks which applications and websites are being accessed, giving managers clear insights into what tools are driving productivity and what might be causing distractions. This isn’t about micromanaging—it’s about creating a balanced and efficient work environment.
 
     This tool is particularly beneficial for remote teams, providing transparency and keeping everyone aligned, no matter where they work. By analyzing real-time data and trends, businesses can foster accountability, improve resource allocation, and create a culture of efficiency. User Activity Monitoring isn’t about micromanaging—it’s about empowering employees to work smarter while maintaining a secure and productive workplace.
     </p>
      <details>
   <summary>Preview</summary>
-      <img src="/assets/DashboardData.png" alt = "Dashboard Preview" width ="1000" height = "500 "></img>
+      <img src="/EmpMonitor-OpenSource-main/assets/User-activity.png" alt = "Dashboard Preview" width ="1000" height = "500 "></img>
   </details>
     <details>
     <summary>Features</summary>
@@ -322,13 +328,13 @@ With powerful automation, AI-driven insights, and a user-friendly interface, Emp
 
 - **Insider Threat Prevention**: 
     <p>
-    Insider Threat Prevention is a powerful feature designed to detect security risks and unauthorized activities in real-time, helping businesses prevent data breaches and protect sensitive information. By monitoring employee access and behavior, this tool identifies potential threats whether intentional or accidental and enables organizations to take proactive measures to mitigate risks. It tracks activities such as file access, application usage, and data transfers, ensuring compliance with security policies and safeguarding valuable assets from internal vulnerabilities.
+    It is the <b>only platform with exclusive solution for Real-Time Insider Threat Detection & Data Protection</b>. It is a powerful feature designed to detect security risks and unauthorized activities in real-time, helping businesses prevent data breaches and protect sensitive information. By monitoring employee access and behavior, this tool identifies potential threats whether intentional or accidental and enables organizations to take proactive measures to mitigate risks. It tracks activities such as file access, application usage, and data transfers, ensuring compliance with security policies and safeguarding valuable assets from internal vulnerabilities.
 
     This feature is particularly essential for remote teams, providing visibility into employee actions regardless of their location. By analyzing real-time data and identifying unusual behavior patterns, businesses can foster accountability, reduce risks, and maintain a culture of trust and security. Insider Threat Prevention isn’t about micromanaging it’s about empowering organizations to stay ahead of potential threats while enabling employees to work confidently within a secure and transparent framework.
     </p>
      <details>
   <summary>Preview</summary>
-      <img src="/assets/usb_detection.png" alt = "Dashboard Preview" width ="800" height = "400 "></img>
+      <img src="/EmpMonitor-OpenSource-main/assets/Inside-threat.png" alt = "Dashboard Preview" width ="800" height = "400 "></img>
   </details>
     <details>
     <summary>Features</summary>
@@ -370,11 +376,11 @@ With powerful automation, AI-driven insights, and a user-friendly interface, Emp
 
 - **Attendance Monitoring**: 
 
-     <p>Attendance Monitoring automates employee attendance tracking and leave management, ensuring accuracy and efficiency. It records daily attendance with clear statuses like Present (P), Absent (A), and Half-Day (D), while seamlessly integrating with payroll systems for compliance and error-free processing. This feature simplifies workforce management, saves time, and provides a reliable system for tracking attendance and leave, enabling businesses to focus on strategic goals.
+     <p>Attendance Monitoring automates employee attendance tracking and leave management, ensuring accuracy and efficiency. It records daily attendance with clear statuses like Present (P), Absent (A), and Half-Day (D), while seamlessly integrating with payroll systems for compliance and error-free processing. As a <b>World-wide Trusted Platform for Workforce Management</b>, this feature simplifies workforce management, saves time, and provides a reliable system for tracking attendance and leave, enabling businesses to focus on strategic goals.
      </p>
      <details>
   <summary>Preview</summary>
-      <img src="/assets/Attendance-monitoring.png" alt = "Dashboard Preview" width ="800" height = "400 "></img>
+      <img src="/EmpMonitor-OpenSource-main/assets/Attendance-monitoring.png" alt = "Dashboard Preview" width ="800" height = "400 "></img>
   </details>
     <details>
     <summary>Features</summary>
@@ -396,7 +402,7 @@ With powerful automation, AI-driven insights, and a user-friendly interface, Emp
     <p>This feature enhances team performance by analyzing workflows and tracking engagement levels. Using AI-driven insights, it identifies inefficiencies, optimizes operations, and boosts productivity. This feature empowers businesses to create a more engaged and high-performing workforce, driving better results and operational excellence.</p>
     <details>
     <summary>Preview</summary>
-      <img src="/assets/activity.png" alt = "Dashboard Preview" width ="800" height = "400 "></img>
+      <img src="/EmpMonitor-OpenSource-main/assets/Workforce-productivity.png" alt = "Dashboard Preview" width ="800" height = "400 "></img>
     </details>
     <details>
     <summary>Features</summary>
@@ -409,12 +415,31 @@ With powerful automation, AI-driven insights, and a user-friendly interface, Emp
         <ul>◇ <b>Customizable Filters</b>: Filter productivity data by date range, role, location, or department for tailored reports and analysis.</ul>
         <ul>◇ <b>Employee-Specific Search</b>: Quickly search for individual employees to view their detailed productivity statistics and performance history.</ul>
         <ul>◇ <b>Performance Benchmarking</b>: Compare employee productivity against previous performance and organizational averages to identify improvement areas and optimize work schedules.</ul>
+      </details>
+
+
+- **Project Management**: 
+
+    <p>Project Management is a feature designed to streamline task planning, assignment, and tracking, ensuring efficient project execution. It enables real-time collaboration among team members, allowing seamless communication and updates on task progress. By monitoring resource allocation and project milestones, this tool helps managers identify bottlenecks, optimize workflows, and ensure timely delivery. With clear visibility into project status and team contributions, businesses can achieve better results, improve productivity, and maintain alignment across all levels of the organization.</p>
+
+   <details>
+    <summary>Features</summary>
+     <li>Task Management & Progress Tracking</li>
+        <ul>◇ <b>Effortless Task Assignment</b>: Easily create, assign, and manage tasks with just a few clicks. Set clear deadlines, priorities, and descriptions to ensure everyone understands their responsibilities and stays aligned with project goals.</ul>
+        <ul>◇ <b>Real-Time Progress Monitoring</b>: Track project milestones and task progress in real-time. Gain detailed insights into time spent on each task, identify bottlenecks, and adjust strategies to keep projects on track.</ul>
+        <ul>◇ <b>Smart Resource Allocation</b>: Assign the right employees to the right tasks based on their skills and availability. Prevent overloading or underutilization of resources, ensuring optimal efficiency and faster project completion.</ul>
+        
+    <li>Collaboration & Optimization Tools</li>
+        <ul>◇ <b>Seamless Team Collaboration</b>: Foster teamwork by enabling real-time updates, shared access to tasks, and smooth communication across departments. This ensures everyone stays informed and can make faster, well-coordinated decisions.</ul>
+        <ul>◇ <b>Comprehensive Reporting</b>: Generate detailed reports on project progress, resource allocation, and team performance. Use these insights to analyze trends, improve workflows, and make data-driven decisions for future projects.</ul>
+        <ul>◇ <b>Workflow Optimization</b>: Leverage real-time data and analytics to refine work strategies, eliminate inefficiencies, and enhance overall productivity. This leads to better project outcomes and a more efficient, well-connected workforce.</ul>
+    </details>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 ## ➤ Why Use EmpMonitor?
-[EmpMonitor](https://empmonitor.com/) is a powerful tool that helps businesses keep track of their employees' work, improve productivity, and ensure security. It allows managers to see how employees spend their time, track active and idle hours, and generate detailed reports. With features like time and attendance tracking, businesses can ensure employees are working as expected and staying punctual.
+**[EmpMonitor Open Source](https://empmonitor.com/)** is a powerful tool that helps businesses keep track of their employees' work, improve productivity, and ensure security. It allows managers to see how employees spend their time, track active and idle hours, and generate detailed reports. With features like time and attendance tracking, businesses can ensure employees are working as expected and staying punctual.
 
 In addition to tracking work, EmpMonitor also helps in managing tasks and projects, making it easier to assign work, track progress, and meet deadlines. It also keeps company data safe by monitoring USB usage, websites visited, keystrokes, and screenshots, helping prevent security threats.
 
@@ -427,14 +452,14 @@ Overall, EmpMonitor helps businesses increase efficiency, improve teamwork, and 
 
 ## ➤ Tech Stack
 
-EmpMonitor is built using a powerful and well-structured technology stack to ensure **cross-platform compatibility**, **scalability**, and **high performance**. Below is a detailed breakdown of the key technologies used:
+EmpMonitor open source is built using a powerful and well-structured technology stack to ensure **cross-platform compatibility**, **scalability**, and **high performance**. Below is a detailed breakdown of the key technologies used:
 
 <!-- <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Qt_logo_2016.svg/1280px-Qt_logo_2016.svg.png" align="left" alt="QT Logo" width="50"> -->
 
 ### Cross-Platform Application
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Qt_logo_2016.svg/1280px-Qt_logo_2016.svg.png"  alt="QT Logo" width="50">
 
-EmpMonitor utilizes **QT**, a leading cross-platform framework, to deliver a seamless experience across **Windows**, **macOS**, and **Linux**.
+EmpMonitor **Open Source** utilizes **_QT_**, a leading cross-platform framework, to deliver a seamless experience across **_Windows_**, **_macOS_**, and **_Linux_**.
 
 **Key Features of QT**:
   - **Single Codebase for Multiple Platforms** – Reduces development time and ensures consistency.
@@ -468,6 +493,8 @@ EmpMonitor utilizes **QT**, a leading cross-platform framework, to deliver a sea
 [Learn about node.js](https://nodejs.org/docs/latest/api/)
 
 
+
+
 ## ➤ How to Setup EmpMonitor
 
 Follow these steps to install and configure EmpMonitor efficiently:
@@ -480,9 +507,11 @@ Follow these steps to install and configure EmpMonitor efficiently:
 
 
 
+
+
 ## ➤ Contribute to EmpMonitor
 
-We welcome [contributions](/Contributions.md) from the community to help improve EmpMonitor! Whether you're fixing bugs, adding features, improving documentation, or suggesting enhancements, your efforts are highly appreciated.
+We welcome [contributions](/EmpMonitor-OpenSource-main/Contributions.md) from the community to help improve EmpMonitor! Whether you're fixing bugs, adding features, improving documentation, or suggesting enhancements, your efforts are highly appreciated.
 <!-- 
 ### Getting started
 1. 🛠️ **Fork the Repository**: Start by forking the EmpMonitor repository to your GitHub account. This creates a copy of the project under your profile, allowing you to make changes without affecting the main codebase.
@@ -495,6 +524,8 @@ We welcome [contributions](/Contributions.md) from the community to help improve
 
 
 
+
+
 ## ➤ Acknowledgement
 
 We sincerely thank everyone who has helped make [EmpMonitor](https://www.empmonitor.com/) better, including developers, testers, contributors, and users. Your support, feedback, and ideas have been invaluable in improving the tool. We also appreciate the businesses and teams using EmpMonitor to improve productivity and workplace security. Your trust encourages us to keep improving and delivering the best solutions.
@@ -504,9 +535,16 @@ We sincerely thank everyone who has helped make [EmpMonitor](https://www.empmoni
 
 
 
+
+
+
 ## ➤ The Team
 
 Curious about who makes EmpMonitor? Here are our [team members](https://empmonitor.com/about-us/)!
+
+
+
+
 
 
 ## ➤ License
@@ -514,8 +552,6 @@ Curious about who makes EmpMonitor? Here are our [team members](https://empmonit
 The GPLv3 license for EmpMonitor gives you the freedom to use, share, modify, and improve the software. However, if you distribute any modified versions or custom versions, they must also be licensed under GPLv3. This ensures that the software and its derivatives remain open-source, preserving these freedoms for all users.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 
 
 
