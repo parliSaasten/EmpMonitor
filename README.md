@@ -5,7 +5,7 @@
 </div>
 
 <p align="center">
-  <img src="/EmpMonitor-OpenSource-main/assets/EMPMonitor logo.png" alt="EmpMonitor Logo">
+  <img src="/assets/EMPMonitor logo.png" alt="EmpMonitor Logo">
 </p>
 <p align="center"><i>Your Workforce Productivity Compass</i></p>
 
@@ -34,50 +34,22 @@
 <details>
   <summary>📖 Expand Table of Contents</summary>
   
-  - [Why EmpMonitor?](#-why-empmonitor-)
-    - Advanced Workforce Analytics
-      - Work Hours & Activity Monitoring
-      - Application & Website Usage Reports
-      - Automated Performance Reports
-    - Enterprise-Grade Security & Compliance
-      - Insider Threat Detection
-      - Data Loss Prevention (DLP)
-      - End-to-End Encryption
-      - Regulatory Compliance & Privacy Protection
-    - Scalable & Adaptable for Any Business Size
-      - Cloud-Based & Remote-Friendly
-      - Customizable & Configurable
-      - Seamless Integration
-
-  - [Key Features of EmpMonitor](#-key-features-of-empmonitor)
-    - Employee Monitoring Software
-      - Employee Information Hub
-      - Attendance Tracking System
-      - Workforce Intelligence Dashboard
-    - Time-Tracking
-      - Work Hours Monitoring
-      - Smart Filtering & Quick Search
-    - User Activity Monitoring
-      - Productivity Trends Dashboard
-    - Insider Threat Prevention
-      - Real-Time Threat Detection
-      - Comprehensive Risk Mitigation & Reporting
-    - Attendance Monitoring
-      - Streamlined Attendance Tracking & Management
-      - Dynamic Filtering, Search & Reporting Features
-    - Workforce Productivity & Engagement
-      - Comprehensive Employee Analytics & Insights
-      - Advanced Filtering, Search & Benchmarking Tools
-    - Project Management
-      - Task Management & Progress Tracking
-      - Collaboration & Optimization Tools
-
-  - [Why Use EmpMonitor?](#-why-use-empmonitor)
-  - [Tech Stack](#-tech-stack)
-  - [How to Setup EmpMonitor?](#-how-to-setup-empmonitor)
-  - [Contribute to EmpMonitor](#-contribute-to-empmonitor)
-  - [Acknowledgment](#-acknowledgement)
-  - [License](#-license)
+- [➤ Introduction](#-introduction)
+- [➤ Why EmpMonitor ?](#-why-empmonitor-)
+  - [⚡Advanced Workforce Analytics](#advanced-workforce-analytics)
+  - [⚡Enterprise-Grade Security \& Compliance](#enterprise-grade-security--compliance)
+  - [⚡Scalable \& Adaptable for Any Business Size](#scalable--adaptable-for-any-business-size)
+- [➤ Key Features of EmpMonitor](#-key-features-of-empmonitor)
+- [➤ Why Use EmpMonitor?](#-why-use-empmonitor)
+- [➤ Tech Stack](#-tech-stack)
+  - [Cross-Platform Application](#cross-platform-application)
+  - [Frontend Templating](#frontend-templating)
+  - [Backend Development](#backend-development)
+- [➤ How to Setup EmpMonitor](#-how-to-setup-empmonitor)
+- [➤ Contribute to EmpMonitor](#-contribute-to-empmonitor)
+- [➤ Acknowledgement](#-acknowledgement)
+- [➤ The Team](#-the-team)
+- [➤ License](#-license)
 </details>
 
 
@@ -94,7 +66,7 @@ With powerful automation, AI-driven insights, and a user-friendly interface, Emp
 
  <details>
   <summary>Dashboard Preview</summary>
-      <img src="/EmpMonitor-OpenSource-main/assets/Dashboard.png" width ="800" height = "400 "></img>
+      <img src="/assets/Dashboard.png" width ="800" height = "400 "></img>
   </details>
 
 
@@ -154,7 +126,7 @@ With powerful automation, AI-driven insights, and a user-friendly interface, Emp
     <p>Whether you’re monitoring application usage, tracking work hours, or identifying areas for improvement, EmpMonitor ensures transparency, efficiency, and trust in your workplace.</p>
      <details>
   <summary>Preview</summary>
-      <img src="/EmpMonitor-OpenSource-main/assets/Employee-details.png" alt = "Dashboard Preview" width ="800" height = "400 "></img>
+      <img src="/assets/Employee-details.png" alt = "Dashboard Preview" width ="800" height = "400 "></img>
   </details>
     <details>
         <summary>Features</summary>
@@ -244,7 +216,7 @@ With powerful automation, AI-driven insights, and a user-friendly interface, Emp
     <p>EmpMonitor open source has the <b>industry-leading Work Hours Monitoring feature</b> enables precise tracking of employee work hours through real-time timesheets and performance analytics. Real-time timesheets ensure accurate records of login/logout times, breaks, and overtime, promoting transparency and schedule compliance. Meanwhile, performance analytics offer insights into productivity trends like peak performance hours, task completion rates, and application usage. These insights help identify inefficiencies, optimize workflows, and allocate resources effectively. By fostering accountability, EmpMonitor keeps employees productive and equips managers with actionable data for informed decision-making. Whether streamlining operations, improving payroll accuracy, or enhancing team performance, this feature drives efficiency, transparency, and accountability across your organization.</p>
     <details>
   <summary>Preview</summary>
-      <img src="/EmpMonitor-OpenSource-main/assets/Time-tracking.png" alt = "Dashboard Preview" width ="800" height = "400 "></img>
+      <img src="/assets/Time-tracking.png" alt = "Dashboard Preview" width ="800" height = "400 "></img>
   </details>
     <details>
     <summary>Features</summary>
@@ -300,7 +272,7 @@ With powerful automation, AI-driven insights, and a user-friendly interface, Emp
     </p>
      <details>
   <summary>Preview</summary>
-      <img src="/EmpMonitor-OpenSource-main/assets/User-activity.png" alt = "Dashboard Preview" width ="1000" height = "500 "></img>
+      <img src="/assets/User-activity.png" alt = "Dashboard Preview" width ="1000" height = "500 "></img>
   </details>
     <details>
     <summary>Features</summary>
@@ -334,7 +306,7 @@ With powerful automation, AI-driven insights, and a user-friendly interface, Emp
     </p>
      <details>
   <summary>Preview</summary>
-      <img src="/EmpMonitor-OpenSource-main/assets/Inside-threat.png" alt = "Dashboard Preview" width ="800" height = "400 "></img>
+      <img src="/assets/Inside-threat.png" alt = "Dashboard Preview" width ="800" height = "400 "></img>
   </details>
     <details>
     <summary>Features</summary>
@@ -380,7 +352,7 @@ With powerful automation, AI-driven insights, and a user-friendly interface, Emp
      </p>
      <details>
   <summary>Preview</summary>
-      <img src="/EmpMonitor-OpenSource-main/assets/Attendance-monitoring.png" alt = "Dashboard Preview" width ="800" height = "400 "></img>
+      <img src="/assets/Attendance-monitoring.png" alt = "Dashboard Preview" width ="800" height = "400 "></img>
   </details>
     <details>
     <summary>Features</summary>
@@ -402,7 +374,7 @@ With powerful automation, AI-driven insights, and a user-friendly interface, Emp
     <p>This feature enhances team performance by analyzing workflows and tracking engagement levels. Using AI-driven insights, it identifies inefficiencies, optimizes operations, and boosts productivity. This feature empowers businesses to create a more engaged and high-performing workforce, driving better results and operational excellence.</p>
     <details>
     <summary>Preview</summary>
-      <img src="/EmpMonitor-OpenSource-main/assets/Workforce-productivity.png" alt = "Dashboard Preview" width ="800" height = "400 "></img>
+      <img src="/assets/Workforce-productivity.png" alt = "Dashboard Preview" width ="800" height = "400 "></img>
     </details>
     <details>
     <summary>Features</summary>
@@ -511,7 +483,7 @@ Follow these steps to install and configure EmpMonitor efficiently:
 
 ## ➤ Contribute to EmpMonitor
 
-We welcome [contributions](/EmpMonitor-OpenSource-main/Contributions.md) from the community to help improve EmpMonitor! Whether you're fixing bugs, adding features, improving documentation, or suggesting enhancements, your efforts are highly appreciated.
+We welcome [contributions](/Contributions.md) from the community to help improve EmpMonitor! Whether you're fixing bugs, adding features, improving documentation, or suggesting enhancements, your efforts are highly appreciated.
 <!-- 
 ### Getting started
 1. 🛠️ **Fork the Repository**: Start by forking the EmpMonitor repository to your GitHub account. This creates a copy of the project under your profile, allowing you to make changes without affecting the main codebase.
