@@ -17,26 +17,12 @@ class authenticateAdmin
      * @return mixed
      */
     public function handle($request, Closure $next)
-    {
-
-        // $helper = new helper();
-        // $roles=['admin',env('Manager'),'employee'];
-        // // dd( Session::has(env('Manager')),env('Manager'),$helper->getHostName());
-        // if(!in_array($helper->getHostName(),$roles)){
-        //     abort(403,'Not a valid access');
-        // }
-
-        // if($helper->getHostName() == env('Manager')&& Session::has(env('Manager')) ) {
-        //     return $next($request);
-        // }else if ($helper->getHostName() == env('Admin')  && Session::has(env('Admin')) ){
+    { 
+        if(Session::has('admin_session')){
             return $next($request);
-        // }else  {
-        //     if($helper->checkHost()){
-        //         return redirect(env('APP_URL') . "amember/logout");
-        //     }
-        //     if($helper->getHostName() == env('Manager')) return redirect('login');
-        //     return redirect('admin-login');
-        // }
+        }else{
+            return redirect('admin-login');
+        }
 
     }
 }

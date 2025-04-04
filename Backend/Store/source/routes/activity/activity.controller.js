@@ -15,25 +15,19 @@ class ActivityController {
                 let [previousAttendance] = await ReportModel.getEmployeeAttendance(user.id, date);
                 if(previousAttendance) {
                     let res = await ReportModel.updateEmployeeAttendance(previousAttendance.id, end_time);
-                    await axios.post(process.env.REPORT_SERVER_URL, {
-                        data: data
-                    }, {
-                        headers: {
-                            Authorization: `Bearer ${user.token}`
-                        }
-                    });
                 }
                 else {
                     let res = await ReportModel.addEmployeeAttendance(user.id, date, start_time, end_time);
-                    await axios.post(process.env.REPORT_SERVER_URL, {
-                        data: data
-                    }, {
-                        headers: {
-                            Authorization: `Bearer ${user.token}`
-                        }
-                    });
                 }
             }
+
+            await axios.post(process.env.REPORT_SERVER_URL, {
+                data: data
+            }, {
+                headers: {
+                    Authorization: `Bearer ${user.token}`
+                }
+            });
 
             return res.status(200).json({
                 code: 200,

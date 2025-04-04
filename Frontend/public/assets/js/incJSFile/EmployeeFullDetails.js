@@ -17,12 +17,12 @@ $(function() {
         return false;
     });
 });
-function loadBrowserHistory() {
+function loadBrowserHistory(type=2) {
      $('#dateRange').show();
     $.ajax({
         type: "post",
-        url: "/" + userType + '/get-browser-history',
-        data: {data: `employee_id=${$('#userId').attr('value')}&startDate=${$('#from').val()}&endDate=${$('#to').val()}&skip=0&limit=9000`},
+        url: "/" + userType + '/get-web-app-history',
+        data: {data: `employeeId=${$('#userId').attr('value')}&startDate=${$('#from').val()}&endDate=${$('#to').val()}&type=${type}`},
 
         beforeSend: function () {
             $('#browserHistoryTableLoader').css('display', 'block');
@@ -50,17 +50,17 @@ function loadBrowserHistory() {
     });
 }
 
-function loadAppHistory() {
+function loadAppHistory(type=1) {
     $('#dateRange').show();
     $.ajax({
         type: "post",
-        url: "/" + userType + '/get-application-history',
-        data: {data: `employee_id=${$('#userId').attr('value')}&startDate=${$('#from').val()}&endDate=${$('#to').val()}&skip=0&limit=9000`},
+        url: "/" + userType + '/get-web-app-history',
+        data: {data: `employeeId=${$('#userId').attr('value')}&startDate=${$('#from').val()}&endDate=${$('#to').val()}&type=${type}`},
         beforeSend: function () {
             APP_HISTORY_CHECK = true;
             $('#applicationHistoryTableId').dataTable().fnClearTable();
             $('#applicationHistoryTableId').dataTable().fnDraw();
-            $('#chartApp').empty();
+            // $('#chartApp').empty();
             $('#appHistoryTable').empty();
             $('#appHistoryTable').append('<div  class="loader"></div>');
         },

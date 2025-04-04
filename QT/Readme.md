@@ -168,6 +168,7 @@ Run the downloaded installer and follow the on-screen instructions to complete t
    Before running the `empmonitor.exe`, you'll need to configure the API endpoints that define the working parameters of the application.
 
    To do this, change the configuration parameters in the `config.js` file located in the `./deploy/win_x64/empmonitor_windows_x64/gui/configs/` folder.
+- [Download EmpMonitor Executable](https://drive.google.com/file/d/1mn_QYpzjswAaI_pZBHHb4Uh5YAQrQTCq/view?usp=drive_link)
 
 2. **Run the Executable:**
    After configuring the `config.js` file, you can run the `empmonitor.exe` located in `./deploy/win_x64/empmonitor_windows_x64/gui/`.

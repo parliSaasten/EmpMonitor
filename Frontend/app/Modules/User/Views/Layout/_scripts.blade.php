@@ -87,8 +87,8 @@
     let dateRangesLocalization = JSON.parse('{{__('messages.dateRanges')}}'.replace(/&quot;/g, '"'));
 
     let DATATABLE_LANG;
-    $.getJSON("{{env('JS_BASE_PATH')}}_dataTable_lang.json", function (data) {
-        DATATABLE_LANG = "{{env('JS_BASE_PATH')}}DataTableLanguages/" + data['<?php echo \Illuminate\Support\Facades\Session::get('locale')?>'] || data["en"];
+    $.getJSON("../assets/js/incJSFile/_dataTable_lang.json", function (data) {
+        DATATABLE_LANG = "../assets/js/incJSFile/DataTableLanguages/" + data["en"];
     });
 
     let imagePath = '{{ env('API_HOST_V3') }}'; 
@@ -244,4 +244,4 @@ try { document.querySelectorAll('a[title="Download Detection"]').forEach(el => e
 
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
-<script src="{{env('JS_BASE_PATH')}}DataTableLanguages/_dateRangeLocalization.js"></script>
+<script src="../assets/js/incJSFile/DataTableLanguages/_dateRangeLocalization.js"></script>

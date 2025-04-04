@@ -105,17 +105,25 @@ async function getAllAttendance() {
   }
 }
 
-async function getWebAppActivityFiltered(employeeId, startDate, endDate) {
+async function getWebAppActivityFiltered(employeeId, startDate, endDate, type) {
   try {
     const query = {
       employee_id: employeeId,
     };
     if (startDate) {
-      query.start_time = { $gte: startDate };
+      query.yyyymmdd = { $gte: startDate.split('-').join('') };
     }
 
     if (endDate) {
-      query.end_time = { $lte: endDate };
+      query.end_time = { $lte: endDate.split('-').join('') };
+    }
+
+    if(type === 1) {
+      query.url = { $ne: null, $eq: "" };
+    }
+    
+    if(type === 2) {
+      query.url = { $ne: null, $ne: "" };
     }
 
     const webAppActivities = await WebAppActivityModel.find(query);

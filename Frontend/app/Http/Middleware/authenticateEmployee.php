@@ -19,15 +19,10 @@ class authenticateEmployee
     public function handle($request, Closure $next)
     {
         try {
-            if (Session::has(env('Employee'))) {
+             if (Session::has('employee_session')) {
                 return $next($request);
             } else {
-                // to check is it ajax call or not
-                if ($request->ajax()) {
-                    return response()->json(array('error' => 'Session Expire'), 499);
-                } else {
                     return redirect("/login");
-                }
             }
         } catch (\Exception $e) {
             Log::error("Error occured in the function handle due to---" . $e->getMessage());

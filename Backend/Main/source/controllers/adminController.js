@@ -25,8 +25,7 @@ async function adminLogin(req, res) {
       }
     }
   } catch (error) {
-    console.error('Error in adminLogin:', error);
-    res.status(500).send('Internal server error');
+    return res.status(500).json({ message: 'Internal server error', error: error.message });
   }
 }
 async function adminRegister(req, res) {
@@ -69,8 +68,7 @@ async function adminRegister(req, res) {
       role: 'employee'
     });
   } catch (error) {
-    console.error('Error in adminRegister:', error);
-    res.status(500).send('Internal server error');
+    return res.status(500).json({ message: 'Internal server error', error: error.message });
   }
 }
 async function getAllEmployees(req, res) {
@@ -80,8 +78,7 @@ async function getAllEmployees(req, res) {
     const count = await employeeService.countEmployees();
     res.json({ employees, totalCount: count });
   } catch (err) {
-    console.error('Error in getAllEmployees:', err);
-    res.status(500).send(err.message);
+    return res.status(500).json({ message: 'Internal server error', error: err.message });
   }
 }
 
@@ -91,8 +88,7 @@ async function deleteEmployee(req, res) {
     await employeeService.deleteEmployee(id);
     res.status(200).json({ message: 'Employee deleted successfully' });
   } catch (error) {
-    console.error('Error deleting employee:', error);
-    res.status(500).json({ message: 'Internal server error' });
+    return res.status(500).json({ message: 'Internal server error', error: error.message });
   }
 }
 
@@ -105,8 +101,7 @@ async function getEmployeeById(req, res) {
     resp.password = password;
     res.status(200).json({ message: 'Success', data: resp });
   } catch (error) {
-    console.error('Error deleting employee:', error);
-    res.status(500).json({ message: 'Internal server error' });
+    return res.status(500).json({ message: 'Internal server error', error: error.message });
   }
 }
 
@@ -115,14 +110,13 @@ async function getAttendance(req, res) {
     const attendanceRecords = await employeeService.getAllAttendance();
     res.json(attendanceRecords);
   } catch (error) {
-    console.error('Error in getAttendance:', error);
-    res.status(500).send('Internal server error');
+    return res.status(500).json({ message: 'Internal server error', error: error.message });
   }
 }
 
 async function getWebAppActivity(req, res) {
   try {
-    const { employeeId, startDate, endDate } = req.query;
+    let { employeeId, startDate, endDate, type = 1 } = req.query;
     startDate = moment(startDate).format('YYYY-MM-DD');
     if(moment(startDate).isSame(endDate)) endDate = moment(endDate).endOf('day').format('YYYY-MM-DD');
     if (!employeeId) {
@@ -132,12 +126,12 @@ async function getWebAppActivity(req, res) {
     const activityRecords = await employeeService.getWebAppActivityFiltered(
       parseInt(employeeId),
       startDate,
-      endDate
+      endDate,
+      +type
     );
-    res.json(activityRecords);
+    return res.json({code: 200, data: activityRecords, error: null, message: 'Success'});
   } catch (error) {
-    console.error('Error in getWebAppActivity:', error);
-    res.status(500).json({ message: 'Internal server error' });
+    return res.status(500).json({ message: 'Internal server error', error: error.message });
   }
 }
 

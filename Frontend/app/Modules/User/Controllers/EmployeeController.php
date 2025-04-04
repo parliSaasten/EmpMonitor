@@ -66,35 +66,19 @@ class EmployeeController extends Controller
     }
 
     public function employeeFullDetailsPage(Request $request)
-    {
-
-        $data['user_id'] = $request->query('id');
-        try {
-            $api_url = $this->API_URL_3 . "api/" . $this->VERSION_3 . "/user/get-user";
-            $method = 'post';
-            // dd(432);
-            $response = $this->helper->postApiCall($method, $api_url, $data);
-
-            $projectData = $this->responseHandler($response);
-
-            // Productivity
-            $today = date('Y-m-d');
-            $from = date('Y-m-d', strtotime('-7 days'));
-            $sub_url = 'api/' . $this->VERSION_3 . '/report/productivity?employee_id=' . $data['user_id'] . '&startDate=' . $from . '&endDate=' . $today;
-            $productivity_url = $this->API_URL_3 . $sub_url;
-            $productivity_method = 'get';
-            $productivity_response = $this->helper->postApiCall($productivity_method, $productivity_url, null);
-            $productivityResponse = $this->responseHandlerWithoutStatusCode($productivity_response);
-
-            // Return to View with data
-            if ($projectData && $projectData['data'] !== null) {
-                return view("User::Employee.NewEmployeeDashboard",
-                    [
-                        "user_details" => ($projectData),
-                        "productivity_response" => ($productivityResponse)
-                    ]);
-            }
+    { 
+        try { 
+            $data['user_id'] = $request->query('id');
+            $api_url = env('MAIN_API').'employee/employees/'.$data['user_id'];
+            $method = 'get-with-token';
+            $response = $this->helper->postApiCall($method, $api_url, []);
+            $result['code'] = 200;
+            $result['data'] = $response['data'];
+            $result['msg'] = $response['message']; 
+            return view("User::EmployeeDetail.EmployeeFullDetails",
+            ["user_details" => $result]);
         } catch (\Exception $e) {
+            dd('hj',$e);
             return Redirect::back()->withErrors(['msg', 'No response or No User Found.']);
         }
     }

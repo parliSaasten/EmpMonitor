@@ -637,36 +637,24 @@ function browserHistoryData(response) {
     if (response.code == 200) {
         if (response.data && response.data.length > 0) {
             let browserHistoryDataTableData = '';
-            setTimeout(() => {
-                webHistoryChart(response);
-            }, 700);
+            // setTimeout(() => {
+            //     webHistoryChart(response);
+            // }, 700);
 
             $('#browserHistoryTableLoader').css('display', 'none');
-            $('#browserHistoryTable').empty();
-            response.data.map(domain => {
-                let productiveStatus = domain.productivity_status == 1 ? '<td class="text-success">'+ lblProductive +'</td>' : domain.productivity_status == 2 ? '<td class="text-danger">' + lblUnProductive + '</td>' : '<td class="text-secondary">'+ lblNeutral +'</td>';
-                let time = `${String(Math.floor(domain.active_seconds / 3600)).padStart(2, '0')}${moment().startOf('day').seconds(domain.active_seconds).format(':mm:ss')}`;
-                $('#browserHistoryTable').append('<tr><td class="td-url" title="' + domain.domain + '"><i class="fas fa-globe mr-2"></i>' + domain.domain + '</td>' + productiveStatus + '<td>' + time + ' hr</td></tr>');
-            });
-
+            $('#browserHistoryTable').empty(); 
             $('#browserHistoryDataTableData').empty();
             $('#browserHistoryTableId').dataTable().fnClearTable();
             $('#browserHistoryTableId').dataTable().fnDraw();
             $('#browserHistoryTableId').dataTable().fnDestroy();
-            response.data.map(domain => {
-                if (domain.urls && domain.urls.length > 0) {
-                    domain.urls.map(url => {
-                        let startDate = moment(new Date(url.start_time)).format('YYYY-MM-DD HH:mm:ss');
-                        let endDate = moment(new Date(url.end_time)).format('YYYY-MM-DD HH:mm:ss');
-                        let activeTime = moment().startOf('day').seconds(url.active_seconds).format('HH:mm:ss');
-                        let totalTime = moment().startOf('day').seconds(url.total_duration).format('HH:mm:ss');
-                        let idleTime = moment().startOf('day').seconds(url.total_duration - url.active_seconds).format('HH:mm:ss');
-                        let urlFormat = url.url.length < 40 ? url.url.toString().substr(0, 40) : url.url.toString().substr(0, 40).concat('...');
-                        let titleFormat = url.title.length < 40 ? url.title : url.title.toString().substr(0, 40).concat('...');
-                        $('#browserHistoryDataTableData').append('<tr style="font-size: 14px !important;"><td style="text-transform: capitalize">' + url.browser.replace('.exe', '') + '</td><td style="text-transform: capitalize;" title="' + url.title + '">' + titleFormat + '</td><td width="400px"><a href="' + url.url + '" title="' + url.url + '" target="_blank">' + urlFormat + '</td>' +
-                            '<td>' + startDate + '</td><td>' + endDate + '</td><td>' + activeTime + '&nbsp; hr</td><td>' + idleTime + '&nbsp; hr</td><td>' + totalTime + '&nbsp; hr</td><td>'+ url.keystrokes_count +'</td><td>'+ url.mouseclicks_count +'</td><td>'+ url.mousemovement_count +'</td></tr>');
-                    });
-                }
+            response.data.map(webData => { 
+                let startDate = moment(new Date(webData.start_time)).format('YYYY-MM-DD HH:mm:ss');
+                let endDate = moment(new Date(webData.end_time)).format('YYYY-MM-DD HH:mm:ss');
+             
+                let urlFormat = webData.application_name.length < 40 ? webData.application_name.toString().substr(0, 40) : webData.application_name.toString().substr(0, 40).concat('...');
+                let titleFormat = webData.application_name.length < 40 ? webData.application_name : webData.application_name.toString().substr(0, 40).concat('...');
+                $('#browserHistoryDataTableData').append('<tr style="font-size: 14px !important;"><td style="text-transform: capitalize">' + webData.application_name + '</td><td style="text-transform: capitalize;" title="' + webData.application_name + '">' + titleFormat + '</td><td width="400px"><a href="' + webData.url + '" title="' + webData.url + '" target="_blank">' + webData.url + '</td>' +
+                    '<td>' + startDate + '</td><td>' + endDate + '</td></tr>');
             });
             $("#browserHistoryTableId").DataTable({
                 "lengthMenu": [[10, 25, 50, 100, 200], [10, 25, 50, 100, 200]],
@@ -707,15 +695,12 @@ function webHistoryChart(response) {
     let chart = am4core.create("webHistoryChart", am4charts.PieChart);
     chart.logo.disabled = true;
     chart.data = [];
-    response.data.map(domain => {
-        // if ((domain.total_duration / 3600).toFixed(2) > 0.01) {
+    response.data.map(domain => { 
         chart.data.push({
-            web_app: domain.domain,
-            time: domain.active_seconds
+            web_app: domain.application_name,
+            time: domain.start_time
         });
-        // }
-    });
-    // Add and configure Series
+     });
     let pieSeries = chart.series.push(new am4charts.PieSeries());
     pieSeries.dataFields.value = "time";
     pieSeries.dataFields.category = "web_app";
@@ -744,21 +729,12 @@ function applicationHistoryData(response) {
             $('#appHistoryTable').empty();
             $('#applicationHistoryTableId').dataTable().fnDestroy();
             $('#applicationHistoryDataTableData').empty();
-            response.data.map(appData => {
-                // let lblProductive= ' ';
-                let productiveStatus = appData.productivity_status == 1 ? '<td class="text-success">' + lblProductive + '</td>' : appData.productivity_status == 2 ? '<td class="text-danger">' + lblUnProductive + '</td>' : '<td  class="text-secondary">' + lblNeutral + '</td>';
-                let time = `${String(Math.floor(appData.active_seconds / 3600)).padStart(2, '0')}${moment().startOf('day').seconds(appData.active_seconds).format(':mm:ss')}`;
-                $('#appHistoryTable').append('<tr><td class="td-url" title="' + appData.app_name + '" style="text-transform: capitalize"><i class="fas fa-mobile-alt mr-2"></i>' + appData.app_name + '</td>' + productiveStatus + '<td>' + time + '&nbsp; hr</td></tr>');
-                if (appData.applications && appData.applications.length > 0) {
-                    appData.applications.map(application => {
-                        let startDate = moment(new Date(application.start_time)).format('YYYY-MM-DD HH:mm:ss');
-                        let endDate = moment(new Date(application.end_time)).format('YYYY-MM-DD HH:mm:ss');
-                        let activeTime = moment().startOf('day').seconds(application.active_seconds).format('HH:mm:ss');
-                        let totalTime = moment().startOf('day').seconds(application.total_duration).format('HH:mm:ss');
-                        let idleTime = moment().startOf('day').seconds(application.total_duration - application.active_seconds).format('HH:mm:ss');
-                        $('#applicationHistoryDataTableData').append('<tr style="text-align: center; font-size: 14px !important;"><td style="text-transform: capitalize">' + application.name.replace(".exe", "") + '</td><td style="text-transform: capitalize;">' + application.title + '</td><td>' + startDate + '</td><td>' + endDate + '</td><td>' + activeTime + ' hr</td><td>' + idleTime + ' hr</td><td>' + totalTime + ' hr</td><td>'+application.keystrokes_count +'</td><td>'+application.mouseclicks_count +'</td><td>'+application.mousemovement_count+ '</td></tr>');
-                    });
-                }
+            response.data.map(appData => { 
+                $('#appHistoryTable').append('<tr><td class="td-url" title="' + appData.application_name + '" style="text-transform: capitalize"><i class="fas fa-mobile-alt mr-2"></i>' + appData.application_name + '</td></tr>');
+                let startDate = moment(new Date(appData.start_time)).format('YYYY-MM-DD HH:mm:ss');
+                let endDate = moment(new Date(appData.end_time)).format('YYYY-MM-DD HH:mm:ss');
+                $('#applicationHistoryDataTableData').append('<tr style="text-align: center; font-size: 14px !important;"><td style="text-transform: capitalize">' + appData.application_name.replace(".exe", "") + '</td><td style="text-transform: capitalize;">' + appData.application_name + '</td><td>' + startDate + '</td><td>' + endDate + '</td></tr>');
+                  
             });
 
             $("#applicationHistoryTableId").DataTable({
@@ -771,19 +747,19 @@ function applicationHistoryData(response) {
             $('#appHistoryTable').empty();
             $('#applicationHistoryDataTableData').empty();
             $('#applicationHistoryDataTableData').append('<tr><td colspan="10" style="text-align: center"> ' + EMPLOYEE_FULL_DETAILS_ERROR.appHistoryNotFound + '</td></tr>');
-            $('#chartApp').empty();
-            $('#chartApp').append('<p  style="color: red; text-align: center; font-size: 150%; width: 100%; height: 10% " ><b> ' + EMPLOYEE_FULL_DETAILS_ERROR.appDataNotFound + ' </b></p>');
+            // $('#chartApp').empty();
+            // $('#chartApp').append('<p  style="color: red; text-align: center; font-size: 150%; width: 100%; height: 10% " ><b> ' + EMPLOYEE_FULL_DETAILS_ERROR.appDataNotFound + ' </b></p>');
         }
     } else if (response.code == 400) {
         $('#appHistoryTable').empty();
-        $('#chartApp').empty();
-        $('#chartApp').append('<p  style="color: red; text-align: center; font-size: 150%; width: 100%; height: 10% " ><b>' + EMPLOYEE_FULL_DETAILS_ERROR.appDataNotFound + '  </b></p>');
+        // $('#chartApp').empty();
+        // $('#chartApp').append('<p  style="color: red; text-align: center; font-size: 150%; width: 100%; height: 10% " ><b>' + EMPLOYEE_FULL_DETAILS_ERROR.appDataNotFound + '  </b></p>');
     } else if (response.code == 500) {
         $('#appHistoryTable').empty();
         $('#applicationHistoryDataTableData').empty();
         $('#applicationHistoryDataTableData').append('<tr><td colspan="7" style="text-align: center"> ' + EMPLOYEE_FULL_DETAILS_ERROR.appHistoryNotFound + '</td></tr>');
-        $('#chartApp').empty();
-        $('#chartApp').append('<p  style="color: red; text-align: center; font-size: 150%; width: 100%; height: 10% " ><b>' + EMPLOYEE_FULL_DETAILS_ERROR.errWhileFetching + ' <br/> <a href="#" onclick="loadAppHistory()">' + EMPLOYEE_FULL_DETAILS_ERROR.reloadSection + ' </a> </b></p>');
+        // $('#chartApp').empty();
+        // $('#chartApp').append('<p  style="color: red; text-align: center; font-size: 150%; width: 100%; height: 10% " ><b>' + EMPLOYEE_FULL_DETAILS_ERROR.errWhileFetching + ' <br/> <a href="#" onclick="loadAppHistory()">' + EMPLOYEE_FULL_DETAILS_ERROR.reloadSection + ' </a> </b></p>');
         APP_HISTORY_CHECK = false;
     } else {
         APP_HISTORY_CHECK = false;
@@ -797,7 +773,7 @@ function appHistoryChart(response) {
     chart.data = [];
     response.data.map(appData => {
         chart.data.push({
-            app_used: appData.app_name.replace(/\w\S*/g, function (txt) {
+            app_used: appData.application_name.replace(/\w\S*/g, function (txt) {
                 return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
             }),
             time: appData.active_seconds
@@ -1329,45 +1305,6 @@ function manageDataTable(tableType, tableData) {
         "language": {"url": DATATABLE_LANG} // declared in _scripts.blade file
     });
     $(divId).modal('show');
-}
-function mobileHistoryData(response) {
-    if (response.code === 200) {
-        if (response.data && response.data.taskWorked.length > 0) {
-            $('#mobileHistoryTableId').dataTable().fnDestroy();
-            $('#mobileHistoryDataTableData').empty();
-            response.data.taskWorked.map(appData => {
-                let startDate =appData?.start_time ? moment(new Date(appData?.start_time)).tz(appData?.timezone).format('YYYY-MM-DD HH:mm:ss') : '--';
-                let endDate = appData.end_time ? moment(new Date(appData?.end_time)).tz(appData?.timezone).format('YYYY-MM-DD HH:mm:ss') : '--';
-                let totalTime = moment().startOf('day').seconds(appData.timespend).format('HH:mm:ss');
-                let taskName = appData.name;
-                let device_used = appData.is_desktop_task ? "Desktop" : "Mobile";
-                let icon = device_used === "Desktop" ? '<i class="fas fa-desktop"></i>' : '<i class="fas fa-mobile-alt"></i>';
-
-                $('#mobileHistoryDataTableData').append('<tr style="text-align: center; font-size: 14px !important;"><td>' + taskName + '</td><td>' + startDate + '</td><td>' + endDate + '</td><td>' + totalTime + ' hr</td><td>' + icon + '</td></tr>');
-            });
-
-            $("#mobileHistoryTableId").DataTable({
-                "lengthMenu": [[10, 25, 50, 100, 200], [10, 25, 50, 100, 200]],
-                "order": [[2, "desc"]],
-                "language": {"url": DATATABLE_LANG} // declared in _scripts.blade file
-            });
-            MOBILE_HISTORY_CHECK = true;
-        }else if(response.data.totalMobileUsage === 0){
-            $('#mobileHistoryDataTableData').empty();
-            $('#mobileHistoryDataTableData').append('<tr><td colspan="4" style="text-align: center"> ' + noData + '</td></tr>');
-        } else {
-            $('#mobileHistoryDataTableData').empty();
-            $('#mobileHistoryDataTableData').append('<tr><td colspan="4" style="text-align: center"> ' + response.message + '</td></tr>');
-        }
-    } else if (response.code == 404) {
-        $('#mobileHistoryDataTableData').empty();
-        $('#mobileHistoryDataTableData').append('<tr><td colspan="4" style="text-align: center"> ' + response.message + '</td></tr>');
-
-        MOBILE_HISTORY_CHECK = false;
-    } else {
-        MOBILE_HISTORY_CHECK = false;
-        return errorHandler(response.message);
-    }
 }
 function breakHistoryData(response) {
     if (response.code === 200) {

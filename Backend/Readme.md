@@ -2,18 +2,25 @@
   <img src="https://img.shields.io/badge/OpenSource-000?style=for-the-badge&logo=ghost&logoColor=black&color=ffd700" alt="OpenSource-Badge">
 </div>
 
-![EmpMonitor](/assets/EMPMonitor%20logo.png)
+![EmpMonitor](/EmpMonitor-OpenSource-main/assets/EMPMonitor%20logo.png)
 <p align="center"><i>Your Workforce Productivity Compass</i></p>
 
-> **_EmpMonitor: The Ultimate Solution for Workforce Monitoring and Productivity Optimization_**
+> **_EmpMonitor: The Worlds #1 Leading Open-Source Platform for Workforce Management & Productivity Enhancement_**
 ---
+
+
+
+
+
 ## ➤ Microservices Architecture
 
-The **EmpMonitor Backend Microservices Architecture** is a robust system designed to support an Employee Monitoring application by leveraging a microservices architecture. This approach breaks down the backend into smaller, independent services, each dedicated to handling specific tasks such as agent communication, user analytics, data processing, and activity logging. By dividing the system into these specialized components, the architecture ensures better **_scalability_**, **_flexibility_**, and **_maintainability_**. Each microservice operates independently, allowing for easier updates, debugging, and scaling without disrupting the entire system. This modular design is particularly beneficial for applications like EMPMonitor, where diverse functionalities need to work seamlessly together.
+The **EmpMonitor Open Source's Backend Microservices Architecture** is a robust system designed to support an Employee Monitoring application by leveraging a microservices architecture. This approach breaks down the backend into smaller, independent services, each dedicated to handling specific tasks such as agent communication, user analytics, data processing, and activity logging. By dividing the system into these specialized components, the architecture ensures better **_scalability_**, **_flexibility_**, and **_maintainability_**. Each microservice operates independently, allowing for easier updates, debugging, and scaling without disrupting the entire system. This modular design is particularly beneficial for applications like EMPMonitor, where diverse functionalities need to work seamlessly together.
 
-To set up the EMPMonitor backend, you’ll need to ensure that essential tools and technologies are in place. Key requirements include `Node.js` for runtime, `NPM` for package management, `PM2` for process management, and databases like `MySQL`, `MongoDB`, and `Redis` for data storage and caching. The installation process involves **_setting up the server environment_**, **_installing dependencies_** for each microservice, and **_configuring the databases_** with the necessary credentials. Once the environment is ready, each microservices such as the `agent-service`, `main-service`, `report-service`, and `store-service` can be started individually using `PM2`. These services are organized into dedicated folders, each responsible for its unique function, ensuring a clean and structured codebase.
+To set up the EMPMonitor backend, you’ll need to ensure that essential tools and technologies are in place. Key requirements include `Node.js` for runtime, `NPM` for package management, `PM2` for process management, and databases like `MySQL`, `MongoDB`, and `Redis` for data storage and caching. The installation process involves **_setting up the server environment_**, **_installing dependencies_** for each microservice, and **_configuring the databases_** with the necessary credentials. Once the environment is ready, each microservices such as the `agent-service`, `main-service`, `report-service`, and `store-service` can be started individually using `PM2`. These services are organized into dedicated folders, each responsible for its unique function, ensuring a clean and structured **open-source-friendly** codebase.
 
-Once set up, you can monitor and debug the services using `PM2` logs. This modular approach ensures scalability, flexibility, and easier maintenance, making the EMPMonitor backend efficient and reliable for employee monitoring tasks. 🚀
+Once set up, you can monitor and debug the services using `PM2` logs. This modular approach ensures scalability, flexibility, and easier maintenance, making the EMPMonitor backend efficient and reliable for employee monitoring tasks. 
+
+
 
 
 
@@ -24,7 +31,6 @@ Below is a detailed breakdown of the key microservices and their responsibilitie
 *_Key Functions_*:
 - Handles **agent authentication** to ensure secure communication. 
 - Acts as the bridge between the agent and the backend system, facilitating data exchange.
-
 
 
 
@@ -79,6 +85,9 @@ Here are some pre-requisites to get started:
 
 
 
+
+
+
 ## ➤ Folder Structure
 ```
 EMPMonitor_Backend/
@@ -94,6 +103,18 @@ EMPMonitor_Backend/
 ```
 
 
+
+
+
+## ➤ Want to Contribute?
+Feel free to fork and [contribute](/EmpMonitor-OpenSource-main/Contributions.md) to this project. If you have any questions or need help, don't hesitate to reach out out [Team!]()
+
+
+
+
+
+## ➤ Conclusion
+Your EmpMonitor backend microservices should now be running successfully. Ensure all services are working as expected by checking logs and database entries. 
  
 <!-- ## 🎯 Installation Process
 
@@ -215,11 +236,5 @@ To restart services if needed:
 ```
 --- -->
 
-## ➤ Want to Contribute?
-Feel free to fork and [contribute](/Contributions.md) to this project. If you have any questions or need help, don't hesitate to reach out out [Team!]()
 
-
-
-## ➤ Conclusion
-Your EmpMonitor backend microservices should now be running successfully. Ensure all services are working as expected by checking logs and database entries. 🚀
 

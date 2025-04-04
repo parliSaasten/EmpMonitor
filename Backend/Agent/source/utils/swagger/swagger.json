@@ -17,11 +17,11 @@
                 "properties": {
                   "email": {
                     "type": "string",
-                    "example": "mounig0610@gmail.com"
+                    "example": "first_user@mail.com"
                   },
                   "password": {
                     "type": "string",
-                    "example": "Admin@123"
+                    "example": "User@123"
                   }
                 },
                 "required": ["email", "password"]
