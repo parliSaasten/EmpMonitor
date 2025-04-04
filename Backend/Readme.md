@@ -2,7 +2,7 @@
   <img src="https://img.shields.io/badge/OpenSource-000?style=for-the-badge&logo=ghost&logoColor=black&color=ffd700" alt="OpenSource-Badge">
 </div>
 
-![EmpMonitor](/EmpMonitor-OpenSource-main/assets/EMPMonitor%20logo.png)
+![EmpMonitor](../assets/EMPMonitor%20logo.png)
 <p align="center"><i>Your Workforce Productivity Compass</i></p>
 
 > **_EmpMonitor: The Worlds #1 Leading Open-Source Platform for Workforce Management & Productivity Enhancement_**
@@ -107,7 +107,7 @@ EMPMonitor_Backend/
 
 
 ## ➤ Want to Contribute?
-Feel free to fork and [contribute](/EmpMonitor-OpenSource-main/Contributions.md) to this project. If you have any questions or need help, don't hesitate to reach out out [Team!]()
+Feel free to fork and [contribute](../Contributions.md) to this project. If you have any questions or need help, don't hesitate to reach out out [Team!]()
 
 
 
