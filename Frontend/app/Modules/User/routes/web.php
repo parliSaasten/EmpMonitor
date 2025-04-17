@@ -3,6 +3,7 @@ use App\Modules\User\Controllers\UserController;
 use App\Modules\User\Controllers\UserDetailsController;
 use App\Modules\User\Controllers\EmployeeController;
 use App\Modules\User\Controllers\EmployeeDetailsController;
+use App\Modules\User\Controllers\TimeAttendanceController;
 
 Route::group(['module' => 'User', 'middleware' => ['web'], 'namespace' => 'App\Modules\User\Controllers'], function () {
     Route::get('/login', [UserController::class,'login']);
@@ -25,6 +26,9 @@ Route::group(['module' => 'User', 'middleware' => ['web'], 'namespace' => 'App\M
             Route::post('/get-web-app-history', [UserDetailsController::class,'getWebAppHistory']);
             Route::get('/employee-details', [UserController::class,'EmpDetails'])->name('employee-details');
             Route::get('/dashboard', [UserController::class,'dashboard'])->name('dashboard');
+            Route::post('/get-time-sheets-data', [UserDetailsController::class,'getTimeSheetData']);
+            Route::get('/attendance-history', [TimeAttendanceController::class,'attendanceHistory'])->name('attendance-history');
+            Route::post('/attendance-history', [TimeAttendanceController::class,'attendanceHistory']);
             }); 
         });
 
@@ -34,6 +38,8 @@ Route::group(['module' => 'User', 'middleware' => ['web'], 'namespace' => 'App\M
                 Route::get('/myTimeline', [EmployeeController::class,'employeeFullDetailsPage'])->name('myTimeline');
                 Route::get('/employee-logout', [EmployeeController::class,'logoutEmployee'])->name('employee-logout');
                 Route::post('/get-web-app-histories', [UserDetailsController::class,'getWebAppHistory']);
+                Route::get('/attendance-history', [TimeAttendanceController::class,'attendanceHistoryEmployee'])->name('attendance-history');
+                Route::post('/attendance-history', [TimeAttendanceController::class,'attendanceHistoryEmployee']);
             });
         });
 

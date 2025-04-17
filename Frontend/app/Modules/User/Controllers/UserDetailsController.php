@@ -58,4 +58,30 @@ class UserDetailsController extends Controller
              return $this->helper->errorHandler($e, ' UserDetailsController =>getBrowserHistory => Method-get ');
         }
     } 
+
+
+    public function getTimeSheetData(Request $request)
+    {
+         try { 
+            $data = $request->input('data');
+            parse_str($data, $parsedData);
+
+            $api_url = env('MAIN_API').'admin/attendance';
+            $method = "post_with_token";  
+            $data = array(
+                "start_date" => $parsedData['start_date'],
+                "end_date" => $parsedData['end_date'], 
+                "employee_id" => $parsedData['employee_id'], 
+                "skip" => $parsedData['skip'], 
+                "limit" => $parsedData['limit'], 
+            );  
+            $response = $this->helper->postApiCall($method, $api_url,$data);
+             $result['code'] = $response['data']['code'];
+            $result['data'] = $response['data']['data'];
+            $result['msg'] = $response['data']['message'];
+            return $result;
+        } catch (\Exception $e) {
+            return $this->helper->errorHandler($e, ' UserDetailsController => getTimeSheetData => Method-get ');
+        }
+    }
 }

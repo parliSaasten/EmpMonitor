@@ -107,8 +107,52 @@ async function getEmployeeById(req, res) {
 
 async function getAttendance(req, res) {
   try {
-    const attendanceRecords = await employeeService.getAllAttendance();
-    res.json(attendanceRecords);
+    let { start_date, end_date, skip = 0, limit = 10, employee_id } = req.body;
+    start_date = moment(start_date).format("YYYY-MM-DD");
+    end_date = moment(end_date).format("YYYY-MM-DD");
+
+    // Run both queries in parallel
+    const [attendanceRecords, attendanceRecordCount] = await Promise.all([
+      employeeService.getAllAttendance(start_date, end_date, +skip, +limit, employee_id),
+      employeeService.getAttendanceCount(start_date, end_date, employee_id)
+    ]);
+
+    return res.json({
+      code: 200,
+      data: {
+        totalCount: attendanceRecordCount,
+        data: attendanceRecords
+      },
+      message: "Success"
+    });
+  } catch (error) {
+    return res.status(500).json({ message: 'Internal server error', error: error.message });
+  }
+}
+
+
+async function getAttendanceById(req, res) {
+  try {
+    const { id } = req.params;
+    let { start_date, end_date, skip = 0, limit = 10 } = req.body;
+    
+    start_date = moment(start_date).format("YYYY-MM-DD");
+    end_date = moment(end_date).format("YYYY-MM-DD");
+
+    // Run both queries in parallel
+    const [attendanceRecords, attendanceRecordCount] = await Promise.all([
+      employeeService.getAllAttendanceById(id, start_date, end_date, skip, limit),
+      employeeService.getAttendanceCount(start_date, end_date, id)
+    ]);
+
+    return res.json({
+      code: 200,
+      data: {
+        totalCount: attendanceRecordCount,
+        data: attendanceRecords
+      },
+      message: "Success"
+    });
   } catch (error) {
     return res.status(500).json({ message: 'Internal server error', error: error.message });
   }
@@ -142,5 +186,6 @@ module.exports = {
   deleteEmployee,
   getAttendance,
   getWebAppActivity,
-  getEmployeeById
+  getEmployeeById,
+  getAttendanceById
 };

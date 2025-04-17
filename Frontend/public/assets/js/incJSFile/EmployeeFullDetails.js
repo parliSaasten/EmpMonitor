@@ -1,12 +1,46 @@
-
-
 $(document).ready(function () {
     $("#EmployeedateOfjoin").datepicker({
         maxDate: new Date,
         uiLibrary: 'bootstrap4',
     });
+
+    $('#TimesheetsTab').click();
 })
 
+function loadTimeSheetData() {
+    $('#dateRange').show();
+    let startTime = new Date($('#from').val()).toISOString();
+    let endTime = new Date($('#to').val()).toISOString();
+    $.ajax({
+        type: "post",
+        url: "/" + userType + '/get-time-sheets-data',
+        data: {data: `skip=0&limit=10&employee_id=${$('#userId').attr('value')}&start_date=${startTime}&end_date=${endTime}`},
+        beforeSend: function () {
+            TIME_SHEET_CHECK = true;
+            $('#timeSheetDataTable').dataTable().fnClearTable();
+            $('#timeSheetDataTable').dataTable().fnDraw();
+            $('#timeSheetsData').empty();
+            $('#browserHistoryTable').hide();
+            $('#timeSheetsData').append('<tr><td colspan="11"><div  class="loader"></div></td></tr>');
+        },
+        success: function (response) {
+            return timeSheetData(response);
+        },
+        error: function (jqXHR) {
+            if(jqXHR.status == 410)  {
+                $('#Timesheet').empty();
+                $('#timeSheetsData').empty();
+                $('#Timesheet').append('<p  style="color: red; text-align: center; font-size: 150%; width: 100%; height: 40% " class="mt-5"><b>'+jqXHR.responseJSON.error+'</b></p>');
+                $("#timeSheetDataTable").DataTable({ "language": {"url": DATATABLE_LANG},"bDestroy": true});
+                $("#ErrorMsgForUnaccess").html(jqXHR.responseJSON.error)
+            } else {
+                $("#timeSheetDataTable").DataTable({ "language": {"url": DATATABLE_LANG},"bDestroy": true});
+                return errorHandler(EMPLOYEE_FULL_DETAILS_ERROR.somethingWrong);
+            }
+            TIME_SHEET_CHECK = false;
+        }
+    });
+}
 $('#select_ss_date').datepicker({
     minDate: '-180d',
     maxDate:"0d",

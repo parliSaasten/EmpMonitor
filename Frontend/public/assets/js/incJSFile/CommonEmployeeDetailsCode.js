@@ -287,41 +287,19 @@ function productDataChart(response) {
 
 function timeSheetData(response) {
     if (response.code === 200) {
-        if (response.data && response.data.user_data.length > 0) {
+        if (response.data && response.data.data.length > 0) {
             $('#timeSheetDataTable').dataTable().fnDestroy();
             $('#timeSheetsData').empty();
-            response.data.user_data.map(timeSheet => {
-                let startTime = moment(timeSheet.start_time).tz(timeSheet.timezone).format('DD-MM-YYYY HH:mm:ss');
-                let endTime = moment(timeSheet.end_time).tz(timeSheet.timezone).format('DD-MM-YYYY HH:mm:ss');
-                let totalHours = `${String(Math.floor(timeSheet.total_time / 3600)).padStart(2, '0')}${moment().startOf('day').seconds(timeSheet.total_time).format(':mm:ss')}`;
-                let workingHours = `${String(Math.floor(timeSheet.office_time / 3600)).padStart(2, '0')}${moment().startOf('day').seconds(timeSheet.office_time).format(':mm:ss')}`;
-                let computerActivity = `${String(Math.floor(timeSheet.computer_activities_time / 3600)).padStart(2, '0')}${moment().startOf('day').seconds(timeSheet.computer_activities_time).format(':mm:ss')}`;
-                let productiveHours = `${String(Math.floor(timeSheet.productive_duration / 3600)).padStart(2, '0')}${moment().startOf('day').seconds(timeSheet.productive_duration).format(':mm:ss')}`;
-                let nonProductiveHours = `${String(Math.floor(timeSheet.non_productive_duration / 3600)).padStart(2, '0')}${moment().startOf('day').seconds(timeSheet.non_productive_duration).format(':mm:ss')}`;
-                let neutralHours = `${String(Math.floor(timeSheet.neutral_duration / 3600)).padStart(2, '0')}${moment().startOf('day').seconds(timeSheet.neutral_duration).format(':mm:ss')}`;
-                let idleHours = `${String(Math.floor(timeSheet.idle_duration / 3600)).padStart(2, '0')}${moment().startOf('day').seconds(timeSheet.idle_duration).format(':mm:ss')}`;
-                let mobileHours = `${String(Math.floor(timeSheet.mobileUsageDuration / 3600)).padStart(2, '0')}${moment().startOf('day').seconds(timeSheet.mobileUsageDuration).format(':mm:ss')}`;
-                // let offlineHours = `${String(Math.floor((timeSheet.total_time - timeSheet.office_time) / 3600)).padStart(2, '0')}${moment().startOf('day').seconds(timeSheet.total_time - timeSheet.office_time).format(':mm:ss')}`;
-                let offlineTime = `${String(Math.floor(Math.abs(timeSheet.offline) / 3600)).padStart(2, '0')}${moment().startOf('day').seconds(Math.abs(timeSheet.offline)).format(':mm:ss')}`;
-                let offlineHours = (timeSheet.offline < 0) ? '-' + offlineTime : offlineTime;
-                let breakHours = `${String(Math.floor(timeSheet.break_duration / 3600)).padStart(2, '0')}${moment().startOf('day').seconds(timeSheet.break_duration).format(':mm:ss')}`;
-                let totalBreakHours = `${String(Math.floor(timeSheet.total_break_time / 3600)).padStart(2, '0')}${moment().startOf('day').seconds(timeSheet.total_break_time).format(':mm:ss')}`;
-                // let productivityPercentage = envAdminIds.includes(Number(adminId)) ? ((timeSheet.productive_duration / 30600) * 100).toFixed(2) : timeSheet.productivity.toFixed(2);
-                let productivityPercentage = timeSheet.productivity.toFixed(2);
-                // let idleHoursText = envAdminIds.includes(Number(adminId)) ? '<td>' + offlineHours + '</td>' : '';
-                let idleHoursText = '<td title="' + convertSecToMMAndSS(timeSheet.offline) + '">' + offlineHours + '</td>';
-                let BR = SiteIndicator === 'dev' ? (`<td title="${convertSecToMMAndSS(timeSheet.break_duration)}">${breakHours}</td></tr>`) : '</tr>';
-                if(!CUSTOM_TIMESHEET){
-                    $('#timeSheetsData').append('<tr id="tr_' + timeSheet.attendance_id + '" class="text-center">\n' +
-                        '                          <td class="startTime">' + startTime + '</td><td class="endTime">' + endTime + '</td><td title="' + convertSecToMMAndSS(timeSheet.computer_activities_time) + '">' + computerActivity + '' + '</td></tr>');
-                }else {
-                    $('#timeSheetsData').append('<tr class="text-center">\n' +
-                        '                          <td>' + startTime + '</td><td>' + endTime + '</td><td title="' + convertSecToMMAndSS(timeSheet.total_time) + '">' + totalHours + '</td><td title="' + convertSecToMMAndSS(timeSheet.office_time) + '">' + workingHours + '</td><td title="' + convertSecToMMAndSS(timeSheet.computer_activities_time) + '">' + computerActivity + '' +
-                        '                          </td><td class="text-success" title="' + convertSecToMMAndSS(timeSheet.productive_duration) + '">' + productiveHours + '</td><td class="text-danger" title="' + convertSecToMMAndSS(timeSheet.non_productive_duration) + '">' + nonProductiveHours + '</td><td title="' + convertSecToMMAndSS(timeSheet.neutral_duration) + '">' + neutralHours + '</td>' +
-                        '<td class="text-warning" title="' + convertSecToMMAndSS(timeSheet.idle_duration) + '">' + idleHours + idleHoursText + '</td>'
-                        + (MOBILE_DATA ? '  <td class="text-success" title="' + convertSecToMMAndSS(timeSheet.mobileUsageDuration) + '">' + mobileHours + '</td>' : '') +
-                        '<td class="text-primary" >' + productivityPercentage + '&nbsp %</td><td title=" ' +convertSecToMMAndSS(timeSheet.break_duration)+ '">'+ breakHours + '</td><td title=" ' + convertSecToMMAndSS(timeSheet.total_break_time) + ' ">'+ totalBreakHours+'</td> </tr>' );
-                }
+            response.data.data.map(timeSheet => {
+                let startTime = moment(timeSheet.start_time).tz('Asia/Kolkata').format('DD-MM-YYYY HH:mm:ss');
+                let endTime = moment(timeSheet.end_time).tz('Asia/Kolkata').format('DD-MM-YYYY HH:mm:ss');
+                
+                const time1 = moment(timeSheet.end_time);
+                const time2 = moment(timeSheet.start_time); 
+                const duration = moment.duration(time1.diff(time2));
+                const hours = duration.asHours();
+  
+                $('#timeSheetsData').append('<tr class="text-center">\n' + ' <td>' + startTime + '</td><td>' + endTime + '</td><td title="' +  hours.toFixed(2) + '">' + hours.toFixed(2) + '</td> </tr>' );
             });
             $("#timeSheetDataTable").DataTable({
                 "lengthMenu": [[10, 25, 50, 100, 200], [10, 25, 50, 100, 200]],
@@ -348,53 +326,6 @@ function timeSheetData(response) {
         TIME_SHEET_CHECK = false;
     } else {
         $("#timeSheetDataTable").DataTable({"language": {"url": DATATABLE_LANG}, "bDestroy": true});
-        TIME_SHEET_CHECK = false;
-        return errorHandler(response.msg);
-    }
-}
-function timeSheetDataNew(response) {
-    console.log(response);
-    if (response.code === 200) {
-        console.log(response);
-        if (response.data && response.data.length > 0) {
-            $('#timeSheetDataTableNew').dataTable().fnDestroy();
-            $('#timeSheetsDataNew').empty();
-            response.data.map(timeSheet => {
-                let startTime = moment(timeSheet.start_time).tz(timeSheet.timezone).format('DD-MM-YYYY HH:mm:ss');
-                let endTime = moment(timeSheet.end_time).tz(timeSheet.timezone).format('DD-MM-YYYY HH:mm:ss');
-                let productivityPercentage = timeSheet.productivity.toFixed(2);
-                $('#timeSheetsDataNew').append('<tr class="text-center">\n' +
-                        '                          <td>' + startTime + '</td><td>' + endTime + '</td><td title="' + timeSheet.office_time + '">' + timeSheet.office_time + '</td><td title="' + timeSheet.computer_activities_time + '">' + timeSheet.computer_activities_time + '' +
-                        '                          </td><td class="text-success" title="' + timeSheet.productive_duration + '">' + timeSheet.productive_duration + '</td><td class="text-danger" title="' + timeSheet.non_productive_duration + '">' + timeSheet.non_productive_duration + '</td><td title="' + timeSheet.neutral_duration + '">' + timeSheet.neutral_duration + '</td>' +
-                        '<td class="text-warning" title="' + timeSheet.idle_duration + '">' + timeSheet.idle_duration + '</td><td title="' + timeSheet.offline_duration + '">' + timeSheet.offline_duration + '</td>'
-                        + (MOBILE_DATA ? '  <td class="text-success" title="' + timeSheet.mobileUsageDuration + '">' + timeSheet.mobileUsageDuration + '</td>' : '') +
-                        '<td class="text-primary" >' + productivityPercentage + '&nbsp %</td></tr>' );
-            });
-            $("#timeSheetDataTableNew").DataTable({
-                "lengthMenu": [[10, 25, 50, 100, 200], [10, 25, 50, 100, 200]],
-                "language": {"url": DATATABLE_LANG}, // declared in _scripts.blade file
-                "order": [],
-                "initComplete": function () {
-                    $("#timeSheetDataTableNew").wrap("<div style='overflow:auto; width:100%;position:relative;'></div>");
-                },
-            });
-            TIME_SHEET_CHECK = true;
-        } else {
-            $('#timeSheetsDataNew').empty();
-            $('#timeSheetsDataNew').append('<tr><td colspan="11" style="text-align: center; color: red"><b>' + EMPLOYEE_FULL_DETAILS_ERROR.timeSheetNotFound + ' </b></td></tr>');
-            $("#timeSheetDataTableNew").DataTable({"language": {"url": DATATABLE_LANG}, "bDestroy": true});
-        }
-    } else if (response.code === 400) {
-        $('#timeSheetsDataNew').empty();
-        $('#timeSheetsDataNew').append('<tr><td colspan="11" style="text-align: center; color: red"><b>' + EMPLOYEE_FULL_DETAILS_ERROR.timeSheetNotFound + '  </b></td></tr>');
-        $("#timeSheetDataTableNew").DataTable({"language": {"url": DATATABLE_LANG}, "bDestroy": true});
-    } else if (response.code === 500) {
-        $('#timeSheetsDataNew').empty();
-        $('#timeSheetsDataNew').append('<tr><td colspan="11" style="text-align: center; color: red"><b>" + EMPLOYEE_FULL_DETAILS_ERROR.errWhileFetching + " <br/> <a href="#" onclick="loadTimeSheetData()">" + EMPLOYEE_FULL_DETAILS_ERROR.reloadSection + " </a> </b></td></tr>');
-        $("#timeSheetDataTableNew").DataTable({"language": {"url": DATATABLE_LANG}, "bDestroy": true});
-        TIME_SHEET_CHECK = false;
-    } else {
-        $("#timeSheetDataTableNew").DataTable({"language": {"url": DATATABLE_LANG}, "bDestroy": true});
         TIME_SHEET_CHECK = false;
         return errorHandler(response.msg);
     }
