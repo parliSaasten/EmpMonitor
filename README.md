@@ -10,18 +10,18 @@
 <p align="center"><i>Your Workforce Productivity Compass</i></p>
 
 <p align="center">
-  <!-- <img src="https://github.com/abhishekglb/EmpMonitor/actions/workflows/main.yml/badge.svg" alt="Build Status"> -->
-  <img src="https://img.shields.io/github/license/Rohit-6/EMPMonitor" alt="License: MIT">
-  <img src="https://img.shields.io/github/last-commit/Rohit-6/EMPMonitor" alt="Last Commit">
-  <img src="https://img.shields.io/github/issues/Rohit-6/EMPMonitor" alt="GitHub Issues">
-  <img src="https://img.shields.io/github/forks/Rohit-6/EMPMonitor" alt="GitHub Forks">
-  <img src="https://img.shields.io/github/stars/Rohit-6/EMPMonitor" alt="GitHub Stars">
+  <!-- <img src="https://github.com/EmpCloud/EmpMonitor/actions/workflows/main.yml/badge.svg" alt="Build Status"> -->
+  <img src="https://img.shields.io/github/license/EmpCloud/EmpMonitor" alt="License: MIT">
+  <img src="https://img.shields.io/github/last-commit/EmpCloud/EmpMonitor" alt="Last Commit">
+  <img src="https://img.shields.io/github/issues/EmpCloud/EmpMonitor" alt="GitHub Issues">
+  <img src="https://img.shields.io/github/forks/EmpCloud/EmpMonitor" alt="GitHub Forks">
+  <img src="https://img.shields.io/github/stars/EmpCloud/EmpMonitor" alt="GitHub Stars">
 </p>
 
 <p align="center">
   <a href="#">📘 Read the Documentation</a> &ensp;•&ensp;
   <a href="https://empmonitor.com/blog">📝 Learn More on Our Blog</a> &ensp;•&ensp;
-  <a href="https://github.com/Rohit-6/EMPMonitor/issues/new">✨ Request a Feature</a>
+  <a href="https://github.com/EmpCloud/EmpMonitor/issues/new">✨ Request a Feature</a>
 </p>
 
 > **_EmpMonitor: The Worlds #1 Advanced Open-Source Platform for Workforce Management & Productivity Enhancement_**

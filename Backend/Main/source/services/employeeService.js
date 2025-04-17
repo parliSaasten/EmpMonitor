@@ -94,16 +94,65 @@ async function deleteEmployee(id) {
     throw error;
   }
 }
-async function getAllAttendance() {
+
+async function getAllAttendance(start_date, end_date, skip, limit, employee_id) {
   try {
     const pool = await mySqlSingleton.getPool();
-    const [rows] = await pool.query('SELECT * FROM employee_attendance');
+
+    let query = 'SELECT * FROM employee_attendance ea JOIN employees e ON e.id = ea.employee_id WHERE date BETWEEN ? AND ?';
+    const params = [start_date, end_date];
+
+    if (employee_id) {
+      query += ' AND employee_id = ?';
+      params.push(employee_id);
+    }
+
+    query += ' LIMIT ?, ?';
+    params.push(skip, limit);
+
+    const [rows] = await pool.query(query, params);
     return rows;
   } catch (error) {
     console.error('Error fetching attendance records:', error);
     throw error;
   }
 }
+
+async function getAttendanceCount(start_date, end_date, employee_id) {
+  try {
+    const pool = await mySqlSingleton.getPool();
+
+    let query = 'SELECT COUNT(*) AS total FROM employee_attendance ea JOIN employees e ON e.id = ea.employee_id WHERE date BETWEEN ? AND ?';
+    const params = [start_date, end_date];
+
+    if (employee_id) {
+      query += ' AND employee_id = ?';
+      params.push(employee_id);
+    }
+
+    const [rows] = await pool.query(query, params);
+    return rows[0].total;
+  } catch (error) {
+    console.error('Error fetching attendance count:', error);
+    throw error;
+  }
+}
+
+
+async function getAllAttendanceById(id, start_date, end_date, skip, limit) {
+  try {
+    const pool = await mySqlSingleton.getPool();
+    const [rows] = await pool.query(
+      'SELECT * FROM employee_attendance WHERE employee_id = ? AND date BETWEEN ? AND ? LIMIT ?, ?',
+      [id, start_date, end_date, skip, limit]
+    );
+    return rows;
+  } catch (error) {
+    console.error('Error fetching attendance records:', error);
+    throw error;
+  }
+}
+
 
 async function getWebAppActivityFiltered(employeeId, startDate, endDate, type) {
   try {
@@ -145,5 +194,7 @@ module.exports = {
   deleteEmployee,
   getAllAttendance,
   getWebAppActivityFiltered,
-  countEmployees
+  countEmployees,
+  getAllAttendanceById,
+  getAttendanceCount 
 };

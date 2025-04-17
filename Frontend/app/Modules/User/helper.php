@@ -83,10 +83,16 @@ class helper
                         'headers' => [
                             'user-agent' => $_SERVER['HTTP_USER_AGENT'],
                             'Content-Type' => 'application/x-www-form-urlencoded',
-                            'Authorization' => 'Bearer ' . Session::get('admin_session')['token']
-                        ]
-                    ]);
-                     if ($response->getStatusCode() == 201) {
+                            'Authorization' => 'Bearer ' . $session_token
+                            ]
+                        ]);
+                      if ($response->getStatusCode() == 201) {
+                        $data = json_decode($response->getBody()->getContents(), true);
+                        $result['statusCode'] = $response->getStatusCode();
+                        $result['data'] = $data;
+
+                        return $result;
+                    }elseif ($response->getStatusCode() == 200) {
                         $data = json_decode($response->getBody()->getContents(), true);
                         $result['statusCode'] = $response->getStatusCode();
                         $result['data'] = $data;

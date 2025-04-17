@@ -15,6 +15,7 @@ function loadWebAppHistory(type) {
             // $('#chartApp').empty();
             $('#appHistoryTable').empty();
             $('#appHistoryTable').append('<div  class="loader"></div>');
+            if(type == 1)  $('#browserHistoryTable').show();
         },
         success: function (response) {
             if(type == 2){

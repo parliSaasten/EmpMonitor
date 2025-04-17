@@ -390,7 +390,7 @@
       }
     },
     "/admin/attendance": {
-      "get": {
+      "post": {
         "summary": "Get all attendance records (admin only)",
         "security": [
           {
