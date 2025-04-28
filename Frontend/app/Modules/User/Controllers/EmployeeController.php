@@ -78,7 +78,6 @@ class EmployeeController extends Controller
             return view("User::EmployeeDetail.EmployeeFullDetails",
             ["user_details" => $result]);
         } catch (\Exception $e) {
-            dd('hj',$e);
             return Redirect::back()->withErrors(['msg', 'No response or No User Found.']);
         }
     }
@@ -86,12 +85,13 @@ class EmployeeController extends Controller
     public function logoutEmployee()
     {
         try {
-            //To make the Token expire once User gets logout the site
-            $api_url = $this->API_URL_3 . 'api/' . $this->VERSION_3 . '/auth/logout';
-            $this->helper->postApiCall("get", $api_url, 0);
+            Session::forget('employee_session');
+            return redirect('login');
+            // $api_url = $this->API_URL_3 . 'api/' . $this->VERSION_3 . '/auth/logout';
+            // $this->helper->postApiCall("get", $api_url, 0);
         } catch (\Exception $e) {}
-        Session::forget('employee');
-        return redirect('login');
+            Session::forget('employee');
+            return redirect('login');
     }
 
 

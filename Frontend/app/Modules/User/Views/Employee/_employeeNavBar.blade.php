@@ -88,18 +88,8 @@
                                                                        class="rounded-circle"/>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                        @if(Session::has(env('Manager')))
-                            <li><a id="profileDetails" class="open-editModal text-success mr-2" data-toggle="modal"
-                                   data-target="#profileModal" title="Edit Employee" href="#">Profile</a></li>
-
-                            <li><a href="{{route('myTimeline',(new App\Modules\User\helper)->getHostName())}}">MyTimeline </a>
-                            </li>
-                            <li><a href="{{route('logout',(new App\Modules\User\helper)->getHostName())}}"
-                                   onclick="clearStorage()">{{ __('messages.logout') }}</a></li>
-                        @else
                             <li><a href="{{route('employee-logout',(new App\Modules\User\helper)->getHostName())}}"
                                    onclick="clearStorage()">{{ __('messages.logout') }}</a></li>
-                        @endif
                     </ul>
                 </li>
             </ul>

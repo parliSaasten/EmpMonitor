@@ -19,9 +19,11 @@ class AdminRoutes {
         this.myRoutes.get('/employees', adminController.getAllEmployees);
         this.myRoutes.get('/employees/:id', adminController.getEmployeeById);
         this.myRoutes.delete('/employees/:id', adminController.deleteEmployee);
+        this.myRoutes.delete('/employee-delete-multiple', adminController.deleteEmployees);
         this.myRoutes.post('/attendance', adminController.getAttendance);
         this.myRoutes.post('/attendance/:id', adminController.getAttendanceById);
         this.myRoutes.get('/web-app-activity', adminController.getWebAppActivity);
+        this.myRoutes.put('/update-employee', adminController.updateEmployee)
     }
 
     getRouters() {

@@ -31,19 +31,24 @@
         <input type="hidden" value="1" id="RoleData" data-list="">
         <div id="main-wrapper">
             <div class="content-header">
-                <nav aria-label="breadcrumb">
+                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb breadcrumb-style-1">
-                        <li class="breadcrumb-item"><a href="dashboard" style="color: #0686d8;font-weight: 500;">
+                    @if(Session::has('employee_session'))
+                    <li class="breadcrumb-item"><a href="" style="color: #0686d8;font-weight: 500;">
+                                {{ __('messages.home') }}</a></li>
+                    @else
+                        <li class="breadcrumb-item"><a href="employee-details" style="color: #0686d8;font-weight: 500;">
                                 {{ __('messages.home') }}</a></li>
                         <li class="breadcrumb-item"><a href="employee-details" style="color: #0686d8;font-weight: 500;">
                                 {{ __('messages.employee') }}</a></li>
+                        @endif
                         <li class="breadcrumb-item" aria-current="page">
                             {{ __('messages.empFullDetails') }}
                         </li>
                         <p id="user-id" style="display: none" name="{{$user_details['data']['id']}}"></p>
                     </ol>
                 </nav>
-                {{--                To show no permission message       --}}
+                 {{--                To show no permission message       --}}
                 <div id="UnaccessModal" style="display: none">
                     <div class="alert alert-danger ">
                         <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -52,10 +57,13 @@
                     </div>
                 </div>
 
-                <h1 class="page-title mr-3" id="userId"
+                 <h1 class="page-title mr-3" id="userId"
                     value="{{$user_details['data']['id']}}">{{$user_details['data']['first_name']." ".$user_details['data']['last_name']}}</h1>
-                <a href="#" class="btn btn-link btn-sm" onclick="getdetails()" data-toggle="modal"
-                   data-target="#editEmpModal">{{ __('messages.edit') }} </a>
+                    @if(Session::has('employee_session'))
+                    @else
+                    <a href="#" class="btn btn-link btn-sm" onclick="getdetails()" data-toggle="modal" data-target="#editEmpModal">{{ __('messages.edit') }} </a>
+                    @endif
+
                    <div class="col-md-4 float-right p-0">
                         <div class="form-control" id="dateRange" style="cursor: pointer">
                             <i class="fa fa-calendar"></i>&nbsp; <span></span>
@@ -64,7 +72,7 @@
                             <span id="to" hidden></span>
                         </div>
                    </div>
-            </div>
+             </div>
           
         </div>
         {{--    removed Analysis modals and calling from external page  --}}

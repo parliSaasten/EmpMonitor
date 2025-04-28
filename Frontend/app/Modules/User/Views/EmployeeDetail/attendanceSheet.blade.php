@@ -92,7 +92,7 @@ thead#headerData tr th:first-child, tbody#bodyData tr td:first-child {
             <div class="content-header">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb breadcrumb-style-1">
-                        <li class="breadcrumb-item"><a href="dashboard" style="color: #0686d8;font-weight: 500;">
+                        <li class="breadcrumb-item"><a href="employee-details" style="color: #0686d8;font-weight: 500;">
                                 {{ __('messages.home') }}</a></li>
                         <li class="breadcrumb-item" aria-current="page">
                             {{ __('messages.attendance') }}

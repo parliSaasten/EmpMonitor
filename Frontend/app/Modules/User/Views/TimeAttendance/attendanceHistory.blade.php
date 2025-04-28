@@ -94,7 +94,7 @@
                 <div class="content-header">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb breadcrumb-style-1">
-                            <li class="breadcrumb-item"><a href="dashboard" style="color: #0686d8;font-weight: 500;">
+                            <li class="breadcrumb-item"><a href="employee-details" style="color: #0686d8;font-weight: 500;">
                                     {{ __('messages.home') }}</a></li>
                             <li class="breadcrumb-item" aria-current="page">
                                 {{ __('messages.timesheets') }}
@@ -131,16 +131,15 @@
 
                                                 <option selected class="active-result" value="0">
                                                     {{ __('messages.all') }}</option>
-                                                {{-- @if ($employeesList['code'] == 200)
-                                                    @if ($employeesList['data'])
-                                                        @foreach ($employeesList['data'] as $empl)
-                                                            <option class="active-result"
-                                                                    value="{{$empl['id']}}">{{$empl['first_name']}} {{$empl['last_name']}}</option>
+                                                    @if (isset($employeesList['employees']) && count($employeesList['employees']) > 0)
+                                                        @foreach ($employeesList['employees'] as $empl)
+                                                            <option class="active-result" value="{{ $empl['id'] }}">
+                                                                {{ $empl['first_name'] }} {{ $empl['last_name'] }}
+                                                            </option>
                                                         @endforeach
+                                                    @else
+                                                        <option disabled>No employees found.</option>
                                                     @endif
-                                                @else
-                                                    <option disabled>{{$employeesList['msg']}}</option>
-                                                @endif --}}
                                             </select>
                                         </div>
                                     </div> 
@@ -227,6 +226,12 @@
                                                             <span class="float-right"><i id="NamesSort"
                                                                     class="fas fa-long-arrow-alt-up text-light"></i>
                                                             </span></label></th>
+                                                    <th class="EmailTable"><label class="d-flex mb-0"><a class="w-100" onclick="sort('Email','EmailsSort')"> {{ __('messages.email') }}</a><span class="float-right"><i id="EmailsSort" class="fas fa-long-arrow-alt-up text-light"></i></span></label></th>
+                                                    <th  class="EmpCodeTable">
+                                                        <label class="d-flex mb-0">
+                                                            <a class="w-100" onclick="sort('Employee Code','EMPCodesSort')">{{ __('messages.employee') }}  {{ __('messages.code') }} </a>
+                                                            <span class="float-right ml-2"><i id="EMPCodesSort" class="fas fa-long-arrow-alt-up text-light"></i>
+                                                        </span></label></th>
                                                     <!-- <th class="EmailTable"><label class="d-flex mb-0"><a class="w-100"
                                                                 onclick="sort('Email','EmailsSort')">
                                                                 {{ __('messages.email') }} </a><span

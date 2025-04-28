@@ -12,11 +12,15 @@ class ReportsController {
             };
             let response = [];
             for (const e of data.data) {
-                // let start_time = 
                 let dataId = moment.utc(e.dataId);
                 for (const app of e.appUsage) {
                     let start_time = moment.utc(dataId).add(app.start, 'second');
                     let end_time = moment.utc(dataId).add(app.end, 'second');
+
+                    let keystrokesCount = e.activityPerSecond.keystrokes.slice(app.start, app.end).filter((e) => +e !== 0).length;
+                    let mouseMovementsCount = e.activityPerSecond.mouseMovements.slice(app.start, app.end).filter((e) => +e !== 0).length;
+                    let buttonClicks = e.activityPerSecond.buttonClicks.slice(app.start, app.end).filter((e) => +e !== 0).length;
+
                     let resp = await ReportModel.addAppUsage({
                         employee_id: user.id,
                         application_name: app.app,
@@ -24,7 +28,11 @@ class ReportsController {
                         url: app.url,
                         start_time: start_time.toISOString(),
                         end_time: end_time.toISOString(),
-                        yyyymmdd: dataId.format('YYYYMMDD')
+                        yyyymmdd: dataId.format('YYYYMMDD'),
+                        keystrokes: app.keystrokes ?? "",
+                        keystrokesCount,
+                        mouseMovementsCount,
+                        buttonClicks,
                     });
                     response.push(resp);
                 }
