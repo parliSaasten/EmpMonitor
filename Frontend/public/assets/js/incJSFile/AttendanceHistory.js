@@ -29,10 +29,10 @@ $(function () {
         from = $('#from').val();
         to = $('#to').val();
         // if (active_function == 1) {
-        //     attendanceReports(locID, deptID, userID, SHOW_ENTRIES, 0, null);
-        //     makeDatatableDefault();
-        //     $('#showPageNumbers').hide();
-        //     $('#attendanceHistory').hide();
+            attendanceReports(locID, deptID, userID, SHOW_ENTRIES, 0, null);
+            makeDatatableDefault();
+            $('#showPageNumbers').hide();
+            $('#attendanceHistory').hide();
 
         // }
         // if (active_function == 0) {
@@ -78,8 +78,7 @@ $(document).ready(function () {
     // }
 
     $("#employee").select2({width: "200"});
-    // users(locID, deptID);
-    $('#SearchButton').click(function () {
+     $('#SearchButton').click(function () {
         $('#SearchButton').attr('disabled', false);
     });
     let runScript = (e) => {
@@ -214,7 +213,7 @@ function attendanceReports(SelectlocID, SelectDeptId, SelectUserId, showEntries,
     } else {
         urlData = `location_id=${SelectlocID}&department_id=${SelectDeptId}&employee_id=${SelectUserId}&start_date=${SelectedfromDate}&end_date=${SelectedtoDate}&limit=${showEntries}&skip=${skipvalue}&name=${searchText}&sortColumn=${SORT_NAME}&sortOrder=${SORT_ORDER}`
     }
-    let url = '/attendance-history';
+    let url = userType == 'employee'? '/attendance-history-employee': '/attendance-history';
     $.ajax({
         type: "post",
         url: '/' + userType + url,
@@ -243,9 +242,9 @@ function attendanceReports(SelectlocID, SelectDeptId, SelectUserId, showEntries,
                         const duration = moment.duration(time1.diff(time2));
                         const hours = duration.asHours();
                         appendData +='<tr>'; 
-                        appendData += '<td class="stickyCol-sticky-col""><a title="View Full Details" href="get-employee-details?id=' + attHistory.employee_id + '">  -- </a></td>'; 
-                        // if (ADD_REMOVE_COLUMN.includes('Email')) appendData += '<td class="EmailTable" style="width: 90px;">' + attHistory.email + '</td>';
-                        // if (ADD_REMOVE_COLUMN.includes('EmpCode')) appendData += '<td class="EmpCodeTable" style="width: 90px;">' + attHistory.emp_code + '</td>'; 
+                        appendData += '<td class="stickyCol-sticky-col""><a title="View Full Details" href="get-employee-details?id=' + attHistory.id + '">' + attHistory.first_name + ' ' + attHistory.last_name + ' </a></td>';
+                        if (ADD_REMOVE_COLUMN.includes('Email')) appendData += '<td class="EmailTable" style="width: 90px;">' + attHistory.email + '</td>';
+                        if (ADD_REMOVE_COLUMN.includes('EmpCode')) appendData += '<td class="EmpCodeTable" style="width: 90px;">' + attHistory.employee_code + '</td>';
                         if (ADD_REMOVE_COLUMN.includes('ClockIn')) appendData += '<td class="ClockInTable" style="width: 90px;">' + startTime + '</td>';
                         if (ADD_REMOVE_COLUMN.includes('ClockOut')) appendData += '<td class="ClockOutTable" style="width: 90px;">' + endTime + '</td>'; 
                         if (ADD_REMOVE_COLUMN.includes('TotalHour')) appendData += ADD_REMOVE_COLUMN.includes('T_minutes') ? '<td class="TotalHourTable" style="text-align:center">' + startTime  + '</td>' : '<td class="TotalHourTable" style="text-align:center">' +hours.toFixed(2)  + '</td>';

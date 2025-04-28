@@ -71,12 +71,18 @@ async function adminRegister(req, res) {
     return res.status(500).json({ message: 'Internal server error', error: error.message });
   }
 }
+
+
 async function getAllEmployees(req, res) {
   try {
-    let { skip = 0, limit = 10 } = req.query;
-    const employees = await employeeService.getAllEmployees(skip, limit);
-    const count = await employeeService.countEmployees();
-    res.json({ employees, totalCount: count });
+    let { skip = 0, limit = 10, name } = req.query;
+
+    const [employees, count] = await Promise.all([
+      employeeService.getAllEmployees(+skip, +limit, name),
+      employeeService.getAllEmployees(+skip, +limit, name, 1)
+    ]);
+ 
+    return res.status(200).json({ employees, totalCount: count });
   } catch (err) {
     return res.status(500).json({ message: 'Internal server error', error: err.message });
   }
@@ -86,6 +92,17 @@ async function deleteEmployee(req, res) {
   try {
     const { id } = req.params;
     await employeeService.deleteEmployee(id);
+    res.status(200).json({ message: 'Employee deleted successfully' });
+  } catch (error) {
+    return res.status(500).json({ message: 'Internal server error', error: error.message });
+  }
+}
+
+
+async function deleteEmployees(req, res) {
+  try {
+    const { user_ids } = req.body;
+    await Promise.all(user_ids.map(id => employeeService.deleteEmployee(id)));
     res.status(200).json({ message: 'Employee deleted successfully' });
   } catch (error) {
     return res.status(500).json({ message: 'Internal server error', error: error.message });
@@ -107,14 +124,14 @@ async function getEmployeeById(req, res) {
 
 async function getAttendance(req, res) {
   try {
-    let { start_date, end_date, skip = 0, limit = 10, employee_id } = req.body;
+    let { start_date, end_date, skip = 0, limit = 10, employee_id, name } = req.body;
     start_date = moment(start_date).format("YYYY-MM-DD");
     end_date = moment(end_date).format("YYYY-MM-DD");
 
     // Run both queries in parallel
     const [attendanceRecords, attendanceRecordCount] = await Promise.all([
-      employeeService.getAllAttendance(start_date, end_date, +skip, +limit, employee_id),
-      employeeService.getAttendanceCount(start_date, end_date, employee_id)
+      employeeService.getAllAttendance(start_date, end_date, +skip, +limit, employee_id, name, 0),
+      employeeService.getAllAttendance(start_date, end_date, null, null, employee_id, name, 1)
     ]);
 
     return res.json({
@@ -179,6 +196,34 @@ async function getWebAppActivity(req, res) {
   }
 }
 
+  async function updateEmployee(req, res) { 
+    try {
+       const {id, role} = await authService.getLoginUserData(req);
+       if(role !== 'admin') return res.status(400).json({ message: 'Admin can update employee', error: null });
+
+       const {employeeId, firstName, lastName, employeeRole, mobileNumber, employeeCode, timeZone, password, email} = req.body;
+       if(!(employeeId && firstName && lastName && employeeRole && email && password && mobileNumber && employeeCode && timeZone && email)) return res.json({code: 400, data: null, error: null, message: 'Invalid inputs'});
+
+       const hashedPassword = await authService.encryptPassword(password);
+       const employeeData = {
+        firstName,
+        lastName,
+        role: employeeRole,
+        email,
+        password: hashedPassword,
+        mobileNumber,
+        employeeCode,
+        timeZone,
+       };
+
+       await employeeService.updateEmployee(employeeId, employeeData);
+      employeeData.employeeId = employeeId;
+      return res.json({code: 200, data: employeeData, error: null, message: 'Success'});
+    } catch (error) {
+      return res.status(500).json({ message: 'Internal server error', error: error.message });
+    }
+}
+
 module.exports = {
   adminRegister,
   adminLogin,
@@ -187,5 +232,7 @@ module.exports = {
   getAttendance,
   getWebAppActivity,
   getEmployeeById,
-  getAttendanceById
+  getAttendanceById,
+  deleteEmployees,
+  updateEmployee
 };

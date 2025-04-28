@@ -70,7 +70,7 @@
             <div class="content-header">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb breadcrumb-style-1">
-                        <li class="breadcrumb-item"><a href="dashboard" style="color: #0686d8;font-weight: 500;">
+                        <li class="breadcrumb-item"><a href="employee-details" style="color: #0686d8;font-weight: 500;">
                                 {{ __('messages.home') }}</a></li>
                         <li class="breadcrumb-item" aria-current="page">{{ __('messages.employee') }}</li>
                     </ol>
@@ -199,6 +199,12 @@
                                                             class="float-right"><i id="EMP-CodeSort"
                                                                                    class="fas fa-long-arrow-alt-up text-light"></i>
                                                     </span></label></th>
+
+                                                    <th  class="rolesTable">
+                                                    <a onclick="sort('Role', 'RoleSort')">{{ __('messages.role') }} </a><span
+                                                        class="float-right"><i id="RoleSort"
+                                                                               class="fas fa-long-arrow-alt-up text-light"></i>
+                                                </span></th>
                                                 <th class="AgentDateTable" style="display: none;"><label class="d-flex mb-0"><a
                                                             class="w-100"
                                                             onclick="sort('AgentDate-asc', 'AgentDate-desc')">{{ __('messages.agentinstalldate') }}
@@ -241,6 +247,7 @@
                                                 </span>
                                                         </label>
                                                     </th> 
+                                                    <th class="action">Action</th>
 
 
 
@@ -373,7 +380,40 @@
                 </div>
             </div>
         </form>
-       
+
+        <!-- Madhu -->
+        <form method="post" action="">
+            @csrf
+            <div class="modal fade" id="deleteManagerModal" tabindex="-1" role="dialog"
+                 aria-labelledby="DeleteEmpModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered " role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title"
+                                id="DeleteEmpModalLabel">{{__('messages.delete')}} {{__('messages.employee')}}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="clearList()">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>{{__('messages.deleteQuestion')}}?</p>
+                            <ol id="selectedEmployeeList"></ol>
+                            <p style="color: red"> {{ __('messages.note') }}:- <span style="color: black">{{__('messages.deleteInfo')}}
+                              </span></p>
+                            <br>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary"
+                                    data-dismiss="modal" onclick="clearList()">{{__('messages.no')}}</button>
+                            <button type="submit" id="deleteModal" class="btn btn-primary deleteMultiple-loc"
+                                    name="save_value">{{__('messages.yes')}}
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
       
         {{--added for multiple manager selection with team lead option    --}}
         <form method="post" id="Manager-select">

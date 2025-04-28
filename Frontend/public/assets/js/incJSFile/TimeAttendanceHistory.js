@@ -174,7 +174,7 @@ function attendanceReports(SelectlocID, SelectDeptId, SelectUserId) {
     var urlData;
 
     urlData = `location_id=${SelectlocID}&department_id=${SelectDeptId}&employee_id=${SelectUserId}&start_date=${SelectedfromDate}&end_date=${SelectedtoDate}`
-    let url = userType === ENV_RESELLER ? '/reseller-attendance-history' : '/employee-timeline';
+    let url = '/employee-timeline';
     $.ajax({
         type: "post",
         url: '/' + userType + url,

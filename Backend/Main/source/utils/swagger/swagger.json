@@ -4,9 +4,20 @@
     "title": "Employee Management API",
     "version": "1.0.0"
   },
+  "tags": [
+    {
+      "name": "Public",
+      "description": "Publicly accessible APIs"
+    },
+    {
+      "name": "Private",
+      "description": "Restricted APIs (require authentication)"
+    }
+  ],
   "paths": {
     "/admin/login": {
       "post": {
+        "tags": ["Public"],
         "summary": "Admin login",
         "requestBody": {
           "required": true,
@@ -85,6 +96,7 @@
     },
     "/admin/register": {
         "post": {
+            "tags": ["Private"],
             "summary": "Admin registration",
             "security": [
                 {
@@ -169,6 +181,7 @@
     },
       "/admin/web-app-activity": {
         "get": {
+          "tags": ["Private"],
           "summary": "Get web app activity records with filters",
           "security": [
             {
@@ -278,45 +291,76 @@
           }
         }
       },
-    "/admin/employees": {
-      "get": {
-        "summary": "Get all employees (admin only)",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "List of employees",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "type": "integer",
-                        "example": 1
-                      },
-                      "name": {
-                        "type": "string",
-                        "example": "Admin User"
-                      },
-                      "email": {
-                        "type": "string",
-                        "example": "admin@example.com"
-                      },
-                      "role": {
-                        "type": "string",
-                        "example": "admin"
-                      },
-                      "employeeCode":{
-                        "type":"string",
-                        "example":"EMP001"
-                      }
-                    }
+  "/admin/employees": {
+  "get": {
+    "tags": ["Private"],
+    "summary": "Get all employees (admin only)",
+    "security": [
+      {
+        "bearerAuth": []
+      }
+    ],
+    "parameters": [
+      {
+        "name": "skip",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "default": 0
+        },
+        "description": "Number of records to skip"
+      },
+      {
+        "name": "limit",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "default": 10
+        },
+        "description": "Number of records to return"
+      },
+      {
+        "name": "name",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "default": ""
+        },
+        "description": "Search by first name, last name, or email"
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "List of employees",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "example": 1
+                  },
+                  "name": {
+                    "type": "string",
+                    "example": "Admin User"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "admin@example.com"
+                  },
+                  "role": {
+                    "type": "string",
+                    "example": "admin"
+                  },
+                  "employeeCode": {
+                    "type": "string",
+                    "example": "EMP001"
                   }
                 }
               }
@@ -324,9 +368,13 @@
           }
         }
       }
-    },
+    }
+  }
+},
+
     "/admin/employees/{id}": {
       "delete": {
+        "tags": ["Private"],
         "summary": "Delete Employee (admin only)",
         "security": [
           {
@@ -358,6 +406,7 @@
         }
       },
       "get": {
+        "tags": ["Private"],
         "summary": "Get Employee (admin only)",
         "security": [
           {
@@ -389,17 +438,186 @@
         }
       }
     },
-    "/admin/attendance": {
-      "post": {
-        "summary": "Get all attendance records (admin only)",
-        "security": [
-          {
-            "bearerAuth": []
+  "/admin/employee-delete-multiple": {
+  "delete": {
+    "tags": ["Private"],
+    "summary": "Delete Multiple Employees (admin only)",
+    "security": [
+      {
+        "bearerAuth": []
+      }
+    ],
+    "requestBody": {
+      "required": true,
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "required": ["user_ids"],
+            "properties": {
+              "user_ids": {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                },
+                "example": [1, 2]
+              }
+            }
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "A list of attendance records.",
+        }
+      }
+    },
+    "responses": {
+      "204": {
+        "description": "Employees Deleted"
+      },
+      "401": {
+        "description": "Unauthorized. Admin role required."
+      },
+      "500": {
+        "description": "Internal server error."
+      }
+    }
+  }
+},
+ "/admin/update-employee": {
+  "put": {
+    "tags": ["Private"],
+    "summary": "Update Employee (admin only)",
+    "security": [
+      {
+        "bearerAuth": []
+      }
+    ],
+    "requestBody": {
+      "required": true,
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "required": [
+              "employeeId",
+              "firstName",
+              "lastName",
+              "employeeRole",
+              "mobileNumber",
+              "employeeCode",
+              "timeZone",
+              "password",
+              "email"
+            ],
+            "properties": {
+              "employeeId": {
+                "type": "number"
+              },
+              "firstName": {
+                "type": "string"
+              },
+              "lastName": {
+                "type": "string"
+              },
+              "employeeRole": {
+                "type": "string"
+              },
+              "mobileNumber": {
+                "type": "string"
+              },
+              "employeeCode": {
+                "type": "string"
+              },
+              "timeZone": {
+                "type": "string"
+              },
+              "password": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string",
+                "format": "email"
+              }
+            },
+            "example": {
+              "employeeId": 57,
+              "firstName": "First",
+              "lastName": "User",
+              "employeeRole": "employee",
+              "mobileNumber": "900000000",
+              "employeeCode": "EMP-1",
+              "timeZone": "UTC",
+              "password": "User@123",
+              "email": "first_user@mail.com"
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "Employee Updated"
+      },
+      "401": {
+        "description": "Unauthorized. Admin role required."
+      },
+      "500": {
+        "description": "Internal server error."
+      }
+    }
+  }
+},
+"/admin/attendance": {
+  "post": {
+    "tags": ["Private"],
+    "summary": "Get all attendance records (admin only)",
+    "security": [
+      {
+        "bearerAuth": []
+      }
+    ],
+    "requestBody": {
+      "required": true,
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "start_date": {
+                "type": "string",
+                "format": "date-time",
+                "example": "2025-04-22T00:00:00Z",
+                "default": "2025-04-22T00:00:00Z"
+              },
+              "end_date": {
+                "type": "string",
+                "format": "date-time",
+                "example": "2025-04-22T23:59:59Z",
+                "default": "2025-04-22T23:59:59Z"
+              },
+              "skip": {
+                "type": "integer",
+                "default": 0
+              },
+              "limit": {
+                "type": "integer",
+                "default": 10
+              },
+              "employee_id": {
+                "type": "integer",
+                "default": 57
+              },
+              "name": {
+                "type": "string",
+                "default": ""
+              }
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "A list of attendance records.",
+        "content": {
+          "application/json": {
             "schema": {
               "type": "array",
               "items": {
@@ -413,14 +631,18 @@
                 }
               }
             }
-          },
-          "401": { "description": "Unauthorized. Admin role required." },
-          "500": { "description": "Internal server error." }
+          }
         }
-      }
-    },
+      },
+      "401": { "description": "Unauthorized. Admin role required." },
+      "500": { "description": "Internal server error." }
+    }
+  }
+},
+
     "/employee/login": {
       "post": {
+        "tags": ["Public"],
         "summary": "Employee login",
         "requestBody": {
           "required": true,
@@ -499,6 +721,7 @@
     },
     "/employee": {
       "put": {
+        "tags": ["Private"],
         "summary": "Update employee details",
         "security": [
           {
@@ -585,6 +808,7 @@
         }
       },
       "get": {
+        "tags": ["Private"],
         "summary": "get employee details",
         "security": [
           {
@@ -658,7 +882,148 @@
           }
         }
       }
-    }
+    },
+    "/employee/attendance": {
+      "post": {
+        "tags": ["Private"],
+        "summary": "Get all attendance records (Employee only)",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of attendance records.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "date": { "type": "string", "format": "date" },
+                  "start_time": { "type": "string", "format": "date-time" },
+                  "end_time": { "type": "string", "format": "date-time" }
+                }
+              }
+            }
+          },
+          "401": { "description": "Unauthorized. Admin role required." },
+          "500": { "description": "Internal server error." }
+        }
+      }
+    },
+     "/employee/web-app-activity": {
+        "get": {
+          "tags": ["Private"],
+          "summary": "Get web app activity records with filters",
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "parameters": [
+            {
+              "name": "employeeId",
+              "in": "query",
+              "description": "Employee ID to filter by",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "example": "44"
+              }
+            },
+            {
+              "name": "startDate",
+              "in": "query",
+              "description": "Start date to filter by (YYYY-MM-DD)",
+              "required": false,
+              "schema": {
+                "type": "string",
+                "format": "date",
+                "example": "2024-01-01"
+              }
+            },
+            {
+              "name": "endDate",
+              "in": "query",
+              "description": "End date to filter by (YYYY-MM-DD)",
+              "required": false,
+              "schema": {
+                "type": "string",
+                "format": "date",
+                "example": "2024-01-31"
+              }
+            },
+            {
+              "name": "type",
+              "in": "query",
+              "description": "1 - Application, 2 - Website",
+              "required": false,
+              "schema": {
+                "type": "string",
+                "format": "",
+                "example": "1"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "A list of web app activity records",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": { "type": "integer", "example": 1 },
+                        "organization_id": { "type": "integer", "example": 1 },
+                        "employee_id": { "type": "integer", "example": 44 },
+                        "start_time": { "type": "string", "example": "2025-01-21T05:16:49.000Z" },
+                        "end_time": { "type": "string", "example": "2025-01-21T05:16:54.000Z" },
+                        "yyyymmdd": { "type": "integer", "example": 20250121 },
+                        "application_name": { "type": "string", "example": "Windows Explorer" },
+                        "title": { "type": "string", "example": "" },
+                        "url": { "type": "string", "example": "" },
+                        "created_at": { "type": "string", "format": "date-time", "example": "2025-03-26T07:13:40.708Z" },
+                        "updated_at": { "type": "string", "format": "date-time", "example": "2025-03-26T07:13:40.708Z" }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request - Missing required parameters",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "message": { "type": "string", "example": "employeeId and startDate are required." },
+                       "details":{ "type": "string", "example": "The employeeId and startDate parameters are required for this request. Please provide valid values."}
+                    }
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal server error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": { "type": "string", "example": "Internal server error" },
+                      "details" : { "type": "string", "example": "An unexpected error occurred on the server. Please try again later."}
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
   },
   "components": {
     "securitySchemes": {

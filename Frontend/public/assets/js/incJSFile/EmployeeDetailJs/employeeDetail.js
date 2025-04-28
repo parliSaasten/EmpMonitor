@@ -18,7 +18,7 @@ let SORTED_TAG_ID = '';
 let SELECTED_CHECKBOXES = [];  // TO store the all selected checkboxes from the differenect pages
 let ACTIVE_STATUS = 1;
 let SEARCH_TEXT = null; 
-let ADD_REMOVE_COLUMN = ["Email","EmpCode","ComputerName","version"];
+let ADD_REMOVE_COLUMN = ["Email","EmpCode","ComputerName","version","roles"];
 let ORIGINAL_TABLE_HEADER =  ["Email","EmpCode","ComputerName","version"];
 let START_DATE = moment().subtract(6, 'days').format('YYYY-MM-D'), END_DATE= moment().format('YYYY-MM-D');
 let COLLAPSE_MERGE_ID=[];
@@ -405,7 +405,7 @@ let EmplooyeeDetails = (response, CollapseMergeOption) => {
             id = empData[i].id; 
             if(Number($("#CollapseMergeEmpId").val()) === id) continue;
             if(CollapseMergeOption === 1)COLLAPSE_MERGE_ID.push(id);
-            empData[i].emp_code != "" ? empCode = empData[i].emp_code : empCode = "null";
+            empData[i].employee_code != "" ? empCode = empData[i].employee_code : empCode = "null";
                  appendData +=
                     '<tr '+collapseMergeTag+' >' +
                     '<td class="stickyCol-sticky-col" id="td'+ id + '">' + '<input  class="open-checkBoxModalld mr-4" type="checkbox" name="checkbox" id="SelectCheckbox' + id + '" onclick="actionsEnable(' + id + ')" value="' + id + '" />';
@@ -414,12 +414,17 @@ let EmplooyeeDetails = (response, CollapseMergeOption) => {
                 if (ADD_REMOVE_COLUMN.includes('Email')) (empData[i].email == null || empData[i].email == "null") ? appendData += '<td style="width:176px" class="EmailTable" id="em' + id + '">-</td>' : appendData += '<td style="width:176px" class="EmailTable" id="em' + id + '">' + empData[i]['email'] + '</td>';
                  
                 if (ADD_REMOVE_COLUMN.includes('EmpCode')) empCode == null ? appendData += '<td style="width:127px" class="EmpCodeTable" id="ec' + id + '">-</td>' : appendData += '<td style="width:127px" class="EmpCodeTable" id="ec' + id + '">' + empCode + '</td>';
-                
+                if (ADD_REMOVE_COLUMN.includes('roles')) {
+                    (empData[i].role == null || empData[i].role == "null") ? appendData += '<td style="width:176px" class="RoleTable" id="ro' + id + '">-</td>' : appendData += '<td style="width:176px" class="RoleTable" id="ro' + id + '">' + empData[i]['role'] + '</td>'
+                       // appendData += '<td  style="width:78px" class="RoleTable" id="ro' + id + '">' +empData.role+ '</td>';
+                       
+                   }
                 if (ADD_REMOVE_COLUMN.includes('ComputerName')) empData[i].computer_name == null ? appendData += '<td  style="width:138px" class="ComputerNameTable" id="sn' + id + '">-</td>' : appendData += '<td  style="width:138px" class="ComputerNameTable" id="sn' + id + '">--</td>';
-                if (ADD_REMOVE_COLUMN.includes('version') ) empData[i].software_version == null ? appendData += '<td style="width:57px" class="versionTable" id="sv' + id + '">-</td>' : appendData += '<td style="width:57px" class="versionTable" id="sv' + id + '">1.0.0</td>';
-                 
+                if (ADD_REMOVE_COLUMN.includes('version') ) empData[i].software_version == null ? appendData += '<td style="width:57px" class="versionTable" id="sv' + id + '">-</td>' : appendData += '<td style="width:57px" class="versionTable" id="sv' + id + '">1.0.0</td>';;
+                 appendData+=`<td>--</td>`
                 appendData += '<td class="td-action text-center" id="act' + id + '" class="">';
                 appendData += '<a  onclick="getdetails(' + id + ', 2, 0)" id="editedId"  class="open-editModal text-success mr-2"  href="#"  data-toggle="modal" data-target="#editEmpModal" title="' + EMPLOYEE_DETAILS_CONST.empEdit + '"  data-id="' + id + '"><i class="fas fa-user-edit fa-fw" data-toggle="tooltip" data-placement="top" ></i></a>';
+                appendData += '<a id="delete" class="open-editModal text-danger mr-2" href="#"  data-toggle="modal" data-target="#DeleteSingleModal" title="' + EMPLOYEE_DETAILS_CONST.empDelete + '" data-id="' + id + '"> <i class="far fa-trash-alt" data-toggle="tooltip" data-placement="top"></i></a>';
            
             appendData += '</td></tr>';
         }
@@ -553,46 +558,29 @@ $(document).on('submit', '#emp-register', function (e) {
                 $('table#empDetails_Table tr#one' + response.data.user_id + '').add();
                 //incrementing totalEmployees on success.
                 totalEmployees += 1;
-                response.code == 200 ? successTourMessage(response.msg,5) : errorSwal(response.msg);
+                console.log(response.msg);
+                
+                response.code == 200 ? successTourMessage(response.msg) : errorSwal(response.msg);
                 document.getElementById('emp-register').reset();
                 ClearErrorForm();
                 deleteAddShowEntries(2)
                 //for append the registered data without reloading
                 let appendData = "";
-                let id = response.data.user_id;
+                let id = response.data.id;
                 let empData = response.data;
                 let projectname = empData['project_name'] != "" ? empData['project_name'] : "-";
-                appendData += '<tr id=' + id + '><td class="stickyCol-sticky-col" id="fn' + id + '">' + '<input  class="open-checkBoxModalld mr-4" type="checkbox" name="checkbox" id="SelectCheckbox' + id + '" onclick="actionsEnable(' + id + ')" value="' + id + '" /> <a href="get-employee-details?id='+id+'" id="fn' + id + '" >' + empData['first_name'] + ' ' + empData['last_name'] + '</a></td>';
+                appendData += '<tr id=' + id + '><td class="stickyCol-sticky-col" id="fn' + id + '">' + '<input  class="open-checkBoxModalld mr-4" type="checkbox" name="checkbox" id="SelectCheckbox' + id + '" onclick="actionsEnable(' + id + ')" value="' + id + '" /> <a href="get-employee-details?id='+id+'" id="fn' + id + '" >' + empData['firstName'] + ' ' + empData['lastName'] + '</a></td>';
                 // appendData += '<td id="fn' + id + '">' + empData['first_name'] + ' ' + empData['last_name'] + '</td>';
                 if (ADD_REMOVE_COLUMN.includes('Email')) appendData += '<td id="em' + id + '">' + empData['email'] + '</td>';
-                if (ADD_REMOVE_COLUMN.includes('EmpCode')) appendData += '<td id="ec' + id + '">' + empData['emp_code'] + '</td>';
-                if (projectField) projectname == null ? appendData += '<td style="width:127px" class="ProjectNameTable" id="pn' + id + '">-</td>' : appendData += '<td style="width:127px" class="ProjectNameTable" id="pn' + id + '">' + projectname + '</td>';
+                if (ADD_REMOVE_COLUMN.includes('EmpCode')) appendData += '<td id="ec' + id + '">' + empData['employeeCode'] + '</td>';
+                // if (projectField) projectname == null ? appendData += '<td style="width:127px" class="ProjectNameTable" id="pn' + id + '">-</td>' : appendData += '<td style="width:127px" class="ProjectNameTable" id="pn' + id + '">' + projectname + '</td>';
                 appendData += '<td style="width:127px" class="SystemArchitechtureTable" id="sa' + id + '">-</td>';
                 if (ADD_REMOVE_COLUMN.includes('ComputerName')) appendData += '<td id="sn' + id + '">-</td>';
                 if (ADD_REMOVE_COLUMN.includes('version')) appendData += '<td id="sv' + id + '">-</td>';
-                appendData += '<td class="text-center">' +
-                    '<a href="get-employee-details?id=' + id + '"  role="button" target="" title="' + EMPLOYEE_DETAILS_CONST.ViewDetails + '">' +
-                    '<i class="fas fa-user-circle"></i></a>';
-                // '' + NEW_ICON + '' +
                 appendData += '<td id="act' + id + '" class="">';
-                if (userType === "admin" || $("#PermissionData").data('list').some(obj => obj.permission === "employee_user_setting")) {
-                    appendData += '<a href="track-user-setting?id=' + id + '" title="' + EMPLOYEE_DETAILS_CONST.trackUser + '" class="mr-2"><i class="fas fa-cog text-primary"></i></a>';
-                }
-                appendData += '<a id="editedId" href="#" onclick="ManagerList(' + id + ',2)" class="open-editModal text-warning mr-2"  data-toggle="modal" data-target="#ManagerUsersModal"  data-id="' + id + '"><i class="fa fa-eye" style="margin-left: 2px; color:black " data-toggle="tooltip" data-placement="top" title="' + EMP_MSG_LOCALE.empNotAssigned + '" ></i></a>';
-                if (userType === "admin" || $("#PermissionData").data('list').some(obj => obj.permission === "employee_assign_employee")) {
-                    appendData += '<a id="editedId" href="#" onclick=" getRoles()" class="open-editModal text-success mr-2"  data-toggle="modal" data-target="#MultiManagerModal"  data-id="' + id + '"><i class="far fa-arrow-alt-circle-up fa-fw" data-toggle="tooltip" data-placement="top" title="' + AssignEmployee + '" ></i></a>';
-                }
-                if (userType === "admin" || $("#PermissionData").data('list').some(obj => obj.permission === "employee_change_role")) {
-                    appendData += '<a id="upgrade" class="open-upgradeModal text-success mr-2 "  href="#"  data-toggle="modal" onclick="getRoles(' + empData['role'] + ',null,' + id + ')" data-target="#upgradeManagerModal" title="' + EMPLOYEE_DETAILS_CONST.empRoleUpdate + '"  data-id="' + id + '"><i class="fas fa-arrow-up fa-fw" data-toggle="tooltip" data-placement="top" ></i></a>';
-                }
                 if (userType === "admin" || $("#PermissionData").data('list').some(obj => obj.permission === "employee_modify")) {
                     appendData += '<a  onclick="getdetails(' + id + ', 2, 0)" id="editedId"  class="open-editModal text-success mr-2"  href="#"  data-toggle="modal" data-target="#editEmpModal" title="' + EMPLOYEE_DETAILS_CONST.empEdit + '"  data-id="' + id + '"><i class="fas fa-user-edit fa-fw" data-toggle="tooltip" data-placement="top" ></i></a>';
-                }
-                if (userType === "admin" || $("#PermissionData").data('list').some(obj => obj.permission === "employee_delete")) {
-                    appendData += '<a id="delete" class="open-editModal text-danger mr-2" href="#"  data-toggle="modal" data-target="#DeleteSingleModal" title="' + EMPLOYEE_DETAILS_CONST.empDelete + '" data-id="' + id + '"> <i class="far fa-trash-alt" data-toggle="tooltip" data-placement="top"></i></a>';
-            
-                  
-                }
+                }     
                 appendData += '</td></tr>';
 
                 $('#fetch_Details').prepend(appendData);
@@ -615,6 +603,17 @@ $(document).on('submit', '#emp-register', function (e) {
     });
 });
 
+function successTourMessage(msg,step) {
+    Swal.fire({
+        icon: 'success',
+        title: DASHBOARD_JS[msg] || msg || 'success',
+        showConfirmButton: true,
+        confirmButtonText: DASHBOARD_JS.ok ?? 'OK',
+        timer: 4000
+    }).then(function () {
+        intro_status ? (VALUE_ADDED_DONT_HOLD ? goToStep(step) : (step != 5 ? goToStep(step) : '')) : '';
+    });
+}
 function ClearErrorForm() {
     $('#valid-msg').text("");
     $('#error-msg').text("");
@@ -705,16 +704,12 @@ $(document).on('submit', '#emp-singleDelete', function (e) {
             $('#DeleteSingleModal').modal('hide');
         },
         success: function (response) {
-            if (response.code == 200) {
-                totalEmployees -= 1;
-                successSwal(response.msg)
-                $('#emp-singleDeletee').attr("disabled", false);
-                $('table#empDetails_Table tr#one' + response['data']['user_ids'][0] + '').remove();
-                if(! COLLAPSE_MERGE_ID.includes(response['data']['user_ids'][0])) deleteAddShowEntries(1)   // to change the show entries
-            } else {
-                errorSwal(response.msg)
-                $('#emp-singleDeletee').attr("disabled", false);
-            }
+            getUsers( SHOW_ENTRIES,0,"","","",0);
+            Swal.fire({
+                icon: 'success',
+                title: response.message,
+                showConfirmButton: true
+            })
             $('#emp-singleDeletee').attr("disabled", false);
         },
         error: function (jqXHR, textStatus, errorThrown) {
@@ -1091,3 +1086,41 @@ function getListEmp(){
 function clearList(){
     $('#selectedEmployeeList').empty();
 }
+
+//for multiple user delete Madhu
+$(document).on('click', '#deleteModal', function (e) {
+    e.preventDefault();
+    $.ajax({
+        type: "post",
+        data: {
+            user_ids: SELECTED_CHECKBOXES.toString(),
+        },
+        url: "/" + userType + '/Delete-multiple',
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        beforeSend: function () {
+            $('#deleteModal').attr("disabled", true);
+            $(".multipleCheck").prop("checked", false);
+        },
+        success: function (response) {
+            getUsers( SHOW_ENTRIES,0,"","","",0);
+            Swal.fire({
+                icon: 'success',
+                title: response.message,
+                showConfirmButton: true
+            });
+            $('#deleteModal').attr("disabled", false);
+            $('#deleteManagerModal').modal('hide');
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            if (jqXHR.status == 410) {
+                $("#UnaccessModal").empty();
+                $("#UnaccessModal").css('display', 'block');
+                $("#UnaccessModal").append('<div class="alert alert-danger text-center"><button type="button" class="close" data-dismiss="alert" >&times;</button><b  id="ErrorMsgForUnaccess"> ' + jqXHR.responseJSON.error + '</b></div>')
+            } else errorSwal(DASHBOARD_JS_ERROR.reload);
+            $('#deleteModal').attr("disabled", false);
+            $('#deleteManagerModal').modal('hide');
+        }
+    });
+});

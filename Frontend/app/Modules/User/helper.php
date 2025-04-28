@@ -86,13 +86,7 @@ class helper
                             'Authorization' => 'Bearer ' . $session_token
                             ]
                         ]);
-                      if ($response->getStatusCode() == 201) {
-                        $data = json_decode($response->getBody()->getContents(), true);
-                        $result['statusCode'] = $response->getStatusCode();
-                        $result['data'] = $data;
-
-                        return $result;
-                    }elseif ($response->getStatusCode() == 200) {
+                      if ($response->getStatusCode() == 201 || $response->getStatusCode() == 200) {
                         $data = json_decode($response->getBody()->getContents(), true);
                         $result['statusCode'] = $response->getStatusCode();
                         $result['data'] = $data;
@@ -119,7 +113,7 @@ class helper
                         'headers' => [
                             'user-agent' => $_SERVER['HTTP_USER_AGENT'],
                             'Content-Type' => 'application/x-www-form-urlencoded',
-                            'Authorization' => 'Bearer ' . Session::get($role)['token']['data']
+                            'Authorization' => 'Bearer ' . $session_token
                         ]
                     ]);
 
@@ -143,7 +137,7 @@ class helper
                         'headers' => [
                             'user-agent' => $_SERVER['HTTP_USER_AGENT'],
                             'Content-Type' => 'application/x-www-form-urlencoded',
-                            'Authorization' => 'Bearer ' . Session::get($role)['token']['data']
+                            'Authorization' => 'Bearer ' . $session_token
                         ]
                     ]);
 
@@ -198,13 +192,13 @@ class helper
 
     public function employeesList()
     {
-        $api_url = $this->API_URL_3 . '/user/users';
-        $method = "post";
+        $api_url = env('MAIN_API'). 'admin/employees';
+        $method = "get-with-token";
         $data['skip'] = "";
         $data['limit'] = "";
         try {
             $response = $this->postApiCall($method, $api_url, $data);
-            return $this->responseHandler($response);
+            return $response;
         } catch (\Exception $e) {
             return $this->errorHandler($e, ' helperfile => employees => Method-post ');
         }
@@ -470,7 +464,6 @@ class helper
 
     public function shiftById($id)
     {
-        // dd(12);
         try {
             $api_url = $this->API_URL_3 . '/organization-shift?id=' . $id;
             $method = "get";
@@ -478,9 +471,7 @@ class helper
             if ($response['data'] != null) {
                 foreach ($response['data'] as $key => $value) {
                     $response['data'][$key]['data'] = json_decode($value['data'], true);
-                    // dd($response['data'][$key]['data']);
                     foreach ($response['data'][$key]['data'] as $key1 => $value1) {
-                        //  dd($value1['status'],$response['data'][$key]['data'][$key1],$key1);
                         if ($value1['status'] == false) {
 
                             unset($response['data'][$key]['data'][$key1]);

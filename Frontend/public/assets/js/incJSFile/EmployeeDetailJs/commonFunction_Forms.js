@@ -16,7 +16,6 @@ function getdetails(id, test, details) {
     $('#ErrorsContact').text("");
     $('#ErrorsEmpCode').text(""); 
     $("#emp_emailAddress").prop("readonly", false);
-     let input = document.querySelector("#Edittelephones");
     let countryData = edititi.getSelectedCountryData();
     let dialCode = countryData.dialCode;
     $("#Emp-edit").trigger("reset");
@@ -35,23 +34,13 @@ function getdetails(id, test, details) {
              $('#Name').val(data.first_name);
             $('#fullName').val(data.last_name);
             $('#emp_emailAddress').val(data.email);
-            (data.mobile_number != "" && data.mobile_number!="null" )? $('#Edittelephones').val(data.mobile_number) : null;
+            $('#Edittelephones').val(data.mobile_number)
             $('#emp_code').val(data.employee_code);
             $('#Employeeaddress').val(data.address); 
             $('#password-editEmp').val(data.password);
             $('#cpassword-editEmp').val(data.password);
             $("#timezoneAddendEdit option[value='" + data.time_zone + "']").attr('selected', 'selected');
-               
-            if (data.mobile_number != "" && data.mobile_number != null && data.mobile_number != 'null') {
-                let phoneNumber = data.mobile_number.split("-");
-                let phoneNum = "+" + phoneNumber[0] + phoneNumber[1];
-                (phoneNumber[0] && phoneNumber[1]) ? edititi.setNumber(phoneNum) : $('#Edittelephones').val('');
-            }
-            // if (data.photo_path.substring(0, 5) === "https") {
-            //     $("#img").attr("src", data.photo_path);
-            // } else {
-            //     $("#img").attr("src", envApiHost + data.photo_path);
-            // } 
+            
             current_Emp = data.id;
          },
         error: function () {
@@ -109,10 +98,10 @@ $(document).on('submit', '#Emp-edit', function (e) {
     let depId = $("#Empedit_departments option:selected").attr('id');
     let roleId = $("#role-EditEmployee option:selected").attr('id');
     let RoleId = [];
-    let id = $("#role-EditEmployee").select2('data');
-    id.forEach(function (dept) {
-        RoleId.push(dept.id);
-    });
+    // let id = $("#role-EditEmployee").select2('data');
+    // id.forEach(function (dept) {
+    //     RoleId.push(dept.id);
+    // });
     let timezoneAddendEdit = $("#timezoneAddendEdit option:selected").attr('data-offset');
     let timezoneName = $("#timezoneAddendEdit option:selected").attr('data-zone');
     let ContactCheck = $("#validContactEdit").val();
@@ -125,8 +114,8 @@ $(document).on('submit', '#Emp-edit', function (e) {
     formData.append('ContactCheck', ContactCheck);
     fileinput && formData.delete('file');
     formData.append('EDmobileTracking', $("#EDmobileTracking").prop("checked")? 'on' : 'off');
-    // formData.append('manager_role_id', $('#role_id_to_get_managers').val());
-    // formData.append('assigned_manager', $('#selectedManagerList').val());
+    formData.append('manager_role_id', $('#role_id_to_get_managers').val());
+    formData.append('assigned_manager', $('#selectedManagerList').val());
     $.ajax({
         type: "post",
         url: "/" + userType + '/Emp-edit',
@@ -150,155 +139,38 @@ $(document).on('submit', '#Emp-edit', function (e) {
             $('#ErrorsRoleIdError').text("");
         },
         success: function (response) {
-            $.each(response, function (index, value) {
-                $("#loaderForm").css('display', 'none');
-                switch (index) {
-                    case "name":
-                        document.getElementById('ErrorsName').innerHTML = EMPLOYEE_DETAILS_ERROR.firstName;
-                        break;
-                    case "Full_name":
-                        document.getElementById('ErrorsFullName').innerHTML = EMPLOYEE_DETAILS_ERROR.lastName;
-                        break;
-                    case "email":
-                        document.getElementById('ErrorsEmailAddress').innerHTML =EMPLOYEE_DETAILS_ERROR.emailError;
-                        break;
-                    case "password":
-                        // if (response.password[0] == 'The password field is required.') document.getElementById('ErrorsPaswd').innerHTML = EMPLOYEE_DETAILS_ERROR.password_field_required;
-                        // if (response.password[0] == 'The password format is invalid.') document.getElementById('ErrorsPaswd').innerHTML = EMPLOYEE_DETAILS_ERROR.password_invalid;
-                        document.getElementById('ErrorsPaswd').innerHTML = value[0];
-                        break;
-                    case "confirmPassword":
-                        document.getElementById('ErrorsCPaswd').innerHTML = EMPLOYEE_DETAILS_ERROR.passMissmatch;
-                        break;
-                    case "number":
-                        document.getElementById('ErrorsContact').innerHTML = response.number;
-                        break;
-                    case "EmpCode":
-                        document.getElementById('ErrorsEmpCode').innerHTML = EMPLOYEE_DETAILS_ERROR.empCodeError;
-                        break;
-                    case "locId":
-                        document.getElementById('ErrorsLocationId').innerHTML = EMPLOYEE_DETAILS_ERROR.empLocationError;
-                        break;
-                    case "depId":
-                        document.getElementById('ErrorsDeptIdMessage').innerHTML = EMPLOYEE_DETAILS_ERROR.empDeptError;
-                        break;
-                    case "address":
-                        document.getElementById('ErrorsAddressBox').innerHTML = EMPLOYEE_DETAILS_ERROR.empAdressError;
-                        break;
-                    case "roleId":
-                        document.getElementById('ErrorsRoleId').innerHTML = EMPLOYEE_DETAILS_ERROR.empRoleError;
-                        break;
-                    case "date":
-                        document.getElementById('Join').innerHTML = EMPLOYEE_DETAILS_ERROR.empDOJError;
-                        break;
-                    case "TimeZoneOffeset":
-                        document.getElementById('ErrorTimeZoneField').innerHTML = EMPLOYEE_DETAILS_ERROR.empTimezoneError;
-
-                }
-            })
-            if (response.code == 200) {
-                let id = response.data.data[0].id;
-                let appendData = "", check = "", names = [];
-                let rowId = response.data.data[0].id;
-                let editResponse = response.data.data[0];
+            if(response.code==200){
+               
+                $('#loaderForm').css('display','none')
                 $('#editEmpModal').modal('hide');
-                customSuccessHandler(response.msg)
                 $('#emp-edit').attr("disabled", false);
+                $('#userId').html(response.data.firstName+response.data.lastName)
+                Swal.fire({
+                    icon: 'success',
+                    title: response['message'],
+                    showConfirmButton: true
+                });
+                let editResponse = response.data;
+               
+                $('#fn' + response.data.employeeId + '').html(editResponse.firstName+editResponse.lastName);
+                $('#em' + response.data.employeeId + '').html(editResponse.email);
+                $('#ec' + response.data.employeeId + '').html(editResponse.employeeCode);
+                $('#ec' + response.data.employeeId + '').html(editResponse.role);
+                $("#timezoneAddendEdit option[value='" + response.data.timeZone + "']").attr('selected', 'selected');
+            }else if(response.code==400){
+                Swal.fire({
+                    icon: 'Error',
+                    title: response['message'],
+                    showConfirmButton: true
+                });
                 $("#loaderForm").css('display', 'none');
-                document.getElementById('Emp-edit').reset();
-                if ($("#FormCalled").val() == 1) {
-                    $('#fn' + rowId + '').html(editResponse.full_name);
-                    $('#em' + rowId + '').html(editResponse.email);
-                    $('#lo' + rowId + '').html(editResponse.location_name);
-                    $('#dpt' + rowId + '').html(editResponse.department_name);
-                    $('#ec' + rowId + '').html(editResponse.emp_code);
-                    if (userType === "admin" || $("#PermissionData").data('list').some(obj => obj.permission === "employee_user_setting")) {
-                        appendData += '<a href="track-user-setting?id=' + id + '" title="track-user-setting   " class="mr-2"><i class="fas fa-cog text-primary"></i></a>';
-                    }
-                    editResponse.roles.forEach(function (roles) {
-                        names.push(roles.name);
-                    });
-                    if (editResponse.status == 1) {
-                        if (editResponse.roles.length > 1) {
-
-                            appendData += '<a  href="#" onclick="ManagerList(' + id + ',2)" class="open-editModal text-warning mr-2"  data-toggle="modal" data-target="#ManagerUsersModal"  data-id="' + id + '"><i class="fa fa-eye" style="margin-left: 2px; color:black " data-toggle="tooltip" data-placement="top" title="Employee Is Not Assigned" ></i></a>';
-                            if (userType === "admin" || $("#PermissionData").data('list').some(obj => obj.permission === "employee_assign_employee")) {
-                                appendData += '<a  href="#" onclick=" getRoles()" class="open-editModal text-success mr-2"  data-toggle="modal" data-target="#MultiManagerModal"  data-id="' + id + '"><i class="far fa-arrow-alt-circle-up fa-fw" data-toggle="tooltip" data-placement="top" title="Assign Employee" ></i></a>';
-                            }
-                        } else if (editResponse.roles.length === 1) {
-                            if ((editResponse.roles[0].name).toLowerCase() == "employee") {
-                                appendData += '<a id="editedId" href="#" onclick="ManagerList(' + id + ',2)" class="open-editModal text-warning mr-2 disabled_effect"  data-toggle="modal" data-target="#ManagerUsersModal"  data-id="' + id + '"><i class="fa fa-eye" style="margin-left: 2px; color:black " data-toggle="tooltip" data-placement="top" title="Employee Is Not Assigned" ></i></a>';
-                                if (userType === "admin" || $("#PermissionData").data('list').some(obj => obj.permission === "employee_assign_employee")) {
-                                    appendData += '<a  href="#" onclick=" getRoles()" class="open-editModal text-success mr-2"  data-toggle="modal" data-target="#MultiManagerModal"  data-id="' + id + '"><i class="far fa-arrow-alt-circle-up fa-fw" data-toggle="tooltip" data-placement="top" title="Assign Employee" ></i></a>';
-                                }
-                            } else {
-
-                                appendData += '<a  href="#" onclick="ManagerList(' + id + ',2)" class="open-editModal text-warning mr-2"  data-toggle="modal" data-target="#ManagerUsersModal"  data-id="' + id + '"><i class="fa fa-eye" style="margin-left: 2px; color:black " data-toggle="tooltip" data-placement="top" title="Employee Is Not Assigned" ></i></a>';
-                                if (userType === "admin" || $("#PermissionData").data('list').some(obj => obj.permission === "employee_assign_employee")) {
-                                    appendData += '<a href="#" onclick=" getRoles()" class="open-editModal text-success mr-2"  data-toggle="modal" data-target="#MultiManagerModal"  data-id="' + id + '"><i class="far fa-arrow-alt-circle-up fa-fw" data-toggle="tooltip" data-placement="top" title="Assign Employee" ></i></a>';
-                                }
-                            }
-                        }
-                        if (userType === "admin" || $("#PermissionData").data('list').some(obj => obj.permission === "employee_change_role")) {
-                            appendData += '<a id="upgrade" class="open-upgradeModal text-success mr-2 "  href="#"  data-toggle="modal" onclick="getRoles(' + editResponse.roles[0].role_id + ',null,' + id + ')" data-target="#upgradeManagerModal" title="Update The Role"  data-id="' + id + '"><i class="fas fa-arrow-up fa-fw" data-toggle="tooltip" data-placement="top" ></i></a>';
-                        }
-                    }
-                    if (userType === "admin" || $("#PermissionData").data('list').some(obj => obj.permission === "employee_modify")) {
-                        appendData += '<a  onclick="getdetails(' + id + ', 2, 0)" id="editedId"  class="open-editModal text-success mr-2"  href="#"  data-toggle="modal" data-target="#editEmpModal" title="Edit Employee"  data-id="' + id + '"><i class="fas fa-user-edit fa-fw" data-toggle="tooltip" data-placement="top" ></i></a>';
-                    }
-                    if (userType === "admin" || $("#PermissionData").data('list').some(obj => obj.permission === "employee_delete")) {
-                        appendData += '<a id="delete" class="open-editModal text-danger mr-2" href="#"  data-toggle="modal" data-target="#DeleteSingleModal" title="Delete Employee" data-id="' + id + '"> <i class="far fa-trash-alt" data-toggle="tooltip" data-placement="top"></i></a>';
-                        appendData += '<a onclick="getSuperiorData(' + id + ')" data-toggle="modal" data-target="#superiorRolesModal" title="' + EMPLOYEE_DETAILS_CONST.superiordetails + '"> <i class="fa fa-eye text-primary" data-toggle="tooltip" data-placement="top"></i></a>';
-                        appendData += '<a data-toggle="modal" class="text-danger mr-2" title="' + EMPLOYEE_DETAILS_CONST.logout + '" id="emplogout" onclick ="logoutEmp(' + id + ')" style="padding-left:5px"> <i class="fas fa-sign-out-alt" data-toggle="tooltip" data-placement="top" ></i></a>';
-                    }
-                    if (names.length === 1) $('#ro' + rowId + '').html(names.toString());
-                    else {
-                        $('#ro' + id + '').html(names.toString().substring(0,8)+'..');
-                        $("#ro" + id).attr('title', names.toString());
-                    }
-                    $('#act' + id + '').html(appendData);
-                    $('#sus' + id + '').html(appendData);
-                    let SLI = editResponse.location_id;
-                    let SDI = editResponse.department_id;
-                    let SRI = editResponse.role_id;
-                    if (LocationId) var LI = LocationId;
-                    else var LI = "0";
-                    if (RoleId) var RI = RoleId;
-                    else var RI = "0";
-                    if (DI != "") var DI = DepartementId.split(",");
-                    else var DI = 0;
-                    let DIStutus = false;
-                    if (DI != 0 && DI.length != 0) {
-                        for (i = 0; i < DI.length; i++) {
-                            if (DI[i] == SDI) {
-                                DIStutus = false;
-                                break;
-                            } else DIStutus = true;
-                        }
-                    }
-                    if ((LI != 0 && SLI != LI && LI != "") || DIStutus) {
-                        $("#empDetails_Table").dataTable().fnDestroy();
-                        $('table#empDetails_Table tr#' + rowId + '').remove();
-                        // $("#empDetails_Table").DataTable({
-                        //     stateSave: true,
-                        //     "scrollX": true,
-                        // });
-                    }
-
-                } else $("#userId").html(editResponse.full_name)
-                reInitializeFilters();
-            } else if (response.code == 404 || response.code == 400) {
-                errorSwal(response.msg, response.error)
                 $('#emp-edit').attr("disabled", false);
+            }else{
+                $("#loaderForm").css('display', 'none');
             }
-            $('#emp-edit').attr("disabled", false);
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            if (jqXHR.status == 410) {
-                $("#UnaccessModal").empty();
-                $("#UnaccessModal").css('display', 'block');
-                $("#UnaccessModal").append('<div class="alert alert-danger text-center"><button type="button" class="close" data-dismiss="alert" >&times;</button><b  id="ErrorMsgForUnaccess"> ' + jqXHR.responseJSON.error + '</b></div>')
-            } else errorSwal(DASHBOARD_JS_ERROR.reload);
+           
             $('#editEmpModal').modal('hide');
             $("#loaderForm").css('display', 'none');
         }

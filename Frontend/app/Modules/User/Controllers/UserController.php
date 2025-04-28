@@ -160,7 +160,7 @@ class UserController extends Controller
                     if ($response->getStatusCode() == 200) { 
                         $response = json_decode($response->getBody()->getContents(), true);
                        if ($response['role'] == 'employee') {  
-                            Session::put('employee_session', $response); 
+                           Session::put('employee_session', $response);
                              return redirect('/employee/myTimeline?id='.$response['id']);
                         } else {
                             return redirect('login')->with('error', $response['error']);
@@ -169,7 +169,6 @@ class UserController extends Controller
                     }
                 }
             } catch (\Exception $e) {
-
                 Log::info('Exception ' . $e->getLine() . " => Function Name =>Login  => code =>" . $e->getCode() . " => message =>  " . $e->getMessage());
                 return redirect('login')->with('error', $e->getMessage());
             }
@@ -316,12 +315,11 @@ class UserController extends Controller
    
     public function EmployeeDetails(Request $request)
     {
-        $data['day'] = date("Y-m-d");
         $data['limit'] = count($request->all()) != 0 ? $request->input('showEntries') : 10;
         $data['skip'] = count($request->all()) != 0 ? $request->input('skipvalue') : 0;
         $data['name'] = count($request->all()) != 0 ? ($request->input('searchText') != null ? $request->input('searchText') : "") : "";
         
-        $api_url = env('MAIN_API').'admin/employees?skip='.$data['skip']."&limit=".$data['limit'];
+        $api_url = env('MAIN_API').'admin/employees?skip='.$data['skip']."&limit=".$data['limit']."&name=".$data['name'];
         $method = "get-with-token"; 
         if ($request->input('sortName') != '' && count($request->all()) != 0) {
             $data['sortColumn'] = $request->input('sortName');
@@ -353,115 +351,24 @@ class UserController extends Controller
 
      public function editEmployee(Request $request)
     {
-        $result = [];
-        $rules = array(
-            "name" => 'required|max:32|min:1|regex:/([a-zA-Zء-ي]+)([0-9٠-٩]*)/', ///([0-9٠-٩]*)([a-zA-Zء-ي]+)([0-9٠-٩]*)/
-            "Full_name" => 'required|max:32|min:1|regex:/([a-zA-Zء-ي]+)([0-9٠-٩]*)/',
-            "email" => 'required|email|regex:/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,10})+$/',
-            "password" => 'required |regex:/^(?=.*\d)(?=.*[!-\/:-@\[-`{-~]).{8,}$/',
-            "confirmPassword" => 'required_with:passwd|same:password',
-            "EmpCode" => 'required|',
-            "locId" => 'required|regex:/[1-9]*[0-9٠-٩]/',
-            "depId" => 'required|regex:/[0-9٠-٩]/',
-            "roleId" => 'required',
-        );
+   
+        $data['firstName']=$request->input('name');
+        $data['lastName']=$request->input('Full_name');
+        $data['email']=$request->input('email');
+        $data['password']=$request->input('password');
+        $data['mobileNumber']=$request->input('number');
+        $data['timeZone']=$request->input('timeZone');
+        $data['employeeCode']=$request->input('EmpCode');
+        $data['employeeId']=(int) $request->input('hideId');
+        $data['employeeRole']="employee";
+      
+        $method = "put";
+        $api_url = env('MAIN_API') . 'admin/update-employee';
         try {
-            $customMessage = [
-                'name.required' => __('messages.inputRequired'),
-                'Full_name.required' => __('messages.inputRequired'),
-                'email.required' => __('messages.inputRequired'),
-                'password.required' => __('messages.inputRequired'),
-                'EmpCode.required' => __('messages.inputRequired'),
-                'locId.required' => __('messages.inputRequired'),
-                'depId.required' => __('messages.inputRequired'),
-                'roleId.required' => __('messages.inputRequired'),
-                'name.max' => __('messages.firstName_length'),
-                'password.regex' => __('messages.Password_formate'),
-                'confirmPassword.required_with' => __('messages.confirm_password'),
-                'confirmPassword.same' => __('messages.Password_missmatch'),
-                'username.regex' => __('messages.Username_alphanumeric'),
-                'first_name.regex' => __('messages.special_characters'),
-            ];
-            $validator = Validator::make($request->all(), $rules, $customMessage);
-            if ($validator->fails()) {
-                return $validator->errors();
-            } else {
-                if ($request->input('number') != null) {
-                    $contact = $this->contactDetailsCheck($request);
-                    if (count($contact['error']) != 0) return $contact['error'];
-                    else if (count($contact['data']) != 0) $data['phone'] = $contact['data']['phone'];
-                } else {
-                    $data['phone'] = $request->input('CountryCode') . "-" . "";
-                }
-                $api_url = $this->API_URL_3 . 'api/' . $this->VERSION_3 . '/user/user-profile-update';
-                $method = 'post';
-                $data['userId'] = $request->input('hideId');
-                $data['first_name'] = $request->input('name');
-                $data['last_name'] = $request->input('Full_name');
-                $data['email'] = strtolower($request->input('email'));
-                $data['password'] = $this->encryptDecryptPswd($request, 1, 0);
-                $data['emp_code'] = $request->input('EmpCode');
-                $data['location'] = $request->input('location');
-                $data['location_id'] = $request->input('locId');
-                $data['role_id'] = $request->input('roleId');
-                $data['department'] = $request->input('department');
-                $data['department_id'] = $request->input('depId');
-                $data['joinDate'] = $request->input('date');
-                $data['address'] = $request->input('address') != null ? $request->input('address') : " ";
-                $data['shift_id'] = $request->input('shiftCheck');
-                $data['project_name'] =  isset($request->projectname) ? $request->input('projectname') : '';
-                $data['hris_id'] =  isset($request->hris_id_edit) ? $request->input('hris_id_edit') : '';
-                $data['employement_id'] = isset($request->employement_id) ? $request->input('employement_id_edit') : '';
-                $data['expiry_period'] = isset($request->expiry_period) ? $request->input('expiry_period_edit') : '';
-                $data['is_mobile'] = isset($request->EDmobileTracking) ? $request->input('EDmobileTracking') == 'on' ? 1 : 0 : 0;
-                // $data['manager_role_id'] = $request->input('manager_role_id') != 0 ? $request->input('manager_role_id') : 0;
-                // $data['assigned_manager'] = isset($request->assigned_manager) ? explode(",",$request->input('assigned_manager')): [];
-
-                if ($request->input("timeZoneOffset") != null) {
-                    $data['timezone_offset'] = $request->input("timeZoneOffset");
-                    $data['timezone'] = $request->input("timeZoneName");
-                }
-                $data['status'] = "1";
-                $response = $this->helper->postApiCall($method, $api_url, $data);
-
-                if ($response['statusCode'] == 200) {
-                    if ($response['data']['code'] == 200) {
-                        $result['code'] = $response['data']['code'];
-                        $result['msg'] = $response['data']['message'];
-                        $result['data'] = ($response['data']);
-                    } else {
-                        $result['code'] = $response['data']['code'];
-                        $result['msg'] = $response['data']['message'];
-                        $result['error'] = strval($response['data']['error']);
-                    }
-                }
-                //upload-image
-                if ($request->file != null) {
-                    //todo:upload the file.
-                    $image = $request->file;
-                    $pathToStorage = storage_path("images");
-                    if (!file_exists($pathToStorage))
-                        mkdir($pathToStorage, 0777, true);
-                    $publishimage = $image->getClientOriginalName();
-                    $path = $pathToStorage . "/" . $publishimage;
-                    file_put_contents($path, file_get_contents($image->path()));
-                    $multipartData = array(
-                        "name" => "avatar",
-                        "file" => $path
-                    );
-                    $uploadUrl = $this->API_URL_3 . 'api/' . $this->VERSION_3 . '/user/upload-profilepic-drive?user_id=' . $request->input('hideId');
-                    $uploadResponse = $this->helper->postApiCall($method, $uploadUrl, $multipartData, true);
-                    if ($uploadResponse['data']['code'] == 200) {
-                        $result['avatar'] = $uploadResponse['data']['data']['photo_path'];
-                    }else {
-                        $result['code'] = $uploadResponse['data']['code'];
-                        $result['msg'] = $uploadResponse['data']['message'];
-                        $result['error'] = $uploadResponse['data']['error']['sqlMessage'] ?? '';
-                    }
-                }
-                return $result;
+            $response = $this->helper->postApiCall($method, $api_url, $data);
+           return $response;
             }
-        } catch (\Exception $e) {
+         catch (\Exception $e) {
             return $this->ExceptionErrorHandler($e, "404", ' UserController => editEmployee => Method-delete');
         }
     }
@@ -470,13 +377,13 @@ class UserController extends Controller
     //  ************* deleting Single employee using delete icon *************
     public function Employeedelete(Request $request)
     {
-        $api_url = $this->API_URL_3 . 'api/' . $this->VERSION_3 . '/user/user-delete-multiple';
+        $api_url =  env('MAIN_API').'admin/employee-delete-multiple';
         $method = 'delete';
         $data['user_ids'] = [$request->input('DetedId')];
         if(Session::has('leftOverLicenses')) Session::forget('leftOverLicenses');
         try {
             $response = $this->helper->postApiCall($method, $api_url, $data);
-            return $this->helper->responseHandlerWithoutStatusCode($response);
+            return $response;
         } catch (\Exception $e) {
             return $this->ExceptionErrorHandler($e, 400, ' UserController => Employeedelete => Method-delete');
         }
@@ -617,6 +524,19 @@ class UserController extends Controller
             return $result;
         } catch (\Exception $e) {
             return $this->ExceptionErrorHandler($e, "400", ' UserController => show_details => Method-post');
+        }
+    }
+    
+    public function DeleteMultiple(Request $request)
+    {
+        $data['user_ids'] = collect(explode(',', $request->input('user_ids')))->map(fn($id) => (int) $id)->filter(fn($id) => $id > 0)->values()->toArray();
+        $method = "delete";
+        $api_url = env('MAIN_API') . 'admin/employee-delete-multiple';
+        try {
+            $response = $this->helper->postApiCall($method, $api_url, $data);
+            return $response;
+        } catch (\Exception $e) {
+            return $this->ExceptionErrorHandler($e, "500", ' UserController => DeleteMultiple => Method-delete');
         }
     }
     public function adminLogin(Request $request)

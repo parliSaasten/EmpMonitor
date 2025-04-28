@@ -61,7 +61,7 @@
                 <li class="dropdown nav-item">
                    <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" data-toggle="dropdown"
                            role="button" aria-haspopup="true" aria-expanded="false"><img
-                                src="{{Session::get('admin_session')['photo_path']??''}}"
+                                src="../assets/images/avatars/avatar-new.png"
                                 alt=""
                                 class="rounded-circle"></a>
                   

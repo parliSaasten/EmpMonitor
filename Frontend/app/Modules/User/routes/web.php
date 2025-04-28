@@ -29,6 +29,8 @@ Route::group(['module' => 'User', 'middleware' => ['web'], 'namespace' => 'App\M
             Route::post('/get-time-sheets-data', [UserDetailsController::class,'getTimeSheetData']);
             Route::get('/attendance-history', [TimeAttendanceController::class,'attendanceHistory'])->name('attendance-history');
             Route::post('/attendance-history', [TimeAttendanceController::class,'attendanceHistory']);
+            Route::post('/Delete-multiple', [UserController::class,'DeleteMultiple']);
+            Route::post('/Emp-edit', [UserController::class,'editEmployee']);
             }); 
         });
 
@@ -38,8 +40,9 @@ Route::group(['module' => 'User', 'middleware' => ['web'], 'namespace' => 'App\M
                 Route::get('/myTimeline', [EmployeeController::class,'employeeFullDetailsPage'])->name('myTimeline');
                 Route::get('/employee-logout', [EmployeeController::class,'logoutEmployee'])->name('employee-logout');
                 Route::post('/get-web-app-histories', [UserDetailsController::class,'getWebAppHistory']);
-                Route::get('/attendance-history', [TimeAttendanceController::class,'attendanceHistoryEmployee'])->name('attendance-history');
-                Route::post('/attendance-history', [TimeAttendanceController::class,'attendanceHistoryEmployee']);
+                Route::post('/get-time-sheets-data-employee', [UserDetailsController::class,'getTimeSheetData']);
+                Route::get('/attendance-history-employee', [TimeAttendanceController::class,'attendanceHistoryEmployee'])->name('attendance-history-employee');
+                Route::post('/attendance-history-employee', [TimeAttendanceController::class,'attendanceHistoryEmployee']);
             });
         });
 

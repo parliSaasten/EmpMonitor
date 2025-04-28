@@ -56,13 +56,30 @@ async function updateEmployee(id, employee) {
   }
 }
 
-async function getAllEmployees(skip, limit) {
+async function getAllEmployees(skip, limit, name, count = 0) {
   try {
     const pool = await mySqlSingleton.getPool();
-    const [rows] = await pool.query(
-      'SELECT * FROM employees WHERE role = ? LIMIT ? OFFSET ?',
-      ['employee', parseInt(limit, 10), parseInt(skip, 10)] // Ensure numeric values
-    );
+    let query='';
+    const params = ['employee'];
+
+    if(count){
+      query = `SELECT COUNT(*) AS total FROM employees WHERE role = ?`;
+    }else{
+      query = `SELECT * FROM employees WHERE role = ?`;
+    }
+
+    if(name){
+      query += `AND (first_name LIKE ? OR last_name LIKE ? OR email LIKE ?)`;
+      params.push(`%${name}%`,  `%${name}%`, `%${name}%`);
+    }
+
+    if(!count){
+       query += ` LIMIT ? OFFSET ?`;
+       params.push(limit, skip);
+    }
+
+    const [rows] = await pool.query(query, params);
+    if(count) return rows[0]?.total || 0; 
     return rows;
   } catch (error) {
     console.error('Error getting all employees:', error);
@@ -88,6 +105,7 @@ async function countEmployees() {
 async function deleteEmployee(id) {
   try {
     const pool = await mySqlSingleton.getPool();
+    await pool.query('DELETE FROM employee_attendance WHERE employee_id = ?', [id]);
     await pool.query('DELETE FROM employees WHERE id = ?', [id]);
   } catch (error) {
     console.error(`Error deleting employee with id ${id}:`, error);
@@ -95,11 +113,16 @@ async function deleteEmployee(id) {
   }
 }
 
-async function getAllAttendance(start_date, end_date, skip, limit, employee_id) {
+async function getAllAttendance(start_date, end_date, skip, limit, employee_id, name, count) {
   try {
     const pool = await mySqlSingleton.getPool();
 
-    let query = 'SELECT * FROM employee_attendance ea JOIN employees e ON e.id = ea.employee_id WHERE date BETWEEN ? AND ?';
+    let query = '';
+    if(count){
+      query = 'SELECT COUNT(*) AS total FROM employee_attendance ea JOIN employees e ON e.id = ea.employee_id WHERE date BETWEEN ? AND ?';
+    }else{
+      query = 'SELECT * FROM employee_attendance ea JOIN employees e ON e.id = ea.employee_id WHERE date BETWEEN ? AND ?';
+    }
     const params = [start_date, end_date];
 
     if (employee_id) {
@@ -107,10 +130,18 @@ async function getAllAttendance(start_date, end_date, skip, limit, employee_id) 
       params.push(employee_id);
     }
 
-    query += ' LIMIT ?, ?';
-    params.push(skip, limit);
+    if (name) {
+      query += ' AND (e.first_name LIKE ? OR e.last_name LIKE ? OR e.email LIKE ?)';
+      params.push(`%${name}%`,  `%${name}%`, `%${name}%`);
+    }
+
+    if(!count){
+      query += ' LIMIT ?, ?';
+      params.push(skip, limit);
+    }
 
     const [rows] = await pool.query(query, params);
+    if(count) return rows[0]?.total || 0;
     return rows;
   } catch (error) {
     console.error('Error fetching attendance records:', error);

@@ -9,7 +9,7 @@
     <div class="secondary-sidebar-menu">
         <ul class="accordion-menu" id="sidebar_menus">
          
-        @if(Session::get('admin_session'))
+        @if(Session::has('admin_session'))
             <li>
                 <a href="#">
                     <i class="menu-icon icon-users"
@@ -24,10 +24,18 @@
             </li>
             @endif
             <li>
-                <a href="{{ route('attendance-history', (new App\Modules\User\helper())->getHostName()) }}">
+               @php  $url = Session::has('employee_session') ? 'attendance-history-employee' : 'attendance-history'; @endphp
+               @if(Session::has('employee_session'))
+               <a href="">
+                    <i class="menu-icon fas fa-tachometer-alt"
+                        title="{{ __('messages.dashboard') }}"></i><span>{{ __('messages.dashboard') }}</span>
+                </a>
+               @else
+                <a href="{{ route($url, (new App\Modules\User\helper())->getHostName()) }}">
                     <i class="menu-icon far fa-calendar-alt"
                         title="{{ __('messages.timesheets') }}"></i><span>{{ __('messages.timesheets') }}</span>
                 </a>
+                @endif
             </li>
         </ul>
     </div>

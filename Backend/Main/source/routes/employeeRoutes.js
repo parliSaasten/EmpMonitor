@@ -19,6 +19,7 @@ class EmployeeRoutes {
         this.myRoutes.get('/', authMiddleware.authenticateToken, employeeController.getEmployee);
         this.myRoutes.get('/web-app-activity', employeeController.getWebAppActivity);
         this.myRoutes.get('/employees/:id', employeeController.getEmployeeById);
+        this.myRoutes.post('/attendance', employeeController.getAttendance);
     }
 
     getRouters() {

@@ -37,8 +37,28 @@ function generateToken(payload) {
   return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1d' });
 }
 
+async function getLoginUserData(req) {
+  try {
+      const authHeader = req.headers['authorization'];
+      const token = authHeader && authHeader.split(' ')[1];
+      if (token == null) {
+        console.error('Token not provided: ', error);
+        throw error;
+      }
+
+      const user = jwt.verify(token, process.env.JWT_SECRET);
+
+      return user;
+  } catch (error) {
+    console.error('Error in decryptPassword: ', error);
+    throw error;
+  }
+  
+}
+
 module.exports = {
   encryptPassword,
   decryptPassword,
   generateToken,
+  getLoginUserData
 };

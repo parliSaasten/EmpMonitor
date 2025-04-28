@@ -535,16 +535,16 @@ Connect with Us</b>
   <a href="https://x.com/EmpMonitor" target="_blank">
     <img alt="EmpMonitor on X" src="https://img.shields.io/badge/EmpMonitor-000000?style=for-the-badge&logo=x&logoColor=white" />
   </a>
-  <a href="https://github.com/EmpMonitor" target="_blank">
+  <a href="https://github.com/EmpCloud/" target="_blank">
     <img alt="EmpMonitor on GitHub" src="https://img.shields.io/badge/GitHub-222222?style=for-the-badge&logo=github&logoColor=white" />
   </a>
-  <a href="https://www.instagram.com/EmpMonitor/" target="_blank">
+  <a href="https://www.instagram.com/emp_monitor/" target="_blank">
     <img alt="EmpMonitor on Instagram" src="https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white" />
   </a>
-  <a href="https://www.facebook.com/EmpMonitor" target="_blank">
+  <a href="https://www.facebook.com/empmonitorglobal/" target="_blank">
     <img alt="EmpMonitor on Facebook" src="https://img.shields.io/badge/Facebook-1877F2?style=for-the-badge&logo=facebook&logoColor=white" />
   </a>
-  <a href="https://www.linkedin.com/company/EmpMonitor" target="_blank">
+  <a href="https://www.linkedin.com/company/empmonitor/" target="_blank">
     <img alt="EmpMonitor on LinkedIn" src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" />
   </a>
 </p>

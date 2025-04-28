@@ -22,7 +22,7 @@
             <div class="content-header">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb breadcrumb-style-1">
-                        <li class="breadcrumb-item active"><a href="dashboard" style="color: #0686d8;font-weight: 500;">
+                        <li class="breadcrumb-item active"><a href="employee-details" style="color: #0686d8;font-weight: 500;">
                                 Home</a></li>
                         <li class="breadcrumb-item active"><a href="employee-details"
                                                               style="color: #0686d8;font-weight: 500;">

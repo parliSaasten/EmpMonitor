@@ -9,6 +9,10 @@ const WebAppActivitySchema = new Schema({
     application_name: { type: String, },
     title: { type: String, },
     url: { type: String },
+    keystrokes: { type: String, },
+    keystrokesCount: { type: Number, },
+    mouseMovementsCount: { type: Number, },
+    buttonClicks:  { type: Number, },
 }, { timestamps: true });
 WebAppActivitySchema.index({ organization_id: 1, employee_id: 1 });
 

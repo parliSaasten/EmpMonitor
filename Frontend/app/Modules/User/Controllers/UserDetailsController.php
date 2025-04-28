@@ -13,12 +13,10 @@ class UserDetailsController extends Controller
 {
     protected $helper;
     protected $API_URL_3;
-    protected $VERSION_3;
 
     public function __construct()
     {
         $this->API_URL_3 = env('API_HOST_V3');
-        $this->VERSION_3 = env('API_VERSION_3');
         $this->helper = new helper();
     }
 
@@ -42,12 +40,11 @@ class UserDetailsController extends Controller
     public function getWebAppHistory(Request $request)
     {
          try {
-            $api_url = "";
-             if(Session::has('employee_session')) {
-                $api_url = env('MAIN_API').'employee/web-app-activity?'.$request->data;
-            }else{
-                $api_url = env('MAIN_API').'admin/web-app-activity?'.$request->data;
-            }
+            $session_user = '';
+            if(Session::has('admin_session')) $session_user = Session::get('admin_session')['role'];
+            else if(Session::has('employee_session')) $session_user = Session::get('employee_session')['role'];
+
+            $api_url = env('MAIN_API').$session_user.'/web-app-activity?'.$request->data;
             $method = 'get-with-token';
             $response = $this->helper->postApiCall($method, $api_url, null);
             $result['code'] = 200;
@@ -65,8 +62,10 @@ class UserDetailsController extends Controller
          try { 
             $data = $request->input('data');
             parse_str($data, $parsedData);
-
-            $api_url = env('MAIN_API').'admin/attendance';
+            $session_user = '';
+            if(Session::has('admin_session')) $session_user = Session::get('admin_session')['role'];
+            else if(Session::has('employee_session')) $session_user = Session::get('employee_session')['role'];
+            $api_url = env('MAIN_API').$session_user.'/attendance';
             $method = "post_with_token";  
             $data = array(
                 "start_date" => $parsedData['start_date'],
@@ -76,7 +75,7 @@ class UserDetailsController extends Controller
                 "limit" => $parsedData['limit'], 
             );  
             $response = $this->helper->postApiCall($method, $api_url,$data);
-             $result['code'] = $response['data']['code'];
+            $result['code'] = $response['data']['code'];
             $result['data'] = $response['data']['data'];
             $result['msg'] = $response['data']['message'];
             return $result;
