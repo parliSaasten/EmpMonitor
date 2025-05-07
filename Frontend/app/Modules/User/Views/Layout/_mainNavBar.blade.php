@@ -66,7 +66,7 @@
                                 class="rounded-circle"></a>
                   
                     <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                        <li><a href="logout" onclick="clearStorage()">{{ __('messages.logout') }}</a></li>
+                        <li><a href="{{Session::has('admin_session') ? 'logout' : 'employee-logout'}}" onclick="clearStorage()">{{ __('messages.logout') }}</a></li>
                     </ul>
                 </li>
             </ul>

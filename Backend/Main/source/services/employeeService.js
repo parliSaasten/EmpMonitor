@@ -4,8 +4,8 @@ const WebAppActivityModel = require('../model/web_app_activity.model');
 async function registerEmployee(employee) {
   try {
     const pool = await mySqlSingleton.getPool();
-    const { firstName, lastName, email, password, mobileNumber, employeeCode, timeZone, role } = employee;
-    const [result] = await pool.query('INSERT INTO employees (first_name, last_name, email, password, mobile_number, employee_code, time_zone, role) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', [firstName, lastName, email, password, mobileNumber, employeeCode, timeZone, role]);
+    const { firstName, lastName, email, password, mobileNumber, employeeCode, timeZone, role, departmentId } = employee;
+    const [result] = await pool.query('INSERT INTO employees (first_name, last_name, email, password, mobile_number, employee_code, time_zone, role, department_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', [firstName, lastName, email, password, mobileNumber, employeeCode, timeZone, role, departmentId]);
     return result.insertId;
   } catch (error) {
     console.error('Error registering employee:', error);
@@ -15,7 +15,13 @@ async function registerEmployee(employee) {
 async function getEmployeeById(id) {
   try {
     const pool = await mySqlSingleton.getPool();
-    const [rows] = await pool.query('SELECT * FROM employees WHERE id = ?', [id]);
+    const [rows] = await pool.query(
+      `SELECT employees.*, departments.name AS department_name
+       FROM employees
+       INNER JOIN departments ON employees.department_id = departments.id
+       WHERE employees.id = ?`,
+      [id]
+    );
     return rows[0];
   } catch (error) {
     console.error(`Error getting employee by id ${id}:`, error);
@@ -45,10 +51,10 @@ async function getEmployeeByEmail(email) {
 async function updateEmployee(id, employee) {
   try {
     const pool = await mySqlSingleton.getPool();
-    const { firstName, lastName, role, mobileNumber, employeeCode, timeZone } = employee;
+    const { firstName, lastName, role, mobileNumber, employeeCode, timeZone, email, password } = employee;
     await pool.query(
-      'UPDATE employees SET first_name = ?, last_name = ?, role = ?, mobile_number = ?, employee_code = ?, time_zone = ? WHERE id = ?',
-      [firstName, lastName, role, mobileNumber, employeeCode, timeZone, id]
+      'UPDATE employees SET first_name = ?, last_name = ?, role = ?, mobile_number = ?, employee_code = ?, time_zone = ?, email = ?, password = ? WHERE id = ?',
+      [firstName, lastName, role, mobileNumber, employeeCode, timeZone, email, password, id]
     );
   } catch (error) {
     console.error(`Error updating employee with id ${id}:`, error);
@@ -59,27 +65,37 @@ async function updateEmployee(id, employee) {
 async function getAllEmployees(skip, limit, name, count = 0) {
   try {
     const pool = await mySqlSingleton.getPool();
-    let query='';
+    let query = '';
     const params = ['employee'];
 
-    if(count){
-      query = `SELECT COUNT(*) AS total FROM employees WHERE role = ?`;
-    }else{
-      query = `SELECT * FROM employees WHERE role = ?`;
+    if (count) {
+      query = `
+        SELECT COUNT(*) AS total 
+        FROM employees 
+        INNER JOIN departments ON employees.department_id = departments.id 
+        WHERE employees.role = ?
+      `;
+    } else {
+      query = `
+        SELECT employees.*, departments.name AS department_name 
+        FROM employees 
+        INNER JOIN departments ON employees.department_id = departments.id 
+        WHERE employees.role = ?
+      `;
     }
 
-    if(name){
-      query += `AND (first_name LIKE ? OR last_name LIKE ? OR email LIKE ?)`;
-      params.push(`%${name}%`,  `%${name}%`, `%${name}%`);
+    if (name) {
+      query += ` AND (employees.first_name LIKE ? OR employees.last_name LIKE ? OR employees.email LIKE ?)`;
+      params.push(`%${name}%`, `%${name}%`, `%${name}%`);
     }
 
-    if(!count){
-       query += ` LIMIT ? OFFSET ?`;
-       params.push(limit, skip);
+    if (!count) {
+      query += ` LIMIT ? OFFSET ?`;
+      params.push(limit, skip);
     }
 
     const [rows] = await pool.query(query, params);
-    if(count) return rows[0]?.total || 0; 
+    if (count) return rows[0]?.total || 0;
     return rows;
   } catch (error) {
     console.error('Error getting all employees:', error);
@@ -213,8 +229,79 @@ async function getWebAppActivityFiltered(employeeId, startDate, endDate, type) {
     throw error;
   }
 }
+async function getDepartments() {
+  try {
+    const pool = await mySqlSingleton.getPool();
+    const [rows] = await pool.query('SELECT * FROM departments');
+    return rows;
+  } catch (error) {
+    console.error('Error fetching departments:', error);
+    throw error;
+  }
+}
 
+async function addDepartment(departmentName) {
+  try {
+    const pool = await mySqlSingleton.getPool();
+    const [result] = await pool.query('INSERT INTO departments (name) VALUES (?)', [departmentName]);
+    return result.insertId;
+  } catch (error) {
+    console.error('Error adding department:', error);
+    throw error;
+  }
+}
 
+async function updateDepartment(id, departmentName) {
+  try {
+    const pool = await mySqlSingleton.getPool();
+    await pool.query('UPDATE departments SET name = ? WHERE id = ?', [departmentName, id]);
+  } catch (error) {
+    console.error(`Error updating department with id ${id}:`, error);
+    throw error;
+  }
+}
+
+async function deleteDepartment(id) {
+  try {
+    const pool = await mySqlSingleton.getPool();
+    await pool.query('DELETE FROM departments WHERE id = ?', [id]);
+  } catch (error) {
+    console.error(`Error deleting department with id ${id}:`, error);
+    throw error;
+  }
+}
+
+async function getDepartmentByName(name) {
+  try {
+    const pool = await mySqlSingleton.getPool();
+    const [rows] = await pool.query('SELECT * FROM departments WHERE name = ?', [name]);
+    return rows[0];
+  } catch (error) {
+    console.error(`Error getting department by name ${name}:`, error);
+    throw error;
+  }
+}
+
+async function isDepartmentUsed(departmentId) {
+  try {
+    const pool = await mySqlSingleton.getPool();
+    const [rows] = await pool.query('SELECT COUNT(*) AS count FROM employees WHERE department_id = ?', [departmentId]);
+    return rows[0].count > 0;
+  } catch (error) {
+    console.error(`Error checking if department with id ${departmentId} is used:`, error);
+    throw error;
+  }
+}
+
+async function getDepartmentById(id) {
+  try {
+    const pool = await mySqlSingleton.getPool();
+    const [rows] = await pool.query('SELECT * FROM departments WHERE id = ?', [id]);
+    return rows[0];
+  } catch (error) {
+    throw error;
+  }
+}
 
 module.exports = {
   registerEmployee,
@@ -227,5 +314,12 @@ module.exports = {
   getWebAppActivityFiltered,
   countEmployees,
   getAllAttendanceById,
-  getAttendanceCount 
+  getAttendanceCount,
+  getDepartments,
+  addDepartment,
+  updateDepartment,
+  deleteDepartment,
+  getDepartmentByName,
+  isDepartmentUsed,
+  getDepartmentById,
 };

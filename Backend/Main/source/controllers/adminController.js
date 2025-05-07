@@ -38,7 +38,7 @@ async function adminRegister(req, res) {
       return res.status(403).json({ message: 'Forbidden: Admin role required' });
     }
 
-    const { firstName, lastName, email, password, mobileNumber, employeeCode, timeZone } = req.body;
+    const { firstName, lastName, email, password, mobileNumber, employeeCode, timeZone, departmentId } = req.body;
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return res.status(400).json({ error: 'Invalid email format' });
     }
@@ -56,6 +56,7 @@ async function adminRegister(req, res) {
       employeeCode,
       timeZone,
       role: 'employee',
+      departmentId
     });
     res.status(201).json({
       id: employeeId,
@@ -224,6 +225,60 @@ async function getWebAppActivity(req, res) {
     }
 }
 
+
+async function getDepartments(req, res) {
+  try {
+    const departments = await employeeService.getDepartments();
+    return res.json({ code: 200, data: departments, error: null, message: 'Success' });
+  } catch (error) {
+    return res.status(500).json({ message: 'Internal server error', error: error.message });
+  }
+}
+
+async function addDepartment(req, res) {
+  try {
+    const { departmentName } = req.body;
+    if (!departmentName) return res.status(400).json({ code: 400, data: null, error: null, message: 'Invalid inputs' });
+    // check if department already exists
+    const existingDepartment = await employeeService.getDepartmentByName(departmentName);
+    if (existingDepartment) return res.status(400).json({ code: 400, data: null, error: null, message: 'Department already exists' });
+    const departmentId = await employeeService.addDepartment(departmentName);
+    return res.json({ code: 200, data: { id: departmentId, departmentName }, error: null, message: 'Success' });
+  } catch (error) {
+    return res.status(500).json({ message: 'Internal server error', error: error.message });
+  }
+}
+
+async function updateDepartment(req, res) {
+  try {
+    const { id, departmentName } = req.body;
+    if (!id || !departmentName) return res.status(400).json({ code: 400, data: null, error: null, message: 'Invalid inputs' });
+    const department = await employeeService.getDepartmentById(id);
+    if (!department)
+      return res.status(404).json({ code: 404, data: null, error: null, message: `Department with id ${id} not found` });
+
+    await employeeService.updateDepartment(id, departmentName);
+    return res.json({ code: 200, data: { id, departmentName }, error: null, message: 'Success' });
+  } catch (error) {
+    return res.status(500).json({ message: 'Internal server error', error: error.message });
+  }
+}
+
+async function deleteDepartment(req, res) {
+  try {
+    const { id } = req.params;
+    if (!id) return res.status(400).json({ code: 400, data: null, error: null, message: 'Invalid inputs' });
+    const department = await employeeService.getDepartmentById(id);
+    if (!department) return res.status(404).json({ code: 404, data: null, error: null, message: `Department with id ${id} not found` });
+    const isDepartmentUsed = await employeeService.isDepartmentUsed(id);
+    if (isDepartmentUsed) return res.status(400).json({ code: 400, data: null, error: null, message: 'Department is being used by an employee' });
+    await employeeService.deleteDepartment(id);
+    return res.json({ code: 200, data: null, error: null, message: 'Success' });
+  } catch (error) {
+    return res.status(500).json({ message: 'Internal server error', error: error.message });
+  }
+}
+
 module.exports = {
   adminRegister,
   adminLogin,
@@ -234,5 +289,9 @@ module.exports = {
   getEmployeeById,
   getAttendanceById,
   deleteEmployees,
-  updateEmployee
+  updateEmployee,
+  getDepartments,
+  addDepartment,
+  updateDepartment,
+  deleteDepartment
 };
