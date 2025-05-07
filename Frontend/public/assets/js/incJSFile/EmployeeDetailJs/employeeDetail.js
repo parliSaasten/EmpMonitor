@@ -397,7 +397,7 @@ let EmplooyeeDetails = (response, CollapseMergeOption) => {
     if (response.code == 200) {
         empData = userType === "admin" ? response.data.employees: response.data.user_data;
         UserCompleteList.push(empData);
-        totalEmployees = 11;
+        totalEmployees = response.data.totalCount;
         let appendData = "", empCode = "", id = "";
         
         for (let i = 0; i < empData.length; i++) {
@@ -416,7 +416,6 @@ let EmplooyeeDetails = (response, CollapseMergeOption) => {
                 if (ADD_REMOVE_COLUMN.includes('EmpCode')) empCode == null ? appendData += '<td style="width:127px" class="EmpCodeTable" id="ec' + id + '">-</td>' : appendData += '<td style="width:127px" class="EmpCodeTable" id="ec' + id + '">' + empCode + '</td>';
                 if (ADD_REMOVE_COLUMN.includes('roles')) {
                     (empData[i].role == null || empData[i].role == "null") ? appendData += '<td style="width:176px" class="RoleTable" id="ro' + id + '">-</td>' : appendData += '<td style="width:176px" class="RoleTable" id="ro' + id + '">' + empData[i]['role'] + '</td>'
-                       // appendData += '<td  style="width:78px" class="RoleTable" id="ro' + id + '">' +empData.role+ '</td>';
                        
                    }
                 if (ADD_REMOVE_COLUMN.includes('ComputerName')) empData[i].computer_name == null ? appendData += '<td  style="width:138px" class="ComputerNameTable" id="sn' + id + '">-</td>' : appendData += '<td  style="width:138px" class="ComputerNameTable" id="sn' + id + '">--</td>';
@@ -437,7 +436,7 @@ let EmplooyeeDetails = (response, CollapseMergeOption) => {
             $('#fetch_Details').append(appendData);
         }
         if (PAGE_COUNT_CALL === true) {
-            TOTAL_COUNT_EMAILS = 11;
+            TOTAL_COUNT_EMAILS = response.data.totalCount;
             ENTRIES_DELETED = (TOTAL_COUNT_EMAILS < SHOW_ENTRIES) ? TOTAL_COUNT_EMAILS : SHOW_ENTRIES;
             paginationSetup();
             TOTAL_COUNT_EMAILS < SHOW_ENTRIES ? $("#showPageNumbers").html(' ' + DATATABLE_LOCALIZE_MSG.showing + ' ' + 1 + ' ' + DATATABLE_LOCALIZE_MSG.to + ' ' + TOTAL_COUNT_EMAILS + ' ' + DATATABLE_LOCALIZE_MSG.of + ' ' + TOTAL_COUNT_EMAILS)
@@ -570,17 +569,19 @@ $(document).on('submit', '#emp-register', function (e) {
                 let empData = response.data;
                 let projectname = empData['project_name'] != "" ? empData['project_name'] : "-";
                 appendData += '<tr id=' + id + '><td class="stickyCol-sticky-col" id="fn' + id + '">' + '<input  class="open-checkBoxModalld mr-4" type="checkbox" name="checkbox" id="SelectCheckbox' + id + '" onclick="actionsEnable(' + id + ')" value="' + id + '" /> <a href="get-employee-details?id='+id+'" id="fn' + id + '" >' + empData['firstName'] + ' ' + empData['lastName'] + '</a></td>';
-                // appendData += '<td id="fn' + id + '">' + empData['first_name'] + ' ' + empData['last_name'] + '</td>';
-                if (ADD_REMOVE_COLUMN.includes('Email')) appendData += '<td id="em' + id + '">' + empData['email'] + '</td>';
+                 if (ADD_REMOVE_COLUMN.includes('Email')) appendData += '<td id="em' + id + '">' + empData['email'] + '</td>';
                 if (ADD_REMOVE_COLUMN.includes('EmpCode')) appendData += '<td id="ec' + id + '">' + empData['employeeCode'] + '</td>';
-                // if (projectField) projectname == null ? appendData += '<td style="width:127px" class="ProjectNameTable" id="pn' + id + '">-</td>' : appendData += '<td style="width:127px" class="ProjectNameTable" id="pn' + id + '">' + projectname + '</td>';
-                appendData += '<td style="width:127px" class="SystemArchitechtureTable" id="sa' + id + '">-</td>';
+                if (ADD_REMOVE_COLUMN.includes('roles')) appendData += '<td id="er' + id + '">' + empData['role'] + '</td>';
+                 appendData += '<td style="width:127px" class="SystemArchitechtureTable" id="sa' + id + '">-</td>';
                 if (ADD_REMOVE_COLUMN.includes('ComputerName')) appendData += '<td id="sn' + id + '">-</td>';
                 if (ADD_REMOVE_COLUMN.includes('version')) appendData += '<td id="sv' + id + '">-</td>';
-                appendData += '<td id="act' + id + '" class="">';
+                appendData += '<td id="act' + id + '" class="text-center">';
                 if (userType === "admin" || $("#PermissionData").data('list').some(obj => obj.permission === "employee_modify")) {
                     appendData += '<a  onclick="getdetails(' + id + ', 2, 0)" id="editedId"  class="open-editModal text-success mr-2"  href="#"  data-toggle="modal" data-target="#editEmpModal" title="' + EMPLOYEE_DETAILS_CONST.empEdit + '"  data-id="' + id + '"><i class="fas fa-user-edit fa-fw" data-toggle="tooltip" data-placement="top" ></i></a>';
                 }     
+                if (userType === "admin" || $("#PermissionData").data('list').some(obj => obj.permission === "employee_delete")) {
+                    appendData += '<a id="delete" class="open-editModal text-danger mr-2" href="#"  data-toggle="modal" data-target="#DeleteSingleModal" title="' + EMPLOYEE_DETAILS_CONST.empDelete + '" data-id="' + id + '"> <i class="far fa-trash-alt" data-toggle="tooltip" data-placement="top"></i></a>';
+                }
                 appendData += '</td></tr>';
 
                 $('#fetch_Details').prepend(appendData);

@@ -36,7 +36,9 @@ CREATE TABLE `employees` (
   `mobile_number` varchar(20) DEFAULT NULL,
   `employee_code` varchar(50) DEFAULT NULL,
   `time_zone` varchar(50) DEFAULT NULL,
-  `role` varchar(50) NOT NULL
+  `role` varchar(50) NOT NULL,
+  `department_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `created_at` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -79,6 +81,7 @@ INSERT INTO `employee_attendance` (`id`, `employee_id`, `date`, `start_time`, `e
 ALTER TABLE `employees`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `email` (`email`);
+  ADD KEY `employees_departments_fk` (`department_id`);
 
 --
 -- Indexes for table `employee_attendance`
@@ -86,6 +89,12 @@ ALTER TABLE `employees`
 ALTER TABLE `employee_attendance`
   ADD PRIMARY KEY (`id`),
   ADD KEY `empployee_attendance_employees_fk` (`employee_id`);
+
+
+
+  ALTER TABLE `departments`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -106,7 +115,8 @@ ALTER TABLE `employee_attendance`
 --
 -- Constraints for dumped tables
 --
-
+ALTER TABLE `employees`
+  ADD CONSTRAINT `employees_departments_fk` FOREIGN KEY (`department_id`) REFERENCES `departments` (`id`) ON DELETE SET NULL;
 --
 -- Constraints for table `employee_attendance`
 --
@@ -117,3 +127,24 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
+
+--
+-- Table structure for table `departments`
+--
+
+CREATE TABLE `departments` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `created_at` timestamp DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `departments`
+--
+
+INSERT INTO `departments` (`id`, `name`) VALUES
+(1, 'Human Resources'),
+(2, 'Technology');
