@@ -39,7 +39,6 @@ class UserController extends Controller
     public function loginpageWhitelabel(Request $request, $username = null, $password = null)
     {
         try {  
-            
             $username = base64_decode($username);
             $password = base64_decode($password);
             if (isset($username) && isset($password)) { 
@@ -51,6 +50,7 @@ class UserController extends Controller
                 ); 
                
                 $adminAuthResponse = $this->helper->postApiCall($method, $api_url, $amemberData);
+            
                 $admin = array( 
                         'token' => $adminAuthResponse['data']['token'],
                         'id' => $adminAuthResponse['data']['id'],
@@ -67,6 +67,7 @@ class UserController extends Controller
                          return redirect('admin-login')->with('error', 'Invalid authentication');
                     }  
         } catch (\Exception $e) {
+            dd($e);
             Log::info('Exception ' . $e->getLine() . " => Function Name => loginpageWhitelabel => code =>" . $e->getCode() . " => message =>  " . $e->getMessage());
             return redirect('admin-login')->with('error', 'Something went wrong. Please contact support Team');
         }
@@ -578,6 +579,117 @@ class UserController extends Controller
             }
         }
     }
- 
+    public function manageLocations()
+    {
+        $location = $this->getLocationsDept();
+        $departments = $this->getDepartments();
+
+        if (isset($location['data']['data'][0]['timezone'])) {
+            for ($i = 0; $i < sizeof($location['data']['data']); $i++) {
+                $location['data']['data'][$i]['timezone'] = str_replace("/", "", $location['data']['data'][$i]['timezone']);
+            }
+        }
+        return view("User::manageLocations")->with(array('location_departmnet' => $location, 'departments' => $departments));
+    }
+     public function getLocationsDept()
+    {
+        try {
+            $api_url = env('MAIN_API') . 'admin/locations';
+            $method = "get-with-token";
+            $response = $this->helper->postApiCall($method, $api_url, []);
+            return $response;
+             } catch (\Exception $e) {
+            return $this->ExceptionErrorHandler($e, "400", ' UserController => getDepartments => Method-get');
+        }
+    }
+     public function addLoctation(Request $request)
+    {
+        try {
+            $data['locationName'] = $request->input('location_name');
+            $api_url = env('MAIN_API') . 'admin/locations';
+            $method = "post_with_token";
+            $response = $this->helper->postApiCall($method, $api_url, $data);
+            return $response;
+             } catch (\Exception $e) {
+            return $this->ExceptionErrorHandler($e, "400", ' UserController => getDepartments => Method-get');
+        }
+    }
+     public function deleteLocation(Request $request)
+    {
+        try {
+            $api_url = env('MAIN_API') . 'admin/locations/'.(int)$request->input('id');
+            $method = "delete";
+            $response = $this->helper->postApiCall($method, $api_url, []);
+            return $response;
+             } catch (\Exception $e) {
+            return $this->ExceptionErrorHandler($e, "400", ' UserController => getDepartments => Method-get');
+        }
+    }
+     public function updateLocation(Request $request)
+    {
+        try {
+            $data['locationName'] = $request->input('locationName');
+            $api_url = env('MAIN_API') . 'admin/locations/'.(int)$request->input('id');
+            $method = "put";
+            $response = $this->helper->postApiCall($method, $api_url,$data);
+            return $response;
+             } catch (\Exception $e) {
+            return $this->ExceptionErrorHandler($e, "400", ' UserController => getDepartments => Method-get');
+        }
+    }
+    public function manageDepartment()
+    {
+          $location = $this->getLocationsDept();
+        $departments = $this->getDepartments();
+        return view("User::manageDepartment")->with(array('departments' => $departments,'location_departmnet' => $location,));
+    }
+
+  public function getDepartments()
+    {
+        try {
+            $api_url = env('MAIN_API').'admin/get-departments';
+            $method = "get-with-token";
+            $response = $this->helper->postApiCall($method, $api_url, []);
+            return $response;
+            } catch (\Exception $e) {
+            return $this->ExceptionErrorHandler($e, "400", ' UserController => getDepartments => Method-get');
+        }
+    }
+      public function addDepartment(Request $request)
+    {
+        try {
+            $data['departmentName'] = $request->input('departmentName');
+            $data['locationId'] =(int)$request->input('locationId');
+            $api_url = env('MAIN_API') . 'admin/add-department';
+            $method = "post_with_token";
+            $response = $this->helper->postApiCall($method, $api_url, $data);
+            return $response;
+             } catch (\Exception $e) {
+            return $this->ExceptionErrorHandler($e, "400", ' UserController => getDepartments => Method-get');
+        }
+    }
+     public function deleteDepartment(Request $request)
+    {
+        try {
+            $api_url = env('MAIN_API') . 'admin/delete-department/'.(int)$request->input('id');
+            $method = "delete";
+            $response = $this->helper->postApiCall($method, $api_url, []);
+            return $response;
+             } catch (\Exception $e) {
+            return $this->ExceptionErrorHandler($e, "400", ' UserController => getDepartments => Method-get');
+        }
+    }
+     public function updateDepartments(Request $request)
+    {
+        try {
+            $data['departmentName'] = $request->input('departmentName');
+            $api_url = env('MAIN_API') . 'admin/update-department';
+            $method = "put";
+            $response = $this->helper->postApiCall($method, $api_url, []);
+            return $response;
+             } catch (\Exception $e) {
+            return $this->ExceptionErrorHandler($e, "400", ' UserController => getDepartments => Method-get');
+        }
+    }
 
 }

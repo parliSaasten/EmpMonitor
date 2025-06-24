@@ -137,7 +137,15 @@
                                 "timeZone": {
                                   "type": "string",
                                   "example": "UTC"
-                                }
+                                },
+                              "departmentId": {
+                                "type": "string",
+                                "example": "1"
+                              },
+                              "locationId": {
+                                "type": "string",
+                                "example": "1"
+                              }
                             }
                         }
                     }
@@ -639,15 +647,9 @@
     }
   }
 },
-
-
-
-
-
-
-
     "/admin/get-departments": {
       "get": {
+        "tags": ["Private"],
         "summary": "Get all departments",
             "security": [
       {
@@ -681,6 +683,7 @@
     },
     "/admin/add-department": {
       "post": {
+        "tags": ["Private"],
         "summary": "Add a new department",
             "security": [
       {
@@ -694,9 +697,10 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "departmentName": { "type": "string" }
+                  "departmentName": { "type": "string" },
+                  "locationId": { "type": "integer" }
                 },
-                "required": ["departmentName"]
+                "required": ["departmentName, locationId"]
               }
             }
           }
@@ -713,6 +717,7 @@
     },
     "/admin/update-department": {
       "put": {
+        "tags": ["Private"],
         "summary": "Update a department",
             "security": [
       {
@@ -746,6 +751,12 @@
     },
     "/admin/delete-department/{id}": {
       "delete": {
+        "tags": ["Private"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "summary": "Delete a department",
         "parameters": [
           {
@@ -767,10 +778,6 @@
         }
       }
     },
-
-
-
-
     "/employee/login": {
       "post": {
         "tags": ["Public"],
@@ -866,9 +873,13 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "name": {
+                  "firstName": {
                     "type": "string",
-                    "example": "Updated Name"
+                    "example": "Updated First Name"
+                  },
+                  "lastName": {
+                    "type": "string",
+                    "example": "Updated Last Name"
                   },
                   "email": {
                     "type": "string",
@@ -877,6 +888,10 @@
                   "role": {
                     "type": "string",
                     "example": "employee"
+                  },
+                  "mobileNumber": {
+                    "type": "string",
+                    "example": "987654321"
                   },
                   "employeeCode": {
                     "type": "string",
@@ -1043,7 +1058,7 @@
         }
       }
     },
-     "/employee/web-app-activity": {
+    "/employee/web-app-activity": {
         "get": {
           "tags": ["Private"],
           "summary": "Get web app activity records with filters",
@@ -1154,7 +1169,479 @@
             }
           }
         }
+    },
+
+   "/admin/locations": {
+      "get": {
+        "tags": ["Private"],
+        "summary": "Get all locations",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of locations",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "location_name": {
+                            "type": "string",
+                            "example": "Bengaluru"
+                          }
+                        }
+                      }
+                    },
+                    "error": {
+                      "type": "null",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Success"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Internal server error"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Database connection failed"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Private"],
+        "summary": "Add a new location",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "locationName": {
+                    "type": "string",
+                    "example": "Mumbai"
+                  }
+                },
+                "required": [
+                  "locationName"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Location added successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "example": 2
+                        },
+                        "locationName": {
+                          "type": "string",
+                          "example": "Mumbai"
+                        }
+                      }
+                    },
+                    "error": {
+                      "type": "null",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Success"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input or location already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 400
+                    },
+                    "data": {
+                      "type": "null",
+                      "example": null
+                    },
+                    "error": {
+                      "type": "null",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid inputs"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Internal server error"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Database error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
+    },
+    "/admin/locations/{id}": {
+      "put": {
+        "tags": ["Private"],
+        "summary": "Update a location by ID",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "locationName": {
+                    "type": "string",
+                    "example": "New York"
+                  }
+                },
+                "required": [
+                  "id",
+                  "locationName"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Location updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "locationName": {
+                          "type": "string",
+                          "example": "New York"
+                        }
+                      }
+                    },
+                    "error": {
+                      "type": "null",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Success"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 400
+                    },
+                    "data": {
+                      "type": "null",
+                      "example": null
+                    },
+                    "error": {
+                      "type": "null",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid inputs"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Location not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 404
+                    },
+                    "data": {
+                      "type": "null",
+                      "example": null
+                    },
+                    "error": {
+                      "type": "null",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Location with id 1 not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Internal server error"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Database update failed"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Private"],
+        "summary": "Delete a location by ID",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Location deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "data": {
+                      "type": "null",
+                      "example": null
+                    },
+                    "error": {
+                      "type": "null",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Success"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input or location has linked departments",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 400
+                    },
+                    "data": {
+                      "type": "null",
+                      "example": null
+                    },
+                    "error": {
+                      "type": "null",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid inputs"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Location not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 404
+                    },
+                    "data": {
+                      "type": "null",
+                      "example": null
+                    },
+                    "error": {
+                      "type": "null",
+                      "example": null
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Location with id 1 not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Internal server error"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Database deletion failed"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   },
   "components": {
     "securitySchemes": {
@@ -1164,13 +1651,35 @@
         "bearerFormat": "JWT"
       }
     },
-     "Department": {
-        "type": "object",
-        "properties": {
-          "id": { "type": "integer" },
-          "name": { "type": "string" },
-          "created_at": { "type": "string", "format": "date-time" }
+    "schemas": {
+      "Department": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "example": 1
+        },
+        "name": {
+          "type": "string",
+          "example": "Technology"
+        },
+        "location_id": {
+          "type": "integer",
+          "example": 2
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "example": "2025-04-01T12:00:00Z"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time",
+          "example": "2025-04-01T12:00:00Z"
         }
+      },
+      "required": ["id", "name", "location_id"]
       }
+    }
   }
 }

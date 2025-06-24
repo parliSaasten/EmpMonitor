@@ -1,10 +1,10 @@
 require('dotenv').config();
 const express = require('express');
-const adminRoutes = require('./source/routes/adminRoutes');
-const employeeRoutes = require('./source/routes/employeeRoutes');
+const adminRoutes = require('./source/routes/admin/admin.routes');
+const employeeRoutes = require('./source/routes/employee/employee.routes');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./source/utils/swagger/swagger.json');
-const mongoDB = require('./source/config/mongodb');
+const mongoDB = require('./source/database/MongoConnection');
 
 const helmet = require('helmet');
 const compression = require('compression');
