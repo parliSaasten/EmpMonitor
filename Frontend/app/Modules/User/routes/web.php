@@ -31,6 +31,15 @@ Route::group(['module' => 'User', 'middleware' => ['web'], 'namespace' => 'App\M
             Route::post('/attendance-history', [TimeAttendanceController::class,'attendanceHistory']);
             Route::post('/Delete-multiple', [UserController::class,'DeleteMultiple']);
             Route::post('/Emp-edit', [UserController::class,'editEmployee']);
+            Route::get('/manageLocations', [UserController::class,'manageLocations'])->name('manageLocations');
+            Route::post('/add-location', [UserController::class,'addLoctation']);
+            Route::post('/delete-location', [UserController::class,'deleteLocation']);
+            Route::post('/update-location', [UserController::class,'updateLocation']);
+
+            Route::get('/manageDepartment', [UserController::class,'manageDepartment'])->name('manageDepartment');
+            Route::post('/add-department', [UserController::class,'addDepartment']);
+            Route::post('/delete-department', [UserController::class,'deleteDepartment']);
+            Route::post('/update-department', [UserController::class,'updateDepartment']);
             }); 
         });
 

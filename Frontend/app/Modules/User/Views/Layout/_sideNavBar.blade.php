@@ -21,7 +21,27 @@
                             href="{{ route('employee-details', (new App\Modules\User\helper())->getHostName()) }}">{{ __('messages.employee-details') }}</a>
                     </li>  
                 </ul>
+                
             </li>
+            <li>
+                <a href="#">
+                    <i class="menu-icon icon-cog"
+                       title="{{ __('messages.employee') }}"></i><span>{{ __('messages.settings') }}</span>
+                    <i class="accordion-icon fas fa-angle-left"></i>
+                </a>
+                <ul class="sub-menu">
+                      <li>
+                 <a href="{{ route('manageLocations', (new App\Modules\User\helper())->getHostName()) }}">
+                   <span>Add {{ __('messages.Location') }}</span>
+                </a>
+                  <a href="{{ route('manageDepartment', (new App\Modules\User\helper())->getHostName()) }}">
+                   <span>Add {{ __('messages.department') }}</span>
+                </a>
+            </li> 
+                </ul>
+                
+            </li>
+          
             @endif
             <li>
                @php  $url = Session::has('employee_session') ? 'attendance-history-employee' : 'attendance-history'; @endphp
@@ -35,6 +55,7 @@
                     <i class="menu-icon far fa-calendar-alt"
                         title="{{ __('messages.timesheets') }}"></i><span>{{ __('messages.timesheets') }}</span>
                 </a>
+                 
                 @endif
             </li>
         </ul>
