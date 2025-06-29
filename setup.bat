@@ -221,7 +221,15 @@ if exist "Frontend" (
     )
 
 
-   echo -e "Please use the default credentials:\n\n- Admin\n  - Email: admin@mail.com\n  - Password: Admin@123\n\n- Employee\n  - Email: first_user@mail.com\n  - Password: User@123"
+    echo Please use the default credentials:
+    echo.
+    echo - Admin
+    echo   - Email: admin@mail.com
+    echo   - Password: Admin@123
+    echo.
+    echo - Employee
+    echo   - Email: first_user@mail.com
+    echo   - Password: User@123
 
     REM Start Laravel development server
     call php artisan serve

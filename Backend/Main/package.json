@@ -21,6 +21,7 @@
     "mysql2": "^3.6.5",
     "nodejs_employee_management": "file:",
     "swagger-ui-express": "^5.0.0",
+    "underscore": "^1.13.7",
     "yamljs": "^0.3.0"
   },
   "devDependencies": {

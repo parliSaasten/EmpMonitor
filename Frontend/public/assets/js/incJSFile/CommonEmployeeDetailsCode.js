@@ -74,11 +74,12 @@ function timeSheetData(response) {
                 let endTime = moment(timeSheet.end_time).tz('Asia/Kolkata').format('DD-MM-YYYY HH:mm:ss');
                 
                 const time1 = moment(timeSheet.end_time);
-                const time2 = moment(timeSheet.start_time); 
-                const duration = moment.duration(time1.diff(time2));
-                const hours = duration.asHours();
-  
-                $('#timeSheetsData').append('<tr class="text-center">\n' + ' <td>' + startTime + '</td><td>' + endTime + '</td><td title="' +  hours.toFixed(2) + '">' + hours.toFixed(2) + '</td> </tr>' );
+                const time2 = moment(timeSheet.start_time);
+                let total_hours = timeSheet.total_seconds ? formatSecondsToHHMMSS(timeSheet.total_seconds) : 0;
+                let active_hours = timeSheet.active_seconds ? formatSecondsToHHMMSS(timeSheet.active_seconds) : 0;
+                let idle_hours = timeSheet.idle_seconds ? formatSecondsToHHMMSS(timeSheet.idle_seconds) : 0;
+
+                $('#timeSheetsData').append('<tr class="text-center">\n' + ' <td>' + startTime + '</td><td>' + endTime + '</td><td title="' +  total_hours + '">' + total_hours + '</td><td>' + active_hours + '</td><td>' + idle_hours + '</td></tr>' );
             });
             $("#timeSheetDataTable").DataTable({
                 "lengthMenu": [[10, 25, 50, 100, 200], [10, 25, 50, 100, 200]],
@@ -109,7 +110,12 @@ function timeSheetData(response) {
         return errorHandler(response.msg);
     }
 }
-
+function formatSecondsToHHMMSS(seconds) {
+    const hrs = String(Math.floor(seconds / 3600)).padStart(2, '0');
+    const mins = String(Math.floor((seconds % 3600) / 60)).padStart(2, '0');
+    const secs = String(seconds % 60).padStart(2, '0');
+    return `${hrs}:${mins}:${secs}`;
+}
 
 function browserHistoryData(response) {
     if (response.code == 200) {

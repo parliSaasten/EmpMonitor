@@ -27,11 +27,18 @@
                             <table id="timeSheetDataTable" class="table table-striped table-bordered ad_tab w-100">
                                 <thead>
                                     <tr class="table-primary">
-                                        <th>{{ __('messages.clockin') }}</th>
-                                        <th>{{ __('messages.clockout') }}</th>
-                                        <th>
+                                        <th class="text-center">{{ __('messages.clockin') }}</th>
+                                        <th class="text-center">{{ __('messages.clockout') }}</th>
+                                        <th class="text-center">
                                             {{ __('messages.totalHours') }}
                                             <i class="fas fa-info-circle ml-1" title="{{ __('messages.clockout') }} - {{ __('messages.clockin') }}"></i>
+                                        </th>
+                                         <th class="text-center">{{ __('messages.activeHours') }}<i class="fas fa-info-circle ml-1"
+                                                                               title="{{__('messages.activeInfo')}}"></i>
+                                        </th>
+                                        <th class="text-center text-warning">{{ __('messages.idleHour') }}
+                                            <i class="fas fa-info-circle ml-1"
+                                               title="{{__('messages.idleInfo')}}"></i>
                                         </th>
                                     </tr>
                                 </thead>
