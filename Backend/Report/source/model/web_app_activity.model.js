@@ -13,6 +13,9 @@ const WebAppActivitySchema = new Schema({
     keystrokesCount: { type: Number, },
     mouseMovementsCount: { type: Number, },
     buttonClicks:  { type: Number, },
+    active_seconds: { type: Number, default: 0 },
+    total_seconds: { type: Number, default: 0 },
+    idle_seconds: { type: Number, default: 0 },
 }, { timestamps: true });
 WebAppActivitySchema.index({ organization_id: 1, employee_id: 1 });
 

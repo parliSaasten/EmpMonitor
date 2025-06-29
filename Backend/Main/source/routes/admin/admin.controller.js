@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 const moment = require('moment-timezone');
+const _ = require('underscore');
 
 const DEFAULT_ADMIN_EMAIL = process.env.DEFAULT_ADMIN_EMAIL || 'admin@example.com';
 const DEFAULT_ADMIN_PASSWORD = process.env.DEFAULT_ADMIN_PASSWORD || 'password123';
@@ -166,10 +167,22 @@ async getAttendance(req, res) {
     end_date = moment(end_date).format("YYYY-MM-DD");
 
     // Run both queries in parallel
-    const [attendanceRecords, attendanceRecordCount] = await Promise.all([
+    let [attendanceRecords, attendanceRecordCount] = await Promise.all([
       EmployeeModel.getAllAttendance(start_date, end_date, +skip, +limit, employee_id, name, 0),
       EmployeeModel.getAllAttendance(start_date, end_date, null, null, employee_id, name, 1)
     ]);
+
+    let dates = _.pluck(attendanceRecords, 'date').map(i => +moment(i).format('YYYY-MM-DD').split("-").join(''));
+    let timesheet = await EmployeeModel.getEmployeeTimesheet({ dates, employee_id});
+    
+    attendanceRecords = attendanceRecords.map(record => {
+      let date = +moment(record.date).format('YYYY-MM-DD').split("-").join('');
+      let timesheetRecord = timesheet.find(ts => ts.yyyymmdd === date && ts.employee_id === record.employee_id);
+      return {
+        ...record,
+        ...timesheetRecord
+      }
+    });
 
     return res.json({
       code: 200,
